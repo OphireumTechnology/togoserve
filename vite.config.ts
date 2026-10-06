@@ -6,7 +6,7 @@ import {defineConfig} from 'vite';
 export default defineConfig(() => {
   return {
     // GitHub Pages project-site base path
-    base: '/togoserve/',
+    base: '/',
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {
