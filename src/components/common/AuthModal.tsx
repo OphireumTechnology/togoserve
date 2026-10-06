@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
-import { Logo } from '../brand/Logo';
+import { BrandLogo } from '../brand/BrandLogo';
 import { X, ShieldCheck, Lock, Mail, CheckCircle } from 'lucide-react';
 import { UserRole } from '../../types';
 
@@ -42,7 +42,7 @@ export const AuthModal: React.FC = () => {
 
         <div className="text-center mb-6">
           <div className="inline-block mb-3">
-            <Logo variant="stacked" isDark={isDarkMode} size="sm" showSlogan={false} />
+            <BrandLogo variant="stacked" theme={isDarkMode ? 'dark' : 'light'} size="sm" showSlogan={false} />
           </div>
           <h2 className="text-xl font-bold tracking-tight">Cloud Authentication & Identity</h2>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 80" fill="none">
+  <defs>
+    <linearGradient id="stem-dark" x1="20" y1="10" x2="60" y2="70" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#CBD5E1"/>
+    </linearGradient>
+    <linearGradient id="gold-dark" x1="30" y1="20" x2="80" y2="70" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFDE59"/>
+      <stop offset="50%" stop-color="#FFC928"/>
+      <stop offset="100%" stop-color="#D9A514"/>
+    </linearGradient>
+  </defs>
+  <!-- Speed lines -->
+  <path d="M4 28H18L15 33H1L4 28Z" fill="#FFC928"/>
+  <path d="M8 38H24L21 43H5L8 38Z" fill="#FFC928"/>
+  <path d="M12 48H28L25 53H9L12 48Z" fill="#D9A514"/>
+  <!-- T-Stem -->
+  <path d="M22 14H62L57 23H40L25 66H14L28 23H18L22 14Z" fill="url(#stem-dark)"/>
+  <!-- S Fold with Arrow -->
+  <path d="M37 30H53L45 52C43 56 47 61 52 61H63L59 50L78 40L75 62L67 58C64 66 55 70 47 69C36 67 32 57 35 48L37 40C31 43 27 48 27 53H18C18 44 26 34 37 30Z" fill="url(#gold-dark)"/>
+  <path d="M58 21L78 18L71 38L64 31L58 21Z" fill="url(#gold-dark)"/>
+  <!-- Text: TOGO in White #FFFFFF, SERVE in Gold #D9A514 -->
+  <text x="96" y="47" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="34" fill="#FFFFFF" letter-spacing="-0.5">TOGO<tspan fill="#D9A514">SERVE</tspan></text>
+  <text x="98" y="65" font-family="'Plus Jakarta Sans', sans-serif" font-weight="500" font-size="10.5" fill="#94A3B8" letter-spacing="0.2">Powering Merchants. Delivering Growth.</text>
+</svg>

@@ -36,6 +36,17 @@ export const CommandPalette: React.FC = () => {
 
   const commands: CommandItem[] = [
     {
+      id: 'cmd-landing',
+      title: 'Platform Overview & Showcase',
+      subtitle: 'Public home page, company capabilities, and ecosystem bridge',
+      category: 'Navigation',
+      icon: <Store className="w-4 h-4 text-[#D9A514]" />,
+      action: () => {
+        setActivePortal('landing');
+        setIsCommandPaletteOpen(false);
+      },
+    },
+    {
       id: 'cmd-market',
       title: 'Customer Marketplace',
       subtitle: 'Browse restaurants, groceries, order food and essentials',
@@ -59,7 +70,7 @@ export const CommandPalette: React.FC = () => {
     },
     {
       id: 'cmd-merchant',
-      title: 'TOGOSERVE Business Portal',
+      title: 'TOGOSERVE Business OS',
       subtitle: 'Store operations, inventory, procurement, and settlements',
       category: 'Navigation',
       icon: <Store className="w-4 h-4 text-emerald-500" />,
@@ -87,6 +98,28 @@ export const CommandPalette: React.FC = () => {
       icon: <Truck className="w-4 h-4 text-amber-500" />,
       action: () => {
         setActivePortal('rider');
+        setIsCommandPaletteOpen(false);
+      },
+    },
+    {
+      id: 'cmd-supplier',
+      title: 'B2B Supplier Network',
+      subtitle: 'Wholesale suppliers, purchase orders, and lead times',
+      category: 'Navigation',
+      icon: <Store className="w-4 h-4 text-teal-400" />,
+      action: () => {
+        setActivePortal('supplier');
+        setIsCommandPaletteOpen(false);
+      },
+    },
+    {
+      id: 'cmd-fleet',
+      title: 'Fleet Operations & Telematics',
+      subtitle: 'Active vehicle units, maintenance schedules, and capacity',
+      category: 'Navigation',
+      icon: <Truck className="w-4 h-4 text-cyan-400" />,
+      action: () => {
+        setActivePortal('fleet');
         setIsCommandPaletteOpen(false);
       },
     },

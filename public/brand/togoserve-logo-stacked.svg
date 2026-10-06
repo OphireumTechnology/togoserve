@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200" fill="none">
+  <defs>
+    <linearGradient id="navystem-s" x1="60" y1="20" x2="120" y2="90" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#071A2F"/>
+      <stop offset="100%" stop-color="#0F2A4A"/>
+    </linearGradient>
+    <linearGradient id="goldfold-s" x1="80" y1="30" x2="160" y2="90" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFDE59"/>
+      <stop offset="50%" stop-color="#FFC928"/>
+      <stop offset="100%" stop-color="#D9A514"/>
+    </linearGradient>
+  </defs>
+  <!-- Centered Symbol -->
+  <g transform="translate(60, 10)">
+    <path d="M4 36H20L17 42H1L4 36Z" fill="#FFC928"/>
+    <path d="M8 48H26L23 54H5L8 48Z" fill="#FFC928"/>
+    <path d="M12 60H30L27 66H9L12 60Z" fill="#D9A514"/>
+    <path d="M26 18H72L66 28H46L29 76H16L32 28H21L26 18Z" fill="url(#navystem-s)"/>
+    <path d="M42 36H60L51 60C49 65 53 70 59 70H72L67 58L88 46L85 72L76 67C72 76 62 81 53 80C41 78 36 66 40 56L42 46C35 50 31 56 31 61H21C21 51 30 40 42 36Z" fill="url(#goldfold-s)"/>
+    <path d="M66 26L88 22L80 44L72 36L66 26Z" fill="url(#goldfold-s)"/>
+  </g>
+  <!-- Text Underneath -->
+  <text x="120" y="145" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="30" fill="#071A2F" letter-spacing="-0.5">TOGO<tspan fill="#D9A514">SERVE</tspan></text>
+  <text x="120" y="170" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-weight="500" font-size="10" fill="#64748B" letter-spacing="0.2">Powering Merchants. Delivering Growth.</text>
+</svg>

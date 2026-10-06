@@ -9,11 +9,14 @@ import { ShortcutsModal } from './components/common/ShortcutsModal';
 import { CommandPalette } from './components/common/CommandPalette';
 import { ToastContainer } from './components/common/ToastContainer';
 
+import { PublicLandingView } from './components/views/PublicLandingView';
 import { MarketplaceView } from './components/views/MarketplaceView';
 import { PadalaView } from './components/views/PadalaView';
 import { MerchantOSView } from './components/views/MerchantOSView';
 import { POSRegisterView } from './components/views/POSRegisterView';
 import { RiderPortalView } from './components/views/RiderPortalView';
+import { SupplierPortalView } from './components/views/SupplierPortalView';
+import { FleetManagementView } from './components/views/FleetManagementView';
 import { AICommandCenterView } from './components/views/AICommandCenterView';
 import { AnalyticsView } from './components/views/AnalyticsView';
 
@@ -34,14 +37,17 @@ const AppContent: React.FC = () => {
 
       {/* Main View Area */}
       <main className="grow max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 pt-6 pb-20 lg:pb-10">
-        {activePortal === 'marketplace' && (
+        {activePortal === 'landing' && <PublicLandingView />}
+        {(activePortal === 'marketplace' || activePortal === 'customer') && (
           <MarketplaceView onOpenCart={() => setIsCartOpen(true)} />
         )}
         {activePortal === 'padala' && <PadalaView />}
         {activePortal === 'merchant' && <MerchantOSView />}
         {activePortal === 'pos' && <POSRegisterView />}
         {activePortal === 'rider' && <RiderPortalView />}
-        {activePortal === 'ai-center' && <AICommandCenterView />}
+        {activePortal === 'supplier' && <SupplierPortalView />}
+        {activePortal === 'fleet' && <FleetManagementView />}
+        {(activePortal === 'ai-center' || activePortal === 'admin') && <AICommandCenterView />}
         {activePortal === 'analytics' && <AnalyticsView />}
       </main>
 

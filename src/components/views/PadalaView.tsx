@@ -530,7 +530,7 @@ export const PadalaView: React.FC = () => {
                       className="px-3 py-1 bg-[#16845B] hover:bg-emerald-700 text-white font-bold text-xs rounded-lg transition-colors flex items-center gap-1.5"
                     >
                       <CheckCircle2 className="w-3.5 h-3.5" />
-                      <span>Simulate e-POD Handover</span>
+                      <span>Complete e-POD Handover</span>
                     </button>
                   )}
                 </div>

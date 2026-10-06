@@ -1,17 +1,17 @@
 import React from 'react';
-import { Logo } from '../brand/Logo';
+import { BrandLogo } from '../brand/BrandLogo';
 import { ShieldCheck, Lock, Globe, Heart } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 
 export const Footer: React.FC = () => {
-  const { setActivePortal, isDarkMode } = useApp();
+  const { setActivePortal } = useApp();
 
   return (
     <footer className="mt-16 bg-[#071A2F] text-slate-300 border-t border-slate-800 text-xs py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
         {/* Brand column */}
         <div className="space-y-3">
-          <Logo variant="horizontal" isDark={true} size="md" showSlogan={true} />
+          <BrandLogo variant="horizontal" theme="dark" size="md" showSlogan={true} />
           <p className="text-slate-400 text-xs leading-relaxed max-w-xs">
             AI-Native Commerce, Delivery, Logistics & Multi-Agent Operating Platform. Connecting
             merchants, consumers, and riders with high-velocity automated operations.
@@ -28,6 +28,14 @@ export const Footer: React.FC = () => {
             Platform Ecosystem
           </h4>
           <ul className="space-y-2 text-slate-400">
+            <li>
+              <button
+                onClick={() => setActivePortal('landing')}
+                className="hover:text-white transition-colors"
+              >
+                Platform Overview
+              </button>
+            </li>
             <li>
               <button
                 onClick={() => setActivePortal('marketplace')}
@@ -49,7 +57,7 @@ export const Footer: React.FC = () => {
                 onClick={() => setActivePortal('merchant')}
                 className="hover:text-white transition-colors"
               >
-                TOGOSERVE Business
+                TOGOSERVE Business OS
               </button>
             </li>
             <li>
@@ -66,6 +74,22 @@ export const Footer: React.FC = () => {
                 className="hover:text-white transition-colors"
               >
                 Rider Hub & Dispatch
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => setActivePortal('supplier')}
+                className="hover:text-white transition-colors"
+              >
+                Supplier Network & B2B
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => setActivePortal('fleet')}
+                className="hover:text-white transition-colors"
+              >
+                Fleet Telematics
               </button>
             </li>
           </ul>
@@ -102,9 +126,9 @@ export const Footer: React.FC = () => {
               </button>
             </li>
             <li>
-              <a href="#privacy" className="hover:text-white transition-colors">
-                Privacy & Role Isolation (RLS)
-              </a>
+              <span className="text-slate-500">
+                Tenant Isolation & Row-Level Security
+              </span>
             </li>
           </ul>
         </div>
@@ -126,7 +150,7 @@ export const Footer: React.FC = () => {
 
       <div className="max-w-7xl mx-auto pt-6 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3 text-slate-500 text-[11px]">
         <div>
-          © 2026 TOGOSERVE Technologies Inc. All rights reserved. Built with React & Tailwind CSS.
+          © 2026 TOGOSERVE Technologies Inc. All rights reserved.
         </div>
         <div className="flex items-center gap-4">
           <span>Terms of Service</span>

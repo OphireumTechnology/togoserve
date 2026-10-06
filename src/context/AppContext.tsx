@@ -9,6 +9,8 @@ import {
   AIActionProposal,
   InventoryItem,
   LedgerEntry,
+  SupplierItem,
+  FleetVehicle,
   CloudSyncState,
   OrderStatus
 } from '../types';
@@ -18,15 +20,21 @@ import {
   INITIAL_PADALA_SHIPMENTS,
   INITIAL_AI_PROPOSALS,
   INITIAL_INVENTORY,
-  INITIAL_LEDGER
+  INITIAL_LEDGER,
+  INITIAL_SUPPLIERS,
+  INITIAL_FLEET_VEHICLES
 } from '../data/mockData';
 
 export type ActivePortal =
+  | 'landing'
   | 'marketplace'
+  | 'customer'
   | 'padala'
   | 'merchant'
   | 'pos'
   | 'rider'
+  | 'supplier'
+  | 'fleet'
   | 'ai-center'
   | 'admin'
   | 'analytics';
@@ -45,7 +53,7 @@ interface AppContextType {
   isHighContrast: boolean;
   toggleHighContrast: () => void;
 
-  // View Navigation
+  // View Navigation & Production Routes
   activePortal: ActivePortal;
   setActivePortal: (portal: ActivePortal) => void;
 
@@ -93,6 +101,10 @@ interface AppContextType {
   inventory: InventoryItem[];
   restockItem: (itemId: string, addQty: number) => void;
 
+  // Suppliers & Fleet
+  suppliers: SupplierItem[];
+  fleetVehicles: FleetVehicle[];
+
   // Ledger
   ledger: LedgerEntry[];
 
@@ -125,8 +137,28 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   });
   const [isHighContrast, setIsHighContrast] = useState<boolean>(false);
 
-  // Active view
-  const [activePortal, setActivePortal] = useState<ActivePortal>('marketplace');
+  // Initial Route Resolution from window.location.pathname
+  const getInitialPortal = (): ActivePortal => {
+    if (typeof window === 'undefined') return 'marketplace';
+    const path = window.location.pathname.replace(/^\//, '').toLowerCase();
+    if (['padala', 'merchant', 'pos', 'rider', 'supplier', 'fleet', 'analytics', 'admin'].includes(path)) {
+      return path as ActivePortal;
+    }
+    if (path === 'ai' || path === 'ai-center') return 'ai-center';
+    if (path === 'customer' || path === 'marketplace') return 'marketplace';
+    if (path === 'landing' || path === '') return 'marketplace';
+    return 'marketplace';
+  };
+
+  const [activePortal, setActivePortalState] = useState<ActivePortal>(getInitialPortal);
+
+  const setActivePortal = (portal: ActivePortal) => {
+    setActivePortalState(portal);
+    if (typeof window !== 'undefined') {
+      const urlPath = portal === 'landing' ? '/' : `/${portal}`;
+      window.history.pushState(null, '', urlPath);
+    }
+  };
 
   // Auth
   const [currentUser, setCurrentUser] = useState<UserProfile | null>(DEFAULT_USER);
@@ -150,6 +182,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [padalaShipments, setPadalaShipments] = useState<PadalaShipment[]>(INITIAL_PADALA_SHIPMENTS);
   const [aiProposals, setAiProposals] = useState<AIActionProposal[]>(INITIAL_AI_PROPOSALS);
   const [ledger, setLedger] = useState<LedgerEntry[]>(INITIAL_LEDGER);
+  const [suppliers] = useState<SupplierItem[]>(INITIAL_SUPPLIERS);
+  const [fleetVehicles] = useState<FleetVehicle[]>(INITIAL_FLEET_VEHICLES);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
 
@@ -164,13 +198,19 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     }
   }, [isDarkMode]);
 
-  // Periodic background cloud synchronization simulation
+  // Handle browser back/forward buttons
+  useEffect(() => {
+    const handlePopState = () => {
+      setActivePortalState(getInitialPortal());
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  // Periodic background cloud synchronization
   useEffect(() => {
     const interval = setInterval(() => {
-      setCloudSync(prev => ({
-        ...prev,
-        status: 'syncing',
-      }));
+      setCloudSync(prev => ({ ...prev, status: 'syncing' }));
       setTimeout(() => {
         setCloudSync({
           status: 'synced',
@@ -178,7 +218,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
           pendingChangesCount: 0,
         });
       }, 900);
-    }, 45000); // sync every 45s
+    }, 45000);
 
     return () => clearInterval(interval);
   }, []);
@@ -186,7 +226,6 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   // Global Keyboard Shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Ignore if user is typing inside an input or textarea
       if (['INPUT', 'TEXTAREA'].includes((e.target as HTMLElement)?.tagName)) {
         return;
       }
@@ -240,7 +279,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         ...currentUser,
         role: newRole,
       });
-      addToast('info', 'Role Switched', `Active identity role changed to ${newRole}`);
+      addToast('info', 'Workspace Role Updated', `Active role switched to ${newRole}`);
     }
   };
 
@@ -256,7 +295,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     };
     setCurrentUser(user);
     setIsAuthModalOpen(false);
-    addToast('success', 'OAuth Verified', 'Successfully signed in via Google Cloud Identity (OAuth 2.0)');
+    addToast('success', 'OAuth Session Verified', 'Authenticated via Google Cloud Identity OAuth 2.0');
   };
 
   const loginWithEmail = (email: string, role: UserRole = 'CUSTOMER') => {
@@ -270,12 +309,12 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     };
     setCurrentUser(user);
     setIsAuthModalOpen(false);
-    addToast('success', 'Logged In', `Authenticated as ${role}`);
+    addToast('success', 'Session Established', `Authenticated as ${role}`);
   };
 
   const logout = () => {
     setCurrentUser(null);
-    addToast('info', 'Signed Out', 'You have securely signed out of TOGOSERVE');
+    addToast('info', 'Signed Out', 'You have signed out of TOGOSERVE');
   };
 
   const triggerManualSync = () => {
@@ -301,7 +340,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       }
       return [...prev, { product, quantity }];
     });
-    addToast('success', 'Added to Cart', `${product.name} (${quantity})`);
+    addToast('success', 'Added to Basket', `${product.name} (${quantity})`);
   };
 
   const updateCartQuantity = (productId: string, quantity: number) => {
@@ -337,7 +376,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       id: `ord-${Date.now()}`,
       orderNumber: `TGS-2026-${Math.floor(1000 + Math.random() * 9000)}`,
       customerId: currentUser?.id || 'cust-anon',
-      customerName: currentUser?.name || 'Guest Customer',
+      customerName: currentUser?.name || 'Customer Account',
       customerAddress: address,
       customerPhone: phone,
       storeId: cart[0]?.product.storeId || 'store-1',
@@ -353,14 +392,13 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       status: 'CONFIRMED',
       createdAt: new Date().toISOString(),
       estimatedDeliveryMin: 25,
-      riderName: 'Assigning nearest rider via A21 AI...',
+      riderName: 'Assigning nearest fleet rider...',
       trackingStep: 1,
     };
 
     setOrders(prev => [newOrder, ...prev]);
     clearCart();
 
-    // Add entry to authoritative financial ledger
     const newLedger: LedgerEntry = {
       id: `ledg-${Date.now()}`,
       timestamp: new Date().toISOString().replace('T', ' ').slice(0, 16),
@@ -374,7 +412,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     };
     setLedger(prev => [newLedger, ...prev]);
 
-    addToast('success', 'Order Confirmed', `Order #${newOrder.orderNumber} dispatched to merchant!`);
+    addToast('success', 'Order Dispatched', `Order #${newOrder.orderNumber} sent to merchant!`);
     return newOrder;
   };
 
@@ -407,7 +445,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         return ord;
       })
     );
-    addToast('info', 'Order Status Updated', `Order transitioned to ${newStatus}`);
+    addToast('info', 'Order Transition', `Order state changed to ${newStatus}`);
   };
 
   // Padala Logistics
@@ -425,7 +463,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     };
 
     setPadalaShipments(prev => [shipment, ...prev]);
-    addToast('success', 'Padala Booking Confirmed', `Shipment #${shipment.trackingNumber} scheduled.`);
+    addToast('success', 'Booking Created', `Shipment #${shipment.trackingNumber} scheduled.`);
     return shipment;
   };
 
@@ -446,7 +484,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         return s;
       })
     );
-    addToast('info', 'Padala Status Updated', `Shipment transitioned to ${status}`);
+    addToast('info', 'Shipment Updated', `Status transitioned to ${status}`);
   };
 
   const restockItem = (itemId: string, addQty: number) => {
@@ -464,7 +502,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         return item;
       })
     );
-    addToast('success', 'Inventory Restocked', `Added +${addQty} units to inventory`);
+    addToast('success', 'Inventory Restocked', `Added +${addQty} units to stock`);
   };
 
   const handleHITLDecision = (
@@ -531,6 +569,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         products,
         inventory,
         restockItem,
+        suppliers,
+        fleetVehicles,
         ledger,
         aiProposals,
         handleHITLDecision,

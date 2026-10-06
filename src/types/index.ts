@@ -163,3 +163,33 @@ export interface CloudSyncState {
   lastSyncedAt: string;
   pendingChangesCount: number;
 }
+
+export interface SupplierItem {
+  id: string;
+  name: string;
+  category: string;
+  contactPerson: string;
+  email: string;
+  phone: string;
+  location: string;
+  rating: number;
+  activePurchaseOrders: number;
+  deliveryLeadDays: number;
+  minimumOrderValue: number;
+  verified: boolean;
+}
+
+export interface FleetVehicle {
+  id: string;
+  plateNumber: string;
+  vehicleType: VehicleType;
+  model: string;
+  driverName: string;
+  driverPhone: string;
+  status: 'ACTIVE' | 'MAINTENANCE' | 'DISPATCHED' | 'STANDBY';
+  capacityKg: number;
+  currentZone: string;
+  lastInspection: string;
+  todayDeliveries: number;
+}
+

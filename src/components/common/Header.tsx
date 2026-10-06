@@ -1,18 +1,16 @@
 import React, { useState } from 'react';
 import { useApp, ActivePortal } from '../../context/AppContext';
-import { Logo } from '../brand/Logo';
+import { BrandLogo } from '../brand/BrandLogo';
 import { CloudSyncIndicator } from './CloudSyncIndicator';
 import {
   Sun,
   Moon,
   ShoppingCart,
   Search,
-  Command,
   HelpCircle,
   User,
   ShieldCheck,
   ChevronDown,
-  Layers,
   BarChart3,
   Menu,
   X,
@@ -20,7 +18,9 @@ import {
   Store,
   CreditCard,
   Cpu,
-  ShoppingBag
+  ShoppingBag,
+  Building2,
+  PackageCheck
 } from 'lucide-react';
 import { UserRole } from '../../types';
 
@@ -50,7 +50,9 @@ export const Header: React.FC<{
     { id: 'merchant', label: 'Merchant OS', icon: <Store className="w-4 h-4" /> },
     { id: 'pos', label: 'POS Terminal', icon: <CreditCard className="w-4 h-4" /> },
     { id: 'rider', label: 'Rider Hub', icon: <Truck className="w-4 h-4" /> },
-    { id: 'ai-center', label: 'AI Command', icon: <Cpu className="w-4 h-4" /> },
+    { id: 'supplier', label: 'Suppliers', icon: <Building2 className="w-4 h-4" /> },
+    { id: 'fleet', label: 'Fleet Ops', icon: <PackageCheck className="w-4 h-4" /> },
+    { id: 'ai-center', label: 'TOGOSERVE AI', icon: <Cpu className="w-4 h-4" /> },
     { id: 'analytics', label: 'Analytics', icon: <BarChart3 className="w-4 h-4" /> },
   ];
 
@@ -67,34 +69,36 @@ export const Header: React.FC<{
   return (
     <header className="sticky top-0 z-40 w-full bg-[#071A2F] text-white border-b border-slate-800 shadow-md">
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* ZONE 1: BRAND LOGO */}
-          <div className="flex items-center gap-3">
+        <div className="flex items-center justify-between h-16 gap-2">
+          {/* ZONE 1: OFFICIAL BRAND LOGO (Single Source of Truth) */}
+          <div className="flex items-center gap-2 shrink-0 min-w-0">
             <button
-              onClick={() => setActivePortal('marketplace')}
-              className="focus:outline-none focus:ring-2 focus:ring-[#D9A514] rounded-lg p-1 transition-transform active:scale-95 text-left"
+              onClick={() => setActivePortal('landing')}
+              className="focus:outline-none focus:ring-2 focus:ring-[#D9A514] rounded-lg p-1 transition-transform active:scale-95 text-left shrink-0"
               aria-label="TOGOSERVE Home"
             >
-              <Logo
-                variant={activePortal === 'merchant' ? 'business' : 'horizontal'}
-                isDark={true}
-                size="md"
-                showSlogan={false}
-              />
+              {/* Desktop & Tablet: Full Horizontal Logo */}
+              <div className="hidden sm:block">
+                <BrandLogo variant="horizontal" theme="dark" size="sm" showSlogan={false} />
+              </div>
+              {/* Mobile (320px - 639px): Perfectly scaled horizontal logo, no compression */}
+              <div className="block sm:hidden">
+                <BrandLogo variant="horizontal" theme="dark" size="xs" showSlogan={false} />
+              </div>
             </button>
           </div>
 
-          {/* ZONE 2: PRIMARY NAVIGATION LINKS (Single-line, clear labels) */}
-          <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
-            {portals.map((p) => {
+          {/* ZONE 2: PRIMARY NAVIGATION LINKS (Desktop only, single line) */}
+          <nav className="hidden xl:flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
+            {portals.slice(0, 7).map((p) => {
               const isActive = activePortal === p.id;
               return (
                 <button
                   key={p.id}
                   onClick={() => setActivePortal(p.id)}
-                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold whitespace-nowrap transition-colors focus:outline-none focus:ring-2 focus:ring-[#FFC928] ${
+                  className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors focus:outline-none focus:ring-2 focus:ring-[#FFC928] ${
                     isActive
-                      ? 'bg-[#FFC928] text-[#071A2F] shadow-sm'
+                      ? 'bg-[#FFC928] text-[#071A2F] font-bold shadow-xs'
                       : 'text-slate-300 hover:text-white hover:bg-white/10'
                   }`}
                 >
@@ -105,21 +109,23 @@ export const Header: React.FC<{
             })}
           </nav>
 
-          {/* ZONE 3: TOP-RIGHT CORNER ACCESSIBILITY & CONTROLS */}
-          <div className="flex items-center gap-1.5 sm:gap-2.5">
-            {/* Cloud Sync State Loading/Synced Indicator */}
-            <CloudSyncIndicator />
+          {/* ZONE 3: TOP-RIGHT CORNER CONTROLS (Clean, no overlap, responsive) */}
+          <div className="flex items-center gap-1 sm:gap-2 shrink-0">
+            {/* Cloud Sync State (Hidden on extra small mobile to save space) */}
+            <div className="hidden md:block">
+              <CloudSyncIndicator />
+            </div>
 
             {/* Quick Command Launcher (Ctrl+K) */}
             <button
               onClick={() => setIsCommandPaletteOpen(true)}
-              className="hidden sm:inline-flex items-center gap-1 px-2.5 py-1 text-xs text-slate-300 bg-white/5 hover:bg-white/10 border border-slate-700 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-[#D9A514]"
+              className="hidden lg:inline-flex items-center gap-1.5 px-2 py-1 text-xs text-slate-300 bg-white/5 hover:bg-white/10 border border-slate-700 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-[#D9A514]"
               title="Command Palette (Ctrl + K)"
               aria-label="Open command palette"
             >
               <Search className="w-3.5 h-3.5 text-slate-400" />
-              <span className="hidden md:inline text-[11px]">Search</span>
-              <kbd className="hidden md:inline-flex items-center font-mono text-[9px] bg-white/10 px-1 py-0.5 rounded text-slate-300 border border-slate-700">
+              <span className="text-[11px]">Search</span>
+              <kbd className="font-mono text-[9px] bg-white/10 px-1 py-0.5 rounded text-slate-300 border border-slate-700">
                 ⌘K
               </kbd>
             </button>
@@ -127,9 +133,9 @@ export const Header: React.FC<{
             {/* Dark Mode Toggle */}
             <button
               onClick={toggleDarkMode}
-              className="p-2 text-slate-300 hover:text-[#FFC928] hover:bg-white/10 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-[#FFC928]"
-              title={isDarkMode ? 'Switch to Light Mode (Alt+D)' : 'Switch to Dark Mode (Alt+D)'}
-              aria-label={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+              className="p-1.5 sm:p-2 text-slate-300 hover:text-[#FFC928] hover:bg-white/10 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-[#FFC928]"
+              title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+              aria-label="Toggle color theme"
             >
               {isDarkMode ? (
                 <Sun className="w-4 h-4 text-[#FFC928]" />
@@ -138,22 +144,12 @@ export const Header: React.FC<{
               )}
             </button>
 
-            {/* Keyboard Shortcuts Helper */}
-            <button
-              onClick={() => setIsShortcutsOpen(true)}
-              className="hidden sm:inline-flex p-2 text-slate-300 hover:text-white hover:bg-white/10 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-[#FFC928]"
-              title="Keyboard Shortcuts (?)"
-              aria-label="Keyboard Shortcuts"
-            >
-              <HelpCircle className="w-4 h-4" />
-            </button>
-
             {/* Cart Drawer Trigger */}
             <button
               onClick={onOpenCart}
-              className="relative p-2 text-slate-200 hover:text-white hover:bg-white/10 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-[#FFC928]"
-              title={`Cart (${cartItemCount} items)`}
-              aria-label={`View shopping cart with ${cartItemCount} items`}
+              className="relative p-1.5 sm:p-2 text-slate-200 hover:text-white hover:bg-white/10 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-[#FFC928]"
+              title={`Basket (${cartItemCount} items)`}
+              aria-label={`View shopping basket with ${cartItemCount} items`}
             >
               <ShoppingCart className="w-4 h-4" />
               {cartItemCount > 0 && (
@@ -163,22 +159,22 @@ export const Header: React.FC<{
               )}
             </button>
 
-            {/* Top-Right Profile / OAuth Menu */}
+            {/* Profile / Sign In Button */}
             {currentUser ? (
               <div className="relative">
                 <button
                   onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
-                  className="flex items-center gap-1.5 pl-2 pr-2.5 py-1 bg-white/5 hover:bg-white/10 border border-slate-700/80 rounded-full text-xs transition-colors focus:outline-none focus:ring-2 focus:ring-[#D9A514]"
+                  className="flex items-center gap-1.5 p-1 sm:px-2 sm:py-1 bg-white/5 hover:bg-white/10 border border-slate-700/80 rounded-full text-xs transition-colors focus:outline-none focus:ring-2 focus:ring-[#D9A514]"
                   aria-expanded={isProfileMenuOpen}
                   aria-haspopup="true"
                 >
                   <div className="w-6 h-6 rounded-full bg-[#D9A514] text-[#071A2F] font-bold flex items-center justify-center text-xs">
                     {currentUser.name.charAt(0)}
                   </div>
-                  <span className="hidden md:inline font-medium text-slate-200 max-w-[100px] truncate">
+                  <span className="hidden sm:inline font-medium text-slate-200 max-w-[80px] truncate text-[11px]">
                     {currentUser.name.split(' ')[0]}
                   </span>
-                  <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
+                  <ChevronDown className="w-3 h-3 text-slate-400 hidden sm:inline" />
                 </button>
 
                 {isProfileMenuOpen && (
@@ -197,8 +193,8 @@ export const Header: React.FC<{
                       </div>
                     </div>
 
-                    <div className="px-3 py-1 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
-                      Switch Role (RBAC Simulation)
+                    <div className="px-3 py-1 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                      Role-Based Workspace
                     </div>
                     <div className="grid grid-cols-1 gap-0.5 mb-2">
                       {roles.map((r) => (
@@ -239,17 +235,17 @@ export const Header: React.FC<{
             ) : (
               <button
                 onClick={() => setIsAuthModalOpen(true)}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#FFC928] hover:bg-[#D9A514] text-[#071A2F] text-xs font-bold rounded-lg shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-[#FFC928]"
+                className="inline-flex items-center gap-1 px-2.5 sm:px-3 py-1.5 bg-[#FFC928] hover:bg-[#D9A514] text-[#071A2F] text-xs font-bold rounded-lg shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-[#FFC928] whitespace-nowrap shrink-0"
               >
-                <User className="w-3.5 h-3.5" />
-                <span>Sign In</span>
+                <User className="w-3.5 h-3.5 shrink-0" />
+                <span className="text-xs">Sign In</span>
               </button>
             )}
 
-            {/* Mobile Hamburger Menu Toggle */}
+            {/* Mobile / Tablet Menu Toggle */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-2 text-slate-300 hover:text-white hover:bg-white/10 rounded-md focus:outline-none focus:ring-2 focus:ring-[#D9A514]"
+              className="xl:hidden p-1.5 sm:p-2 text-slate-300 hover:text-white hover:bg-white/10 rounded-md focus:outline-none focus:ring-2 focus:ring-[#D9A514]"
               aria-label="Toggle navigation menu"
             >
               {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -257,29 +253,36 @@ export const Header: React.FC<{
           </div>
         </div>
 
-        {/* Mobile Navigation Drawer */}
+        {/* Responsive Mobile Drawer */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden border-t border-slate-800 py-3 space-y-1">
-            {portals.map((p) => {
-              const isActive = activePortal === p.id;
-              return (
-                <button
-                  key={p.id}
-                  onClick={() => {
-                    setActivePortal(p.id);
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                    isActive
-                      ? 'bg-[#FFC928] text-[#071A2F] font-bold'
-                      : 'text-slate-300 hover:bg-white/10 hover:text-white'
-                  }`}
-                >
-                  {p.icon}
-                  <span>{p.label}</span>
-                </button>
-              );
-            })}
+          <div className="xl:hidden border-t border-slate-800 py-3 space-y-1">
+            <div className="px-3 pb-2 flex items-center justify-between text-xs text-slate-400 border-b border-slate-800 mb-2">
+              <span>Cloud Status</span>
+              <CloudSyncIndicator />
+            </div>
+
+            <div className="grid grid-cols-2 gap-1 px-1">
+              {portals.map((p) => {
+                const isActive = activePortal === p.id;
+                return (
+                  <button
+                    key={p.id}
+                    onClick={() => {
+                      setActivePortal(p.id);
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-semibold transition-colors ${
+                      isActive
+                        ? 'bg-[#FFC928] text-[#071A2F] font-bold'
+                        : 'text-slate-300 hover:bg-white/10 hover:text-white'
+                    }`}
+                  >
+                    {p.icon}
+                    <span className="truncate">{p.label}</span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
         )}
       </div>
