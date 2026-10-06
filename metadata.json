@@ -1,0 +1,6 @@
+{
+  "name": "TOGOSERVE – AI-Native Commerce, Delivery & Logistics Platform",
+  "description": "TOGOSERVE connects merchants, customers, riders, and logistics with unified commerce, TOGO Padala express delivery, POS, merchant OS, and governed AI operations.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

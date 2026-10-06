@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+:root {
+  --togo-navy: #071A2F;
+  --togo-gold: #D9A514;
+  --togo-yellow: #FFC928;
+  --togo-white: #FFFFFF;
+  --togo-background: #F5F7FA;
+  --togo-text: #17212B;
+  --togo-text-secondary: #64748B;
+  --togo-success: #16845B;
+  --togo-danger: #D64545;
+  --togo-warning: #F59E0B;
+  --togo-info: #6366F1;
+  --togo-link: #0EA5E9;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+
+.dark {
+  --togo-background: #040E1B;
+  --togo-text: #F8FAFC;
+  --togo-text-secondary: #94A3B8;
+  color-scheme: dark;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Custom scrollbars for high density data & tables */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.3);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.5);
+}
+
