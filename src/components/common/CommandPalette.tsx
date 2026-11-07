@@ -73,7 +73,7 @@ export const CommandPalette: React.FC = () => {
       title: 'TOGOSERVE Business OS',
       subtitle: 'Store operations, inventory, procurement, and settlements',
       category: 'Navigation',
-      icon: <Store className="w-4 h-4 text-emerald-500" />,
+      icon: <Store className="w-4 h-4 text-[#F4B400]" />,
       action: () => {
         setActivePortal('merchant');
         setIsCommandPaletteOpen(false);
@@ -84,7 +84,7 @@ export const CommandPalette: React.FC = () => {
       title: 'TOGOSERVE POS Terminal',
       subtitle: 'Fast touch point-of-sale checkout & barcode lookup',
       category: 'Navigation',
-      icon: <CreditCard className="w-4 h-4 text-sky-500" />,
+      icon: <CreditCard className="w-4 h-4 text-[#F4B400]" />,
       action: () => {
         setActivePortal('pos');
         setIsCommandPaletteOpen(false);
@@ -95,7 +95,7 @@ export const CommandPalette: React.FC = () => {
       title: 'Rider Hub & Dispatch App',
       subtitle: 'Manage delivery routes, e-POD verification, and earnings',
       category: 'Navigation',
-      icon: <Truck className="w-4 h-4 text-amber-500" />,
+      icon: <Truck className="w-4 h-4 text-[#F4B400]" />,
       action: () => {
         setActivePortal('rider');
         setIsCommandPaletteOpen(false);
@@ -106,7 +106,7 @@ export const CommandPalette: React.FC = () => {
       title: 'B2B Supplier Network',
       subtitle: 'Wholesale suppliers, purchase orders, and lead times',
       category: 'Navigation',
-      icon: <Store className="w-4 h-4 text-teal-400" />,
+      icon: <Store className="w-4 h-4 text-[#F4B400]" />,
       action: () => {
         setActivePortal('supplier');
         setIsCommandPaletteOpen(false);
@@ -117,7 +117,7 @@ export const CommandPalette: React.FC = () => {
       title: 'Fleet Operations & Telematics',
       subtitle: 'Active vehicle units, maintenance schedules, and capacity',
       category: 'Navigation',
-      icon: <Truck className="w-4 h-4 text-cyan-400" />,
+      icon: <Truck className="w-4 h-4 text-[#F4B400]" />,
       action: () => {
         setActivePortal('fleet');
         setIsCommandPaletteOpen(false);
@@ -128,7 +128,7 @@ export const CommandPalette: React.FC = () => {
       title: 'AI Command Center (A00 Supervisor)',
       subtitle: 'Multi-agent governance, HITL approvals, risk policies',
       category: 'Intelligence',
-      icon: <Cpu className="w-4 h-4 text-indigo-400" />,
+      icon: <Cpu className="w-4 h-4 text-[#F4B400]" />,
       action: () => {
         setActivePortal('ai-center');
         setIsCommandPaletteOpen(false);
@@ -139,7 +139,7 @@ export const CommandPalette: React.FC = () => {
       title: 'Real-time Analytics & Report Generation',
       subtitle: 'Conversion funnel, live metrics, and CSV summary export',
       category: 'Intelligence',
-      icon: <BarChart3 className="w-4 h-4 text-emerald-400" />,
+      icon: <BarChart3 className="w-4 h-4 text-[#F4B400]" />,
       action: () => {
         setActivePortal('analytics');
         setIsCommandPaletteOpen(false);

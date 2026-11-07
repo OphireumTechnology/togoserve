@@ -407,15 +407,15 @@ export const AICommandCenterView: React.FC = () => {
       {/* Navigation Tabs Bar */}
       <div className="flex overflow-x-auto pb-1 gap-2 border-b border-slate-200 dark:border-slate-800 text-xs font-bold">
         {[
-          { id: 'overview', label: 'Platform Overview', icon: <Activity className="w-3.5 h-3.5" /> },
+          { id: 'overview', label: 'Platform Overview', icon: <Activity className="w-3.5 h-3.5 text-[#F4B400]" /> },
           { id: 'supervisors', label: 'Department Supervisors (3)', icon: <Building2 className="w-3.5 h-3.5 text-[#F4B400]" /> },
-          { id: 'agents', label: `Agent Workforce (${allAgentMetadata.length})`, icon: <Layers className="w-3.5 h-3.5" /> },
-          { id: 'hitl', label: `HITL Queue (${pendingReviews.length})`, icon: <ShieldAlert className="w-3.5 h-3.5 text-amber-500" /> },
-          { id: 'knowledge', label: 'Enterprise RAG Docs', icon: <BookOpen className="w-3.5 h-3.5 text-blue-500" /> },
-          { id: 'telemetry', label: 'Tokens & Financials', icon: <Coins className="w-3.5 h-3.5 text-emerald-500" /> },
+          { id: 'agents', label: `Agent Workforce (${allAgentMetadata.length})`, icon: <Layers className="w-3.5 h-3.5 text-[#F4B400]" /> },
+          { id: 'hitl', label: `HITL Queue (${pendingReviews.length})`, icon: <ShieldAlert className="w-3.5 h-3.5 text-[#F4B400]" /> },
+          { id: 'knowledge', label: 'Enterprise RAG Docs', icon: <BookOpen className="w-3.5 h-3.5 text-[#F4B400]" /> },
+          { id: 'telemetry', label: 'Tokens & Financials', icon: <Coins className="w-3.5 h-3.5 text-[#F4B400]" /> },
           { id: 'playground', label: 'Orchestration Sandbox', icon: <Play className="w-3.5 h-3.5 text-[#F4B400]" /> },
-          { id: 'audit', label: `Audit Ledger (${auditEvents.length})`, icon: <History className="w-3.5 h-3.5" /> },
-          { id: 'policies', label: 'Policy Matrix', icon: <Lock className="w-3.5 h-3.5" /> },
+          { id: 'audit', label: `Audit Ledger (${auditEvents.length})`, icon: <History className="w-3.5 h-3.5 text-[#F4B400]" /> },
+          { id: 'policies', label: 'Policy Matrix', icon: <Lock className="w-3.5 h-3.5 text-[#F4B400]" /> },
         ].map((tab) => (
           <button
             key={tab.id}
@@ -439,12 +439,12 @@ export const AICommandCenterView: React.FC = () => {
             <div className={`p-5 rounded-2xl border ${isDarkMode ? 'bg-[#1E1E1E] border-slate-800' : 'bg-white border-slate-200 shadow-xs'}`}>
               <span className="text-xs font-mono uppercase text-slate-400">Total Registered Agents</span>
               <div className="text-2xl font-extrabold mt-1 text-[#2E2E2E] dark:text-white font-mono">{health.total}</div>
-              <p className="text-[11px] text-emerald-500 font-medium mt-1">A00 Central + S01-S03 + A01-A60</p>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium mt-1">A00 Central + S01-S03 + A01-A60</p>
             </div>
             <div className={`p-5 rounded-2xl border ${isDarkMode ? 'bg-[#1E1E1E] border-slate-800' : 'bg-white border-slate-200 shadow-xs'}`}>
               <span className="text-xs font-mono uppercase text-slate-400">Workforce Status</span>
-              <div className="text-2xl font-extrabold mt-1 text-[#16845B] font-mono">
-                {health.active} <span className="text-xs font-normal text-slate-400">Active</span> · {health.testing} <span className="text-xs font-normal text-amber-500">Shadow</span>
+              <div className="text-2xl font-extrabold mt-1 text-[#2E2E2E] dark:text-[#FAFAFA] font-mono">
+                {health.active} <span className="text-xs font-normal text-slate-400">Active</span> · {health.testing} <span className="text-xs font-normal text-[#F4B400]">Shadow</span>
               </div>
               <p className="text-[11px] text-slate-400 mt-1">
                 {health.paused} Paused · {health.quarantined} Quarantined
@@ -452,12 +452,12 @@ export const AICommandCenterView: React.FC = () => {
             </div>
             <div className={`p-5 rounded-2xl border ${isDarkMode ? 'bg-[#1E1E1E] border-slate-800' : 'bg-white border-slate-200 shadow-xs'}`}>
               <span className="text-xs font-mono uppercase text-slate-400">Pending HITL Approvals</span>
-              <div className="text-2xl font-extrabold mt-1 text-amber-500 font-mono">{pendingReviews.length}</div>
+              <div className="text-2xl font-extrabold mt-1 text-[#F4B400] font-mono">{pendingReviews.length}</div>
               <p className="text-[11px] text-slate-400 mt-1">Maker-Checker governed reviews</p>
             </div>
             <div className={`p-5 rounded-2xl border ${isDarkMode ? 'bg-[#1E1E1E] border-slate-800' : 'bg-white border-slate-200 shadow-xs'}`}>
               <span className="text-xs font-mono uppercase text-slate-400">Audit Ledger Traces</span>
-              <div className="text-2xl font-extrabold mt-1 text-indigo-500 font-mono">{auditEvents.length}</div>
+              <div className="text-2xl font-extrabold mt-1 text-[#2E2E2E] dark:text-[#FAFAFA] font-mono">{auditEvents.length}</div>
               <p className="text-[11px] text-slate-400 mt-1">Sanitized immutable trace logs</p>
             </div>
           </div>
@@ -478,30 +478,30 @@ export const AICommandCenterView: React.FC = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="p-4 rounded-xl border border-emerald-500/30 bg-emerald-50/20 dark:bg-emerald-950/20">
+              <div className="p-4 rounded-xl border border-[#F4B400]/30 bg-[#2E2E2E]/5 dark:bg-[#2E2E2E]/40">
                 <div className="flex items-center justify-between font-bold text-xs mb-1">
                   <span>S01 Merchant Supervisor</span>
-                  <span className="font-mono text-emerald-600 dark:text-emerald-400">14 Agents</span>
+                  <span className="font-mono text-[#F4B400] font-bold">14 Agents</span>
                 </div>
                 <p className="text-[11px] text-slate-500 dark:text-slate-400">
                   Oversees Merchant OS (A10–A19) and Procurement & Suppliers (A53–A56).
                 </p>
               </div>
 
-              <div className="p-4 rounded-xl border border-amber-500/30 bg-amber-50/20 dark:bg-amber-950/20">
+              <div className="p-4 rounded-xl border border-[#F4B400]/30 bg-[#2E2E2E]/5 dark:bg-[#2E2E2E]/40">
                 <div className="flex items-center justify-between font-bold text-xs mb-1">
                   <span>S02 Logistics Supervisor</span>
-                  <span className="font-mono text-amber-600 dark:text-amber-400">13 Agents</span>
+                  <span className="font-mono text-[#F4B400] font-bold">13 Agents</span>
                 </div>
                 <p className="text-[11px] text-slate-500 dark:text-slate-400">
                   Oversees Fleet & Routing (A27–A36) and Rider Hub Operations (A37–A39).
                 </p>
               </div>
 
-              <div className="p-4 rounded-xl border border-indigo-500/30 bg-indigo-50/20 dark:bg-indigo-950/20">
+              <div className="p-4 rounded-xl border border-[#F4B400]/30 bg-[#2E2E2E]/5 dark:bg-[#2E2E2E]/40">
                 <div className="flex items-center justify-between font-bold text-xs mb-1">
                   <span>S03 Admin & Platform Supervisor</span>
-                  <span className="font-mono text-indigo-600 dark:text-indigo-400">36 Agents</span>
+                  <span className="font-mono text-[#F4B400] font-bold">36 Agents</span>
                 </div>
                 <p className="text-[11px] text-slate-500 dark:text-slate-400">
                   Oversees Customer (A01–A09), Commerce (A20–A26), Finance (A40–A46), Marketing, and Support.
@@ -604,7 +604,7 @@ export const AICommandCenterView: React.FC = () => {
             <div className={`p-6 rounded-2xl border ${isDarkMode ? 'bg-[#1E1E1E] border-slate-800' : 'bg-white border-slate-200 shadow-sm'}`}>
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
-                  <span className="p-2 rounded-xl bg-indigo-500/20 text-indigo-400 font-black font-mono text-sm">
+                  <span className="p-2 rounded-xl bg-[#2E2E2E] dark:bg-slate-800 text-[#FAFAFA] font-black font-mono text-sm">
                     S03
                   </span>
                   <div>
@@ -988,8 +988,8 @@ export const AICommandCenterView: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
               <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50">
                 <div className="flex items-center justify-between font-bold mb-1">
-                  <span className="font-mono text-emerald-600 dark:text-emerald-400">gemini-3.8-flash</span>
-                  <span className="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 font-mono text-[10px]">
+                  <span className="font-mono text-[#F4B400] font-bold">gemini-3.8-flash</span>
+                  <span className="px-2 py-0.5 rounded bg-[#F4B400]/20 text-[#2E2E2E] dark:text-[#FFD54F] font-mono text-[10px] font-bold">
                     High Throughput Tier
                   </span>
                 </div>
@@ -1003,8 +1003,8 @@ export const AICommandCenterView: React.FC = () => {
 
               <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50">
                 <div className="flex items-center justify-between font-bold mb-1">
-                  <span className="font-mono text-indigo-600 dark:text-indigo-400">gemini-4-argon</span>
-                  <span className="px-2 py-0.5 rounded bg-indigo-100 text-indigo-800 dark:bg-indigo-950 dark:text-indigo-300 font-mono text-[10px]">
+                  <span className="font-mono text-[#2E2E2E] dark:text-[#FAFAFA] font-bold">gemini-4-argon</span>
+                  <span className="px-2 py-0.5 rounded bg-[#2E2E2E] text-white dark:bg-slate-800 dark:text-slate-200 font-mono text-[10px] font-bold">
                     Complex Reasoning Tier
                   </span>
                 </div>
@@ -1094,7 +1094,7 @@ export const AICommandCenterView: React.FC = () => {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="text-sm font-bold flex items-center gap-2">
-              <History className="w-4 h-4 text-indigo-500" />
+              <History className="w-4 h-4 text-[#F4B400]" />
               <span>Immutable Audit Trail ({auditEvents.length} Recent Events)</span>
             </h3>
             <span className="text-xs font-mono text-slate-400">PII Redaction Active</span>

@@ -74,7 +74,7 @@ export const RiderPortalView: React.FC = () => {
             <div>
               <div className="flex items-center gap-2">
                 <h2 className="text-sm font-bold">Marcus Ramirez</h2>
-                <span className="px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-mono text-[10px] font-bold">
+                <span className="px-2 py-0.5 rounded bg-[#F4B400]/20 text-[#FFD54F] border border-[#F4B400]/30 font-mono text-[10px] font-bold">
                   Verified Tier 1
                 </span>
               </div>
@@ -90,9 +90,9 @@ export const RiderPortalView: React.FC = () => {
               setIsOnline(!isOnline);
               addToast('info', 'Fleet Status', isOnline ? 'Switched to Offline' : 'Switched to Online');
             }}
-            className={`px-4 py-2.5 rounded-xl text-xs font-extrabold flex items-center gap-2 transition-all shadow-md active:scale-95 ${
+            className={`px-4 py-2.5 rounded-xl text-xs font-black flex items-center gap-2 transition-all shadow-md active:scale-95 ${
               isOnline
-                ? 'bg-[#16845B] text-white hover:bg-emerald-700'
+                ? 'bg-[#F4B400] text-[#2E2E2E] hover:bg-[#FFD54F]'
                 : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
             }`}
           >
@@ -307,7 +307,7 @@ export const RiderPortalView: React.FC = () => {
                   <span className="font-bold font-mono">{p.id}</span> • {p.desc}
                   <div className="text-[10px] text-slate-400">{p.time}</div>
                 </div>
-                <span className="font-mono font-bold text-emerald-500">+₱{p.amount.toFixed(2)}</span>
+                <span className="font-mono font-bold text-[#2E2E2E] dark:text-[#FAFAFA]">+₱{p.amount.toFixed(2)}</span>
               </div>
             ))}
           </div>
@@ -335,13 +335,13 @@ export const RiderPortalView: React.FC = () => {
             <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/60">
               <span className="font-bold block mb-1">Thermal Delivery Box</span>
               <p className="text-slate-500">65L Double-Insulated Waterproof Box with official TS Arrow Badge.</p>
-              <span className="text-[10px] text-emerald-500 font-bold block mt-2">✓ Verified Clean</span>
+              <span className="text-[10px] text-[#2E2E2E] dark:text-[#FAFAFA] font-bold block mt-2">✓ Verified Clean</span>
             </div>
 
             <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/60">
               <span className="font-bold block mb-1">Vehicle Registration</span>
               <p className="text-slate-500">Honda Click 150i (Plate: NC-8492) OR/CR valid until Oct 2027.</p>
-              <span className="text-[10px] text-emerald-500 font-bold block mt-2">✓ Compliant</span>
+              <span className="text-[10px] text-[#2E2E2E] dark:text-[#FAFAFA] font-bold block mt-2">✓ Compliant</span>
             </div>
           </div>
         </div>

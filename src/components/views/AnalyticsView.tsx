@@ -70,8 +70,8 @@ export const AnalyticsView: React.FC = () => {
         <div className="flex items-start sm:items-center gap-4">
           <Logo variant="circular" size="lg" className="hidden sm:inline-flex shrink-0" />
           <div>
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-bold border border-emerald-500/30 mb-2">
-              <BarChart3 className="w-3.5 h-3.5" />
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#F4B400]/20 text-[#FFD54F] text-xs font-bold border border-[#F4B400]/30 mb-2">
+              <BarChart3 className="w-3.5 h-3.5 text-[#F4B400]" />
               <span>Real-time Telemetry & Business Intelligence</span>
             </div>
             <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight">
@@ -153,9 +153,9 @@ export const AnalyticsView: React.FC = () => {
         >
           <div className="flex items-center justify-between text-xs text-slate-400 mb-2">
             <span>Active Users Online</span>
-            <Users className="w-4 h-4 text-[#6366F1]" />
+            <Users className="w-4 h-4 text-[#F4B400]" />
           </div>
-          <div className="text-2xl font-bold font-mono tabular-nums text-indigo-400">
+          <div className="text-2xl font-bold font-mono tabular-nums text-[#2E2E2E] dark:text-[#FAFAFA]">
             3,418 Active
           </div>
           <div className="mt-2 text-[11px] text-slate-400">
@@ -170,13 +170,14 @@ export const AnalyticsView: React.FC = () => {
         >
           <div className="flex items-center justify-between text-xs text-slate-400 mb-2">
             <span>Avg Delivery Duration</span>
-            <Truck className="w-4 h-4 text-[#F59E0B]" />
+            <Truck className="w-4 h-4 text-[#F4B400]" />
           </div>
-          <div className="text-2xl font-bold font-mono tabular-nums text-amber-500">
+          <div className="text-2xl font-bold font-mono tabular-nums text-[#2E2E2E] dark:text-[#FAFAFA]">
             21.4 Mins
           </div>
-          <div className="mt-2 text-[11px] text-emerald-500 font-semibold">
-            -3.8 mins vs industry benchmark
+          <div className="mt-2 text-[11px] text-slate-500 dark:text-slate-400 font-semibold flex items-center gap-1">
+            <span className="text-[#F4B400]">↓</span>
+            <span>-3.8 mins vs industry benchmark</span>
           </div>
         </div>
       </div>
@@ -265,13 +266,13 @@ export const AnalyticsView: React.FC = () => {
 
             <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 text-center">
               <span className="text-xs text-slate-400">e-POD OTP Success Rate</span>
-              <div className="text-xl font-bold font-mono text-emerald-500 mt-1">99.8%</div>
+              <div className="text-xl font-bold font-mono text-[#2E2E2E] dark:text-[#FAFAFA] mt-1">99.8%</div>
               <span className="text-[10px] text-slate-400">Zero disputed handovers</span>
             </div>
 
             <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 text-center">
               <span className="text-xs text-slate-400">Batching Efficiency</span>
-              <div className="text-xl font-bold font-mono text-indigo-400 mt-1">1.8 orders/trip</div>
+              <div className="text-xl font-bold font-mono text-[#2E2E2E] dark:text-[#FAFAFA] mt-1">1.8 orders/trip</div>
               <span className="text-[10px] text-slate-400">Optimized via A21 AI</span>
             </div>
 

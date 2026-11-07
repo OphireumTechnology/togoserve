@@ -160,17 +160,17 @@ export const MarketplaceView: React.FC<{
           {/* Stepper Progress Bar */}
           <div className="mt-4 pt-3 border-t border-slate-200 dark:border-slate-800">
             <div className="flex items-center justify-between text-[11px] text-slate-400 font-medium">
-              <span className="text-emerald-500 font-bold">1. Confirmed</span>
-              <span className={activeOrders[0].trackingStep >= 3 ? 'text-emerald-500 font-bold' : ''}>
+              <span className="text-[#2E2E2E] dark:text-[#FAFAFA] font-bold">1. Confirmed</span>
+              <span className={activeOrders[0].trackingStep >= 3 ? 'text-[#2E2E2E] dark:text-[#FAFAFA] font-bold' : ''}>
                 2. Merchant Accepted
               </span>
-              <span className={activeOrders[0].trackingStep >= 4 ? 'text-emerald-500 font-bold' : ''}>
+              <span className={activeOrders[0].trackingStep >= 4 ? 'text-[#2E2E2E] dark:text-[#FAFAFA] font-bold' : ''}>
                 3. Preparing
               </span>
-              <span className={activeOrders[0].trackingStep >= 7 ? 'text-emerald-500 font-bold' : ''}>
+              <span className={activeOrders[0].trackingStep >= 7 ? 'text-[#2E2E2E] dark:text-[#FAFAFA] font-bold' : ''}>
                 4. In Transit
               </span>
-              <span>5. Delivered</span>
+              <span className={activeOrders[0].trackingStep >= 8 ? 'text-[#F4B400] font-bold' : ''}>5. Delivered</span>
             </div>
             <div className="w-full bg-slate-200 dark:bg-slate-800 h-1.5 rounded-full mt-2 overflow-hidden">
               <div

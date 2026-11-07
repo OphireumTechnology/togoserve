@@ -337,9 +337,9 @@ export const POSRegisterView: React.FC = () => {
                     />
                   </div>
 
-                  <div className="flex items-center justify-between p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 font-bold">
+                  <div className="flex items-center justify-between p-3 rounded-xl bg-[#2E2E2E]/5 dark:bg-[#2E2E2E]/40 border border-slate-200 dark:border-slate-700 text-[#2E2E2E] dark:text-[#FAFAFA] font-bold">
                     <span className="text-xs">Change to Return:</span>
-                    <span className="text-lg font-mono">₱{changeDue.toFixed(2)}</span>
+                    <span className="text-lg font-mono text-[#F4B400]">₱{changeDue.toFixed(2)}</span>
                   </div>
                 </div>
               )}

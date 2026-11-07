@@ -63,7 +63,7 @@ export const MerchantOSView: React.FC = () => {
               <span className="text-xs font-bold uppercase tracking-wider text-[#F4B400]">
                 TOGOSERVE Business OS
               </span>
-              <span className="text-xs bg-[#16845B]/30 text-emerald-300 px-2 py-0.5 rounded-full border border-emerald-500/30">
+              <span className="text-xs bg-[#2E2E2E] dark:bg-slate-800 text-[#FAFAFA] px-2.5 py-0.5 rounded-full border border-slate-700 dark:border-slate-600 font-medium">
                 Aroma Bakehouse & Roastery (Branch #01)
               </span>
             </div>
@@ -161,7 +161,7 @@ export const MerchantOSView: React.FC = () => {
                 <MetricCard
                   label="Pending Settlement"
                   value={`₱${pendingSettlement.toFixed(2)}`}
-                  icon={<CheckCircle className="w-4 h-4 text-[#16845B]" />}
+                  icon={<CheckCircle className="w-4 h-4 text-[#F4B400]" />}
                   subValue="Payout window: Friday"
                   isDark={isDarkMode}
                 />
@@ -273,8 +273,8 @@ export const MerchantOSView: React.FC = () => {
                           onClick={() => updateOrderStatus(ord.id, st)}
                           className={`px-2.5 py-1 text-[10px] font-bold rounded-lg border transition-all ${
                             ord.status === st
-                              ? 'bg-[#16845B] text-white border-[#16845B]'
-                              : 'border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800'
+                              ? 'bg-[#F4B400] text-[#2E2E2E] border-[#F4B400] shadow-xs'
+                              : 'border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300'
                           }`}
                         >
                           {st.replace(/_/g, ' ')}
@@ -381,7 +381,7 @@ export const MerchantOSView: React.FC = () => {
                     >
                       <div className="flex items-center justify-between">
                         <span className="font-bold text-sm">{sup.name}</span>
-                        <span className="px-2 py-0.5 rounded text-[10px] bg-emerald-500/20 text-emerald-500 font-bold">
+                        <span className="px-2 py-0.5 rounded text-[10px] bg-[#EBEEEE] dark:bg-slate-800 text-[#2E2E2E] dark:text-slate-300 font-bold border border-slate-200 dark:border-slate-700">
                           Lead: {sup.deliveryLeadDays} days
                         </span>
                       </div>
@@ -390,7 +390,7 @@ export const MerchantOSView: React.FC = () => {
                         <span className="font-mono text-slate-400">Min Order: ₱{sup.minimumOrderValue.toLocaleString()}</span>
                         <button
                           onClick={() => addToast('success', 'PO Draft Created', `Purchase order draft sent to ${sup.name}`)}
-                          className="px-3 py-1 bg-[#F4B400] text-[#2E2E2E] font-bold rounded-lg hover:bg-[#F4B400]"
+                          className="px-3 py-1 bg-[#F4B400] text-[#2E2E2E] font-bold rounded-lg hover:bg-[#FFD54F]"
                         >
                           Create PO
                         </button>
@@ -418,7 +418,7 @@ export const MerchantOSView: React.FC = () => {
                 </div>
                 <div className="text-right">
                   <div className="text-xs text-slate-400">Total Net Payable</div>
-                  <div className="text-base font-bold font-mono text-emerald-500">
+                  <div className="text-base font-bold font-mono text-[#2E2E2E] dark:text-[#FAFAFA]">
                     ₱{pendingSettlement.toFixed(2)}
                   </div>
                 </div>
@@ -445,7 +445,7 @@ export const MerchantOSView: React.FC = () => {
                         <td className="p-3 font-bold">₱{entry.grossAmount.toFixed(2)}</td>
                         <td className="p-3 text-slate-400">₱{entry.platformFee.toFixed(2)}</td>
                         <td className="p-3 text-slate-400">₱{entry.deliveryFee.toFixed(2)}</td>
-                        <td className="p-3 font-bold text-[#16845B]">
+                        <td className="p-3 font-bold text-[#2E2E2E] dark:text-[#FAFAFA]">
                           ₱{entry.merchantPayable.toFixed(2)}
                         </td>
                         <td className="p-3 font-sans">
@@ -479,21 +479,30 @@ export const MerchantOSView: React.FC = () => {
                 <Store className="w-5 h-5 text-[#F4B400]" />
                 <h4 className="font-bold text-xs">Marketplace Listing</h4>
                 <p className="text-[11px] text-slate-400">Active in Metro Manila radius with 25-min delivery SLA.</p>
-                <span className="inline-block text-[10px] text-emerald-500 font-bold">Status: Online</span>
+                <span className="inline-flex items-center gap-1.5 text-[10px] text-[#2E2E2E] dark:text-slate-300 font-semibold font-mono">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#F4B400]" />
+                  <span>Status: Online</span>
+                </span>
               </div>
 
               <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 space-y-2">
                 <ShoppingBag className="w-5 h-5 text-[#F4B400]" />
                 <h4 className="font-bold text-xs">In-Store Pickup</h4>
                 <p className="text-[11px] text-slate-400">Curbside and counter pickup tickets routed to POS.</p>
-                <span className="inline-block text-[10px] text-emerald-500 font-bold">Status: Enabled</span>
+                <span className="inline-flex items-center gap-1.5 text-[10px] text-[#2E2E2E] dark:text-slate-300 font-semibold font-mono">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#F4B400]" />
+                  <span>Status: Enabled</span>
+                </span>
               </div>
 
               <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 space-y-2">
-                <Truck className="w-5 h-5 text-indigo-400" />
+                <Truck className="w-5 h-5 text-[#F4B400]" />
                 <h4 className="font-bold text-xs">TOGO Padala Fleet</h4>
                 <p className="text-[11px] text-slate-400">On-demand motorcycle, van, and truck dispatch.</p>
-                <span className="inline-block text-[10px] text-emerald-500 font-bold">Status: Active</span>
+                <span className="inline-flex items-center gap-1.5 text-[10px] text-[#2E2E2E] dark:text-slate-300 font-semibold font-mono">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#F4B400]" />
+                  <span>Status: Active</span>
+                </span>
               </div>
             </div>
           </div>

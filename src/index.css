@@ -1,6 +1,21 @@
 @import "tailwindcss";
 
 :root {
+  /* Official TOGOSERVE Corporate Brand Colors */
+  --brand-primary: #F4B400;
+  --brand-secondary: #FFD54F;
+  --brand-charcoal: #2E2E2E;
+  --brand-light-gray: #EBEEEE;
+  --brand-white: #FAFAFA;
+  --brand-beige: #D9C39A;
+
+  --brand-text: #2E2E2E;
+  --brand-background: #FAFAFA;
+  --brand-surface: #FFFFFF;
+  --brand-border: #EBEEEE;
+  --brand-accent: #F4B400;
+
+  /* Backward compatible legacy tokens */
   --togo-gold: #F4B400;
   --togo-yellow: #FFD54F;
   --togo-charcoal: #2E2E2E;
@@ -10,6 +25,12 @@
   --togo-background: #FAFAFA;
   --togo-text: #2E2E2E;
   --togo-text-secondary: #64748B;
+  
+  /* Semantic Operational Status Colors (Used ONLY for critical operational states) */
+  --semantic-success: #16845B;
+  --semantic-danger: #D64545;
+  --semantic-warning: #F4B400;
+  --semantic-info: #2E2E2E;
   --togo-success: #16845B;
   --togo-danger: #D64545;
   --togo-warning: #F4B400;
@@ -19,7 +40,11 @@
 }
 
 .dark {
-  --togo-background: #1A1A1A;
+  --brand-background: #181818;
+  --brand-surface: #1E1E1E;
+  --brand-text: #FAFAFA;
+  --brand-border: #2E2E2E;
+  --togo-background: #181818;
   --togo-text: #FAFAFA;
   --togo-text-secondary: #D9C39A;
   color-scheme: dark;

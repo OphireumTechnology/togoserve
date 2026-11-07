@@ -94,12 +94,10 @@ export const MetricCard: React.FC<MetricCardProps> = ({
       {(trend || subValue) && (
         <div className="mt-2.5 flex items-center justify-between text-[11px] text-slate-400 font-mono">
           {trend ? (
-            <span
-              className={`inline-flex items-center gap-1 font-semibold ${
-                trend.direction === 'up' ? 'text-[#16845B]' : 'text-[#D64545]'
-              }`}
-            >
-              {trend.direction === 'up' ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
+            <span className="inline-flex items-center gap-1 font-semibold text-[#2E2E2E] dark:text-[#FAFAFA]">
+              <span className="text-[#F4B400]">
+                {trend.direction === 'up' ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
+              </span>
               <span>{trend.value}</span>
             </span>
           ) : (
@@ -252,22 +250,22 @@ export const AIWidget: React.FC<{
 }> = ({ title, recommendation, impact, agentId, onApply, isDark = false }) => {
   return (
     <div
-      className={`p-4 rounded-xl border border-indigo-200 dark:border-indigo-900/60 bg-indigo-50/50 dark:bg-indigo-950/20 text-xs space-y-2`}
+      className={`p-4 rounded-xl border border-[#F4B400]/30 bg-[#2E2E2E]/5 dark:bg-[#2E2E2E]/40 text-xs space-y-2`}
     >
       <div className="flex items-center justify-between">
-        <span className="font-mono text-[10px] font-bold text-indigo-600 dark:text-indigo-400 uppercase">
+        <span className="font-mono text-[10px] font-bold text-[#F4B400] uppercase">
           TOGOSERVE AI ({agentId})
         </span>
         <span className="text-[10px] text-slate-400">Automated Copilot</span>
       </div>
       <h4 className="font-bold text-slate-800 dark:text-slate-100">{title}</h4>
       <p className="text-slate-600 dark:text-slate-300">{recommendation}</p>
-      <div className="pt-2 border-t border-indigo-100 dark:border-indigo-900/40 flex items-center justify-between">
-        <span className="text-[11px] text-[#16845B] font-semibold">{impact}</span>
+      <div className="pt-2 border-t border-[#EBEEEE] dark:border-slate-800 flex items-center justify-between">
+        <span className="text-[11px] text-[#2E2E2E] dark:text-[#FAFAFA] font-semibold">{impact}</span>
         {onApply && (
           <button
             onClick={onApply}
-            className="px-2.5 py-1 bg-[#2E2E2E] text-white dark:bg-[#F4B400] dark:text-[#2E2E2E] rounded-lg font-bold text-[10px] hover:opacity-90 transition-opacity"
+            className="px-2.5 py-1 bg-[#F4B400] text-[#2E2E2E] font-bold rounded-lg text-[10px] hover:bg-[#FFD54F] transition-colors shadow-xs"
           >
             Apply Insight
           </button>

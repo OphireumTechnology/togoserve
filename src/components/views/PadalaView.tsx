@@ -493,7 +493,7 @@ export const PadalaView: React.FC = () => {
                     <span className="text-xs font-mono font-bold text-[#F4B400]">
                       ₱{shipment.quoteAmount.toFixed(2)}
                     </span>
-                    <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-emerald-500/15 text-emerald-500">
+                    <span className="px-2 py-0.5 rounded text-[10px] font-bold font-mono uppercase bg-slate-100 dark:bg-slate-800 text-[#2E2E2E] dark:text-slate-300 border border-slate-200 dark:border-slate-700">
                       {shipment.status.replace('_', ' ')}
                     </span>
                   </div>
@@ -531,7 +531,7 @@ export const PadalaView: React.FC = () => {
                   {shipment.status !== 'DELIVERED' && (
                     <button
                       onClick={() => updatePadalaStatus(shipment.id, 'DELIVERED', 'Danilo D. (Recipient)')}
-                      className="px-3 py-1 bg-[#16845B] hover:bg-emerald-700 text-white font-bold text-xs rounded-lg transition-colors flex items-center gap-1.5"
+                      className="px-3 py-1 bg-[#F4B400] hover:bg-[#FFD54F] text-[#2E2E2E] font-extrabold text-xs rounded-lg transition-colors flex items-center gap-1.5 shadow-xs"
                     >
                       <CheckCircle2 className="w-3.5 h-3.5" />
                       <span>Complete e-POD Handover</span>
