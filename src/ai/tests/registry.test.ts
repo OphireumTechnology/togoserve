@@ -7,13 +7,18 @@ test('AgentRegistry: registers all A00-A60 agents without duplicates', () => {
   const registry = bootstrapAgentRegistry();
   const registered = registry.list();
 
-  // Exactly 61 agents (A00 + A01 through A60)
-  assert.equal(registered.length, 61, `Expected 61 registered agents, got ${registered.length}`);
+  // 64 agents (A00 + S01, S02, S03 + A01 through A60)
+  assert.equal(registered.length, 64, `Expected 64 registered agents, got ${registered.length}`);
 
   // Assert A00 exists
   const a00 = registry.get('A00');
   assert.ok(a00, 'A00 Supervisor must exist');
   assert.equal(a00.category, 'ORCHESTRATION');
+
+  // Assert S01, S02, S03 exist
+  assert.ok(registry.get('S01'), 'S01 Merchant Supervisor must exist');
+  assert.ok(registry.get('S02'), 'S02 Logistics Supervisor must exist');
+  assert.ok(registry.get('S03'), 'S03 Admin Supervisor must exist');
 
   // Verify all A01 through A60 exist
   const idSet = new Set<string>();
@@ -36,7 +41,7 @@ test('AgentRegistry: enable, disable, and category filtering', () => {
   const registry = bootstrapAgentRegistry();
 
   const logisticsAgents = registry.getByCategory('LOGISTICS');
-  assert.equal(logisticsAgents.length, 10, 'Must have 10 logistics agents (A27-A36)');
+  assert.equal(logisticsAgents.length, 11, 'Must have 11 logistics agents (A27-A36 + S02)');
 
   const financeAgents = registry.getByCategory('FINANCE');
   assert.equal(financeAgents.length, 7, 'Must have 7 finance agents (A40-A46)');

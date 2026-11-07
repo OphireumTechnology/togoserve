@@ -11,7 +11,14 @@ export type AgentId =
   | `A0${1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9}`
   | `A${1 | 2 | 3 | 4 | 5}${0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9}`
   | 'A60'
+  | 'S01'
+  | 'S02'
+  | 'S03'
   | (string & {}); // Extensible for future namespaces (TRUST, SECURITY, etc.)
+
+export type Department = 'MERCHANTS' | 'LOGISTICS' | 'ADMINISTRATION';
+export type DepartmentSupervisorId = 'S01' | 'S02' | 'S03';
+export type AgentLifecycleStatus = 'ACTIVE' | 'PAUSED' | 'TESTING' | 'QUARANTINED';
 
 export type AgentCategory =
   | 'ORCHESTRATION'
@@ -267,6 +274,9 @@ export interface TOGOServeAgent {
   id: AgentId;
   name: string;
   category: AgentCategory;
+  department?: Department;
+  supervisorId?: DepartmentSupervisorId | 'A00';
+  lifecycleStatus?: AgentLifecycleStatus;
   description: string;
   version: string;
   capabilities: readonly AgentCapability[] | AgentCapability[];
@@ -275,6 +285,7 @@ export interface TOGOServeAgent {
   maxRisk: AIRiskLevel;
   requiredPermissions: string[];
   enabled: boolean;
+  modelName?: string;
 
   canHandle(request: AgentRequest): Promise<boolean>;
   execute(request: AgentRequest, context: AgentContext): Promise<AgentResponse>;
@@ -284,6 +295,9 @@ export interface AgentRegistrationMetadata {
   id: AgentId;
   name: string;
   category: AgentCategory;
+  department: Department;
+  supervisorId: DepartmentSupervisorId | 'A00';
+  lifecycleStatus: AgentLifecycleStatus;
   description: string;
   version: string;
   capabilities: readonly AgentCapability[] | AgentCapability[];
@@ -292,8 +306,14 @@ export interface AgentRegistrationMetadata {
   maxRisk: AIRiskLevel;
   requiredPermissions: string[];
   enabled: boolean;
+  modelName: string;
   lastRun?: string;
   successCount: number;
   failureCount: number;
   averageLatencyMs: number;
+  promptTokens: number;
+  completionTokens: number;
+  estimatedCostUsd: number;
+  accuracyScore: number;
+  quarantineReason?: string;
 }

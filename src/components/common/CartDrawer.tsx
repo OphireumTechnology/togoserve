@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
 import { X, Trash2, Plus, Minus, ArrowRight, ShieldCheck, CreditCard, Wallet, Banknote } from 'lucide-react';
 import { Order } from '../../types';
+import { Logo } from '../brand/Logo';
 
 export const CartDrawer: React.FC<{
   isOpen: boolean;
@@ -53,11 +54,14 @@ export const CartDrawer: React.FC<{
         >
           {/* Header */}
           <div className="p-4 sm:p-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
-            <div>
-              <h2 className="text-base font-bold">Your TOGOSERVE Basket</h2>
-              <p className="text-xs text-slate-500 dark:text-slate-400">
-                {cart.length === 0 ? 'Empty basket' : `${cart.length} item(s) from merchant`}
-              </p>
+            <div className="flex items-center gap-2.5">
+              <Logo variant="circular" size="xs" />
+              <div>
+                <h2 className="text-base font-bold">Your TOGOSERVE Basket</h2>
+                <p className="text-xs text-slate-500 dark:text-slate-400">
+                  {cart.length === 0 ? 'Empty basket' : `${cart.length} item(s) from merchant`}
+                </p>
+              </div>
             </div>
             <button
               onClick={onClose}

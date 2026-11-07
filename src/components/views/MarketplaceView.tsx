@@ -14,6 +14,7 @@ import {
   SlidersHorizontal
 } from 'lucide-react';
 import { ProductItem } from '../../types';
+import { Logo } from '../brand/Logo';
 
 export const MarketplaceView: React.FC<{
   onOpenCart: () => void;
@@ -54,7 +55,7 @@ export const MarketplaceView: React.FC<{
   return (
     <div className="space-y-8 pb-12">
       {/* HERO SECTION */}
-      <section className="relative overflow-hidden rounded-2xl bg-[#2E2E2E] text-white p-6 sm:p-10 shadow-xl border border-slate-800">
+      <section className="relative overflow-hidden rounded-2xl bg-[#2E2E2E] text-white p-6 sm:p-10 shadow-xl border border-slate-800 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
         <div className="relative z-10 max-w-2xl space-y-4">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs text-[#F4B400] font-semibold border border-white/15">
             <Sparkles className="w-3.5 h-3.5" />
@@ -91,6 +92,10 @@ export const MarketplaceView: React.FC<{
               <span>Send with TOGO Padala</span>
             </button>
           </div>
+        </div>
+
+        <div className="hidden lg:flex items-center justify-center pr-4 relative z-10">
+          <Logo variant="circular" size="2xl" className="drop-shadow-2xl" />
         </div>
 
         {/* Ambient background decoration */}

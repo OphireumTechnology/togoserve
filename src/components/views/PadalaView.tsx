@@ -16,6 +16,7 @@ import {
   Check
 } from 'lucide-react';
 import { VehicleType, PadalaShipment } from '../../types';
+import { Logo } from '../brand/Logo';
 
 export const PadalaView: React.FC = () => {
   const { padalaShipments, createPadalaShipment, updatePadalaStatus, isDarkMode } = useApp();
@@ -104,18 +105,21 @@ export const PadalaView: React.FC = () => {
     <div className="space-y-6 pb-12 max-w-5xl mx-auto">
       {/* Top Header Banner */}
       <div className="bg-[#2E2E2E] text-white rounded-2xl p-6 sm:p-8 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xl">
-        <div>
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#F4B400]/20 text-[#F4B400] text-xs font-bold border border-[#F4B400]/30 mb-2">
-            <Truck className="w-3.5 h-3.5" />
-            <span>TOGO Padala Logistics Core</span>
+        <div className="flex items-start sm:items-center gap-4">
+          <Logo variant="circular" size="lg" className="hidden sm:inline-flex shrink-0" />
+          <div>
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#F4B400]/20 text-[#F4B400] text-xs font-bold border border-[#F4B400]/30 mb-2">
+              <Truck className="w-3.5 h-3.5" />
+              <span>TOGO Padala Logistics Core</span>
+            </div>
+            <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight">
+              Express Courier & Fleet Dispatch
+            </h1>
+            <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-lg">
+              Guaranteed door-to-door delivery with real-time GPS telemetry, volumetric vehicle
+              matching, and tamper-proof electronic proof of delivery (e-POD).
+            </p>
           </div>
-          <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight">
-            Express Courier & Fleet Dispatch
-          </h1>
-          <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-lg">
-            Guaranteed door-to-door delivery with real-time GPS telemetry, volumetric vehicle
-            matching, and tamper-proof electronic proof of delivery (e-POD).
-          </p>
         </div>
 
         {/* Tab switch */}

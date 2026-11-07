@@ -56,6 +56,36 @@ export class A00Supervisor implements TOGOServeAgent {
     context: AgentContext
   ): Promise<AgentResponse> {
     const startTime = Date.now();
+    const registry = AgentRegistry.getInstance();
+
+    // Check Global Emergency Stop
+    if (registry.isEmergencyStopped()) {
+      const reason = registry.getEmergencyStopReason() || 'Global Emergency Stop is active';
+      context.recordAudit?.({
+        requestId: request.requestId,
+        actorId: request.actorId,
+        tenantId: request.tenantId,
+        agentId: this.id,
+        eventType: 'EMERGENCY_STOP_BLOCKED',
+        resourceType: 'PLATFORM_CONTROL',
+        resourceId: request.requestId,
+        riskLevel: 'L5',
+        metadata: { reason, query: request.query },
+      });
+
+      return {
+        requestId: request.requestId,
+        agentId: 'A00',
+        status: 'BLOCKED',
+        summary: `Platform operation halted: ${reason}. Automated operations are paused by system administration.`,
+        data: { emergencyStopped: true, reason },
+        confidence: 1.0,
+        warnings: [reason],
+        executionTimeMs: Date.now() - startTime,
+        timestamp: new Date().toISOString(),
+      };
+    }
+
     context.emitEvent?.(AI_EVENT_NAMES.REQUEST_CREATED, { requestId: request.requestId, query: request.query });
 
     // 1. Classify Intent
@@ -69,7 +99,6 @@ export class A00Supervisor implements TOGOServeAgent {
     const subTasks = TaskDecomposer.decompose(request, classified, selectedAgentIds);
     const stages = ExecutionPlanner.createExecutionStages(subTasks);
 
-    const registry = AgentRegistry.getInstance();
     const stageResponses: AgentResponse[] = [];
 
     // 4. Execute Stages

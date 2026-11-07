@@ -16,6 +16,7 @@ import {
   ArrowRight
 } from 'lucide-react';
 import { ProductItem } from '../../types';
+import { Logo } from '../brand/Logo';
 
 export const POSRegisterView: React.FC = () => {
   const { products, currentUser, isDarkMode, addToast } = useApp();
@@ -104,9 +105,7 @@ export const POSRegisterView: React.FC = () => {
       {/* Top POS Header */}
       <div className="bg-[#2E2E2E] text-white p-4 rounded-2xl flex flex-wrap items-center justify-between gap-3 shadow-lg border border-slate-800">
         <div className="flex items-center gap-3">
-          <div className="p-2 rounded-xl bg-[#F4B400] text-[#2E2E2E] font-bold">
-            <CreditCard className="w-5 h-5" />
-          </div>
+          <Logo variant="circular" size="sm" className="shrink-0" />
           <div>
             <h1 className="text-base font-bold">TOGOSERVE POS Terminal #01</h1>
             <p className="text-[11px] text-slate-400 font-mono">
@@ -370,6 +369,7 @@ export const POSRegisterView: React.FC = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in">
           <div className="w-full max-w-sm bg-white text-slate-900 rounded-2xl shadow-2xl p-6 font-mono text-xs border border-slate-200">
             <div className="text-center pb-3 border-b border-dashed border-slate-300 space-y-1">
+              <Logo variant="circular" size="xs" className="mx-auto mb-1" />
               <h2 className="text-sm font-extrabold font-sans">TOGOSERVE RETAIL</h2>
               <p className="text-[10px] text-slate-500">Aroma Bakehouse & Roastery</p>
               <p className="text-[10px] text-slate-400">Tax ID: 480-192-384-000 VAT</p>

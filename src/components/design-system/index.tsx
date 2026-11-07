@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowUpRight, TrendingUp, TrendingDown, Sparkles } from 'lucide-react';
-export { BrandLogo, BrandMark } from '../brand/BrandLogo';
+import { Logo } from '../brand/Logo';
+export { BrandLogo, BrandMark, Logo } from '../brand/Logo';
 export { ImageWithFallback } from '../common/ImageWithFallback';
 
 // 1. StatusBadge
@@ -176,23 +177,26 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
 }) => {
   return (
     <div
-      className={`rounded-2xl p-6 sm:p-8 border border-slate-800 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4 ${
+      className={`rounded-2xl p-6 sm:p-8 border border-neutral-700/80 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4 ${
         isDark ? 'bg-[#2E2E2E] text-white' : 'bg-white text-[#2E2E2E]'
       } ${className}`}
     >
-      <div className="space-y-1">
-        {badge && (
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#F4B400]/20 text-[#F4B400] text-xs font-bold border border-[#F4B400]/30 mb-1">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>{badge}</span>
-          </div>
-        )}
-        <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight">{title}</h1>
-        {subtitle && (
-          <p className="text-xs sm:text-sm text-slate-300 dark:text-slate-400 max-w-xl">
-            {subtitle}
-          </p>
-        )}
+      <div className="flex items-start sm:items-center gap-4">
+        <Logo variant="circular" size="lg" className="hidden sm:inline-flex shrink-0" />
+        <div className="space-y-1">
+          {badge && (
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#F4B400]/20 text-[#F4B400] text-xs font-bold border border-[#F4B400]/30 mb-1">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>{badge}</span>
+            </div>
+          )}
+          <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight">{title}</h1>
+          {subtitle && (
+            <p className="text-xs sm:text-sm text-slate-300 dark:text-slate-400 max-w-xl">
+              {subtitle}
+            </p>
+          )}
+        </div>
       </div>
 
       {actions && <div className="flex flex-wrap items-center gap-2 shrink-0">{actions}</div>}

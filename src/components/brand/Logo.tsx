@@ -1,70 +1,25 @@
 import React, { useState } from 'react';
 
 export interface LogoProps {
-  variant?: 'default' | 'light' | 'dark' | 'symbol' | 'horizontal' | 'stacked' | 'app-icon' | 'circular' | 'header' | 'footer';
+  variant?: 'default' | 'circular' | 'header' | 'footer' | 'dashboard' | 'mobile' | 'stacked' | 'horizontal' | 'app-icon' | 'original' | 'dark' | 'light' | 'symbol';
   theme?: 'light' | 'dark';
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
+  showWordmark?: boolean;
   showSlogan?: boolean;
   className?: string;
   onClick?: () => void;
 }
 
 /**
- * Official TOGOSERVE Brand Symbol Mark
- * Strict vector geometry with Stylized Metallic Gold T (#F4B400 - #FFD54F)
- * and Charcoal Accent Wing (#2E2E2E).
- */
-export const BrandMark: React.FC<{
-  size?: number;
-  className?: string;
-  isDark?: boolean;
-}> = ({ size = 36, className = '', isDark = false }) => {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 120 120"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={`shrink-0 select-none ${className}`}
-      aria-hidden="true"
-    >
-      <defs>
-        <linearGradient id={`togoGoldGrad-${isDark ? 'dark' : 'light'}`} x1="15" y1="15" x2="95" y2="95" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#FFD54F" />
-          <stop offset="55%" stopColor="#F4B400" />
-          <stop offset="100%" stopColor="#D9A514" />
-        </linearGradient>
-        <linearGradient id={`togoWingGrad-${isDark ? 'dark' : 'light'}`} x1="60" y1="30" x2="95" y2="75" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor={isDark ? "#FAFAFA" : "#383838"} />
-          <stop offset="100%" stopColor={isDark ? "#D9C39A" : "#222222"} />
-        </linearGradient>
-      </defs>
-
-      {/* Stylized Gold T */}
-      <path
-        d="M18 22C18 17.58 21.58 14 26 14H94C98.42 14 102 17.58 102 22V28C102 32.42 98.42 36 94 36H70V96C70 101.52 65.52 106 60 106C54.48 106 50 101.52 50 96V36H26C21.58 36 18 32.42 18 28V22Z"
-        fill={`url(#togoGoldGrad-${isDark ? 'dark' : 'light'})`}
-      />
-
-      {/* Dark Charcoal Geometric Wing Accent */}
-      <path
-        d="M72 40C72 37.79 73.79 36 76 36H94C96.21 36 98 37.79 98 40V70C98 74.42 94.42 78 90 78H76C73.79 78 72 76.21 72 74V40Z"
-        fill={`url(#togoWingGrad-${isDark ? 'dark' : 'light'})`}
-      />
-    </svg>
-  );
-};
-
-/**
- * Official TOGOSERVE Logo Component
- * Single centralized corporate logo implementation across all portals.
+ * Official Authoritative TOGOSERVE Logo Component
+ * Source of truth for corporate branding across all portals, dashboards, and documents.
+ * Directly renders the official circular gold corporate emblem and typography.
  */
 export const Logo: React.FC<LogoProps> = ({
   variant = 'default',
   theme,
   size = 'md',
-  showSlogan = false,
+  showWordmark = true,
   className = '',
   onClick,
 }) => {
@@ -72,56 +27,65 @@ export const Logo: React.FC<LogoProps> = ({
 
   const isDark = theme === 'dark' || variant === 'dark';
 
-  // Height mappings in px to preserve exact aspect ratio
-  const heightPixels = {
-    xs: 26,
-    sm: 32,
-    md: 40,
-    lg: 48,
-    xl: 60,
+  // Pixel heights for the circular emblem
+  const emblemSizes = {
+    xs: 28,
+    sm: 36,
+    md: 44,
+    lg: 56,
+    xl: 72,
+    '2xl': 96,
   };
 
-  const symbolPixels = {
-    xs: 24,
-    sm: 30,
-    md: 38,
-    lg: 46,
-    xl: 58,
-  };
+  const dim = emblemSizes[size] || 44;
 
-  const h = heightPixels[size] || 40;
-  const symH = symbolPixels[size] || 38;
+  // Asset routing according to directive specification
+  let emblemSrc = '/branding/togoserve/logo-transparent.png';
+  if (variant === 'header') {
+    emblemSrc = '/branding/togoserve/logo-header.png';
+  } else if (variant === 'dashboard') {
+    emblemSrc = '/branding/togoserve/logo-dashboard.png';
+  } else if (variant === 'footer') {
+    emblemSrc = '/branding/togoserve/logo-footer.png';
+  } else if (variant === 'mobile') {
+    emblemSrc = '/branding/togoserve/logo-mobile.png';
+  } else if (variant === 'original') {
+    emblemSrc = '/branding/togoserve/logo-original.png';
+  } else if (isDark) {
+    emblemSrc = '/branding/togoserve/logo-dark-background.png';
+  }
 
-  // 1. CIRCULAR EMBLEM
-  if (variant === 'circular') {
+  // 1. STANDALONE CIRCULAR EMBLEM ONLY
+  if (variant === 'circular' || variant === 'original' || variant === 'symbol') {
     return (
       <div
         onClick={onClick}
-        className={`inline-flex items-center justify-center shrink-0 ${onClick ? 'cursor-pointer hover:opacity-95' : ''} ${className}`}
+        className={`inline-flex items-center justify-center shrink-0 select-none ${
+          onClick ? 'cursor-pointer hover:opacity-95' : ''
+        } ${className}`}
         role="img"
-        aria-label="TOGOSERVE Circular Corporate Emblem"
+        aria-label="TOGOSERVE Official Circular Gold Logo"
       >
         <img
-          src="/branding/togoserve/logo-circular.png"
-          alt="TOGOSERVE Emblem"
-          style={{ width: `${symH * 1.5}px`, height: `${symH * 1.5}px` }}
-          className="shrink-0 object-contain drop-shadow-md"
+          src={emblemSrc}
+          alt="TOGOSERVE Circular Corporate Emblem"
+          style={{ width: `${dim}px`, height: `${dim}px` }}
+          className="shrink-0 object-contain drop-shadow-sm transition-transform duration-200"
           onError={() => setImgError(true)}
         />
       </div>
     );
   }
 
-  // 2. APP ICON VARIANT
+  // 2. APP ICON (Squircle)
   if (variant === 'app-icon') {
-    const iconDim = Math.round(symH * 1.3);
     return (
       <div
         onClick={onClick}
         className={`inline-flex items-center justify-center rounded-2xl overflow-hidden shrink-0 shadow-md ${
           onClick ? 'cursor-pointer hover:opacity-95' : ''
         } ${className}`}
-        style={{ width: iconDim, height: iconDim }}
+        style={{ width: `${dim}px`, height: `${dim}px` }}
         role="img"
         aria-label="TOGOSERVE Application Icon"
       >
@@ -134,21 +98,7 @@ export const Logo: React.FC<LogoProps> = ({
     );
   }
 
-  // 3. SYMBOL ONLY
-  if (variant === 'symbol') {
-    return (
-      <div
-        onClick={onClick}
-        className={`inline-flex items-center justify-center shrink-0 ${onClick ? 'cursor-pointer hover:opacity-90' : ''} ${className}`}
-        role="img"
-        aria-label="TOGOSERVE Symbol"
-      >
-        <BrandMark size={symH} isDark={isDark} />
-      </div>
-    );
-  }
-
-  // 4. STACKED VARIANT
+  // 3. STACKED VARIANT (Center-aligned emblem with wordmark below)
   if (variant === 'stacked') {
     return (
       <div
@@ -157,10 +107,16 @@ export const Logo: React.FC<LogoProps> = ({
           onClick ? 'cursor-pointer hover:opacity-95' : ''
         } ${className}`}
         role="img"
-        aria-label="TOGOSERVE Stacked Logo"
+        aria-label="TOGOSERVE Stacked Corporate Logo"
       >
-        <BrandMark size={Math.round(symH * 1.15)} isDark={isDark} />
-        <div className="mt-1 flex items-baseline tracking-tight font-black leading-none text-xl sm:text-2xl font-['Inter']">
+        <img
+          src={emblemSrc}
+          alt="TOGOSERVE Emblem"
+          style={{ width: `${dim * 1.3}px`, height: `${dim * 1.3}px` }}
+          className="shrink-0 object-contain drop-shadow-sm"
+          onError={() => setImgError(true)}
+        />
+        <div className="mt-2 flex items-baseline tracking-tight font-black leading-none text-xl sm:text-2xl font-['Inter']">
           <span className={isDark ? 'text-white' : 'text-[#2E2E2E]'}>TOGO</span>
           <span className="text-[#F4B400]">SERVE</span>
         </div>
@@ -171,43 +127,46 @@ export const Logo: React.FC<LogoProps> = ({
     );
   }
 
-  // 5. HORIZONTAL / DEFAULT / HEADER / FOOTER LOGO
-  const assetSrc = isDark
-    ? '/branding/togoserve/logo-dark.png'
-    : (variant === 'header' ? '/branding/togoserve/logo-header.png' : '/branding/togoserve/logo-horizontal.png');
-
+  // 4. HEADER, DASHBOARD, FOOTER, AND DEFAULT HORIZONTAL (Emblem + Wordmark)
   return (
     <div
       onClick={onClick}
-      className={`inline-flex items-center shrink-0 select-none ${
+      className={`inline-flex items-center gap-3 shrink-0 select-none ${
         onClick ? 'cursor-pointer hover:opacity-95' : ''
       } ${className}`}
       role="img"
-      aria-label="TOGOSERVE Official Logo"
+      aria-label="TOGOSERVE Official Corporate Logo"
     >
-      {!imgError ? (
-        <img
-          src={assetSrc}
-          alt="TOGOSERVE – Commerce • Logistics • AI"
-          style={{ height: `${h}px`, width: 'auto', maxHeight: `${h}px` }}
-          className="object-contain shrink-0"
-          onError={() => setImgError(true)}
-        />
-      ) : (
-        <div className="inline-flex items-center gap-2.5">
-          <BrandMark size={symH} isDark={isDark} />
-          <div className="flex flex-col justify-center">
-            <div className="flex items-baseline tracking-tight font-black leading-none text-xl sm:text-2xl font-['Inter']">
-              <span className={isDark ? 'text-white' : 'text-[#2E2E2E]'}>TOGO</span>
-              <span className="text-[#F4B400]">SERVE</span>
-            </div>
-            <span className={`mt-0.5 font-bold tracking-widest text-[9px] uppercase ${isDark ? 'text-[#D9C39A]' : 'text-[#2E2E2E]'}`}>
-              COMMERCE <span className="text-[#F4B400]">•</span> LOGISTICS <span className="text-[#F4B400]">•</span> AI
-            </span>
+      <img
+        src={emblemSrc}
+        alt="TOGOSERVE Circular Gold Emblem"
+        style={{ width: `${dim}px`, height: `${dim}px` }}
+        className="shrink-0 object-contain drop-shadow-sm"
+        onError={() => setImgError(true)}
+      />
+
+      {showWordmark && (
+        <div className="flex flex-col justify-center text-left leading-none">
+          <div className="flex items-baseline tracking-tight font-black leading-none text-lg sm:text-xl font-['Inter']">
+            <span className={isDark ? 'text-white' : 'text-[#2E2E2E]'}>TOGO</span>
+            <span className="text-[#F4B400]">SERVE</span>
           </div>
+          <span className={`mt-1 font-bold tracking-widest text-[8px] sm:text-[9px] uppercase ${isDark ? 'text-[#D9C39A]' : 'text-[#2E2E2E]'}`}>
+            COMMERCE <span className="text-[#F4B400]">•</span> LOGISTICS <span className="text-[#F4B400]">•</span> AI
+          </span>
         </div>
       )}
     </div>
+  );
+};
+
+export const BrandMark: React.FC<{
+  size?: number;
+  className?: string;
+  isDark?: boolean;
+}> = ({ size = 36, className = '' }) => {
+  return (
+    <Logo variant="circular" size="sm" className={className} />
   );
 };
 

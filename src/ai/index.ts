@@ -36,4 +36,6 @@ export * from './governance/RiskEngine';
 export * from './governance/ApprovalService';
 
 export * from './events/AIEventBus';
+export * from './orchestrator/supervisors';
+export * from './rag/KnowledgeService';
 export * from './audit/AIAuditService';

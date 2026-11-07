@@ -13,6 +13,7 @@ import {
   CheckCircle2,
   PieChart
 } from 'lucide-react';
+import { Logo } from '../brand/Logo';
 
 export const AnalyticsView: React.FC = () => {
   const { orders, ledger, padalaShipments, isDarkMode, addToast } = useApp();
@@ -66,17 +67,20 @@ export const AnalyticsView: React.FC = () => {
     <div className="space-y-6 pb-12 max-w-7xl mx-auto">
       {/* Top Banner */}
       <div className="bg-[#2E2E2E] text-white p-6 sm:p-8 rounded-2xl border border-slate-800 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-bold border border-emerald-500/30 mb-2">
-            <BarChart3 className="w-3.5 h-3.5" />
-            <span>Real-time Telemetry & Business Intelligence</span>
+        <div className="flex items-start sm:items-center gap-4">
+          <Logo variant="circular" size="lg" className="hidden sm:inline-flex shrink-0" />
+          <div>
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-bold border border-emerald-500/30 mb-2">
+              <BarChart3 className="w-3.5 h-3.5" />
+              <span>Real-time Telemetry & Business Intelligence</span>
+            </div>
+            <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight">
+              Platform Analytics & Report Generator
+            </h1>
+            <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-xl">
+              Live user engagement, order velocity, omnichannel conversion funnels, and automated CSV audit exports.
+            </p>
           </div>
-          <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight">
-            Platform Analytics & Report Generator
-          </h1>
-          <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-xl">
-            Live user engagement, order velocity, omnichannel conversion funnels, and automated CSV audit exports.
-          </p>
         </div>
 
         {/* Date Filter & Export Action */}

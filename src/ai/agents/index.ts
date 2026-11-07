@@ -6,6 +6,11 @@
 import { TOGOServeAgent } from '../core/types';
 import { AgentRegistry } from '../core/AgentRegistry';
 import { A00Supervisor } from '../orchestrator/A00Supervisor';
+import {
+  MerchantSupervisor,
+  LogisticsSupervisor,
+  AdminSupervisor
+} from '../orchestrator/supervisors';
 import { CUSTOMER_AGENTS } from './customer';
 import { MERCHANT_AGENTS } from './merchant';
 import { COMMERCE_AGENTS } from './commerce';
@@ -18,6 +23,9 @@ import { SUPPORT_AGENTS } from './support';
 
 export const ALL_AGENTS: TOGOServeAgent[] = [
   new A00Supervisor(),
+  new MerchantSupervisor(),
+  new LogisticsSupervisor(),
+  new AdminSupervisor(),
   ...CUSTOMER_AGENTS,
   ...MERCHANT_AGENTS,
   ...COMMERCE_AGENTS,

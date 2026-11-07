@@ -78,10 +78,13 @@ export const PublicLandingView: React.FC = () => {
           {/* Left Column: Official Headings & Interactive CTAs */}
           <div className="lg:col-span-7 space-y-6">
             
-            {/* Tag / Micro-header */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EBEEEE] dark:bg-neutral-800 text-xs text-[#2E2E2E] dark:text-[#FFD54F] font-bold border border-[#D9C39A]/40">
-              <span className="w-2 h-2 rounded-full bg-[#F4B400]"></span>
-              <span className="tracking-wide">AI-Native Commerce, Logistics &amp; Multi-Agent Operating Platform</span>
+            {/* Tag / Micro-header with Official Circular Corporate Logo */}
+            <div className="flex flex-wrap items-center gap-3">
+              <Logo variant="circular" size="lg" className="shrink-0 drop-shadow-md" />
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EBEEEE] dark:bg-neutral-800 text-xs text-[#2E2E2E] dark:text-[#FFD54F] font-bold border border-[#D9C39A]/40">
+                <span className="w-2 h-2 rounded-full bg-[#F4B400]"></span>
+                <span className="tracking-wide">AI-Native Commerce, Logistics &amp; Multi-Agent Operating Platform</span>
+              </div>
             </div>
 
             {/* Primary Heading (Official Directive Specification) */}

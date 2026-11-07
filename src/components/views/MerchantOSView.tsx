@@ -18,6 +18,7 @@ import {
   Building2
 } from 'lucide-react';
 import { OrderStatus } from '../../types';
+import { Logo } from '../brand/Logo';
 
 export const MerchantOSView: React.FC = () => {
   const {
@@ -55,21 +56,24 @@ export const MerchantOSView: React.FC = () => {
     <div className="space-y-6 pb-12 max-w-7xl mx-auto">
       {/* Top Banner */}
       <div className="bg-[#2E2E2E] text-white rounded-2xl p-6 sm:p-7 border border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-xl">
-        <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#F4B400]">
-              TOGOSERVE Business OS
-            </span>
-            <span className="text-xs bg-[#16845B]/30 text-emerald-300 px-2 py-0.5 rounded-full border border-emerald-500/30">
-              Aroma Bakehouse & Roastery (Branch #01)
-            </span>
+        <div className="flex items-start sm:items-center gap-4">
+          <Logo variant="circular" size="lg" className="hidden sm:inline-flex shrink-0" />
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#F4B400]">
+                TOGOSERVE Business OS
+              </span>
+              <span className="text-xs bg-[#16845B]/30 text-emerald-300 px-2 py-0.5 rounded-full border border-emerald-500/30">
+                Aroma Bakehouse & Roastery (Branch #01)
+              </span>
+            </div>
+            <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight">
+              Merchant Operating Ecosystem
+            </h1>
+            <p className="text-xs sm:text-sm text-slate-300 mt-0.5 max-w-xl">
+              Unified omnichannel commerce connecting Sell, Operate, and Grow modules with real-time inventory and ledger settlements.
+            </p>
           </div>
-          <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight">
-            Merchant Operating Ecosystem
-          </h1>
-          <p className="text-xs sm:text-sm text-slate-300 mt-0.5 max-w-xl">
-            Unified omnichannel commerce connecting Sell, Operate, and Grow modules with real-time inventory and ledger settlements.
-          </p>
         </div>
 
         <div className="flex items-center gap-2">
