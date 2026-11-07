@@ -1,19 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
-  <defs>
-    <linearGradient id="stem-white" x1="20" y1="20" x2="80" y2="100" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#FFFFFF" />
-      <stop offset="100%" stop-color="#CBD5E1" />
-    </linearGradient>
-    <linearGradient id="goldfold-white" x1="40" y1="30" x2="110" y2="90" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#FFDE59" />
-      <stop offset="40%" stop-color="#FFC928" />
-      <stop offset="100%" stop-color="#D9A514" />
-    </linearGradient>
-  </defs>
-  <path d="M6 46H26L22 52H2L6 46Z" fill="#FFC928" />
-  <path d="M12 60H34L30 66H8L12 60Z" fill="#FFC928" />
-  <path d="M18 74H38L34 80H14L18 74Z" fill="#D9A514" />
-  <path d="M32 24H86L80 36H56L36 94H20L40 36H26L32 24Z" fill="url(#stem-white)" />
-  <path d="M52 46H74L63 76C61 82 66 88 73 88H88L82 72L108 58L104 90L92 84C89 96 76 102 65 100C49 98 44 84 48 72L52 60C44 64 38 72 38 78H26C26 66 36 52 52 46Z" fill="url(#goldfold-white)" />
-  <path d="M80 34L108 30L98 58L88 48L80 34Z" fill="url(#goldfold-white)" />
-</svg>
+
+    <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="togoGoldGrad" x1="20" y1="20" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#FFD54F" />
+          <stop offset="60%" stop-color="#F4B400" />
+          <stop offset="100%" stop-color="#D9A514" />
+        </linearGradient>
+        <linearGradient id="togoCharcoalGrad" x1="60" y1="30" x2="100" y2="70" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#3A3A3A" />
+          <stop offset="100%" stop-color="#242424" />
+        </linearGradient>
+      </defs>
+      <!-- Stylized Gold T -->
+      <path d="M18 22C18 17.5817 21.5817 14 26 14H94C98.4183 14 102 17.5817 102 22V28C102 32.4183 98.4183 36 94 36H70V96C70 101.523 65.5228 106 60 106C54.4772 106 50 101.523 50 96V36H26C21.5817 36 18 32.4183 18 28V22Z" fill="url(#togoGoldGrad)" />
+      <!-- Dark Charcoal Geometric Accent Wing -->
+      <path d="M72 40C72 37.7909 73.7909 36 76 36H94C96.2091 36 98 37.7909 98 40V70C98 74.4183 94.4183 78 90 78H76C73.7909 78 72 76.2091 72 74V40Z" fill="#E2E8F0" />
+    </svg>
+  

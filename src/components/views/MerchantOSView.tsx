@@ -54,10 +54,10 @@ export const MerchantOSView: React.FC = () => {
   return (
     <div className="space-y-6 pb-12 max-w-7xl mx-auto">
       {/* Top Banner */}
-      <div className="bg-[#071A2F] text-white rounded-2xl p-6 sm:p-7 border border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-xl">
+      <div className="bg-[#2E2E2E] text-white rounded-2xl p-6 sm:p-7 border border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-xl">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#FFC928]">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#F4B400]">
               TOGOSERVE Business OS
             </span>
             <span className="text-xs bg-[#16845B]/30 text-emerald-300 px-2 py-0.5 rounded-full border border-emerald-500/30">
@@ -75,7 +75,7 @@ export const MerchantOSView: React.FC = () => {
         <div className="flex items-center gap-2">
           <button
             onClick={() => setActivePortal('pos')}
-            className="px-4 py-2 bg-[#FFC928] hover:bg-[#D9A514] text-[#071A2F] font-bold text-xs rounded-xl shadow-sm transition-colors flex items-center gap-1.5"
+            className="px-4 py-2 bg-[#F4B400] hover:bg-[#F4B400] text-[#2E2E2E] font-bold text-xs rounded-xl shadow-sm transition-colors flex items-center gap-1.5"
           >
             <span>Launch POS Register</span>
             <ArrowUpRight className="w-4 h-4" />
@@ -92,7 +92,7 @@ export const MerchantOSView: React.FC = () => {
               onClick={() => setActivePillar(pillar)}
               className={`px-4 py-2 text-xs font-extrabold rounded-xl transition-all ${
                 activePillar === pillar
-                  ? 'bg-[#071A2F] dark:bg-[#FFC928] text-white dark:text-[#071A2F] shadow-sm'
+                  ? 'bg-[#2E2E2E] dark:bg-[#F4B400] text-white dark:text-[#2E2E2E] shadow-sm'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-800/60'
               }`}
             >
@@ -121,7 +121,7 @@ export const MerchantOSView: React.FC = () => {
                 onClick={() => setOperateSubTab(tab.id as any)}
                 className={`px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-colors whitespace-nowrap ${
                   operateSubTab === tab.id
-                    ? 'bg-[#D9A514]/20 text-[#D9A514] font-bold border border-[#D9A514]/40'
+                    ? 'bg-[#F4B400]/20 text-[#F4B400] font-bold border border-[#F4B400]/40'
                     : 'text-slate-500 hover:text-slate-800 dark:text-slate-400'
                 }`}
               >
@@ -166,14 +166,14 @@ export const MerchantOSView: React.FC = () => {
               {/* Kitchen fulfillment quick view */}
               <div
                 className={`p-5 rounded-2xl border ${
-                  isDarkMode ? 'bg-[#0B223D] border-slate-800 text-white' : 'bg-white border-slate-200 text-[#17212B] shadow-xs'
+                  isDarkMode ? 'bg-[#1E1E1E] border-slate-800 text-white' : 'bg-white border-slate-200 text-[#2E2E2E] shadow-xs'
                 }`}
               >
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-sm font-bold">Live Kitchen Display System (KDS)</h3>
                   <button
                     onClick={() => setOperateSubTab('orders')}
-                    className="text-xs text-[#D9A514] hover:underline font-semibold"
+                    className="text-xs text-[#F4B400] hover:underline font-semibold"
                   >
                     Manage All Orders ({orders.length}) →
                   </button>
@@ -187,7 +187,7 @@ export const MerchantOSView: React.FC = () => {
                     >
                       <div>
                         <div className="flex items-center justify-between text-xs mb-1.5">
-                          <span className="font-mono font-bold text-[#D9A514]">{ord.orderNumber}</span>
+                          <span className="font-mono font-bold text-[#F4B400]">{ord.orderNumber}</span>
                           <StatusBadge status={ord.status} />
                         </div>
                         <div className="text-xs font-semibold truncate mb-1">{ord.customerName}</div>
@@ -213,7 +213,7 @@ export const MerchantOSView: React.FC = () => {
                                 : 'PICKED_UP'
                             )
                           }
-                          className="px-2.5 py-1 text-[11px] font-bold rounded-lg bg-[#071A2F] dark:bg-[#FFC928] text-white dark:text-[#071A2F] hover:opacity-90"
+                          className="px-2.5 py-1 text-[11px] font-bold rounded-lg bg-[#2E2E2E] dark:bg-[#F4B400] text-white dark:text-[#2E2E2E] hover:opacity-90"
                         >
                           {ord.status === 'CONFIRMED'
                             ? 'Accept'
@@ -236,12 +236,12 @@ export const MerchantOSView: React.FC = () => {
                 <div
                   key={ord.id}
                   className={`p-4 rounded-xl border transition-all ${
-                    isDarkMode ? 'bg-[#0B223D] border-slate-800 text-white' : 'bg-white border-slate-200 text-[#17212B]'
+                    isDarkMode ? 'bg-[#1E1E1E] border-slate-800 text-white' : 'bg-white border-slate-200 text-[#2E2E2E]'
                   }`}
                 >
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2.5 border-b border-slate-200 dark:border-slate-800">
                     <div className="flex items-center gap-2">
-                      <span className="font-mono text-xs font-bold text-[#D9A514]">{ord.orderNumber}</span>
+                      <span className="font-mono text-xs font-bold text-[#F4B400]">{ord.orderNumber}</span>
                       <span className="text-xs font-medium text-slate-400">
                         • {ord.customerName} ({ord.customerPhone})
                       </span>
@@ -287,7 +287,7 @@ export const MerchantOSView: React.FC = () => {
           {operateSubTab === 'inventory' && (
             <div
               className={`rounded-2xl border p-5 ${
-                isDarkMode ? 'bg-[#0B223D] border-slate-800 text-white' : 'bg-white border-slate-200 text-[#17212B]'
+                isDarkMode ? 'bg-[#1E1E1E] border-slate-800 text-white' : 'bg-white border-slate-200 text-[#2E2E2E]'
               }`}
             >
               <div className="flex items-center justify-between mb-4">
@@ -299,7 +299,7 @@ export const MerchantOSView: React.FC = () => {
                 </div>
                 <button
                   onClick={() => restockItem('inv-2', 20)}
-                  className="px-3 py-1.5 bg-[#FFC928] text-[#071A2F] text-xs font-bold rounded-lg hover:bg-[#D9A514] transition-colors"
+                  className="px-3 py-1.5 bg-[#F4B400] text-[#2E2E2E] text-xs font-bold rounded-lg hover:bg-[#F4B400] transition-colors"
                 >
                   + Restock All Low
                 </button>
@@ -328,12 +328,12 @@ export const MerchantOSView: React.FC = () => {
                           <span className="ml-2 font-bold">{inv.stockLevel} units</span>
                         </td>
                         <td className="p-3">₱{inv.unitCost}</td>
-                        <td className="p-3 text-[#D9A514] font-bold">₱{inv.retailPrice}</td>
+                        <td className="p-3 text-[#F4B400] font-bold">₱{inv.retailPrice}</td>
                         <td className="p-3 text-slate-400 font-sans">{inv.supplier}</td>
                         <td className="p-3 font-sans">
                           <button
                             onClick={() => restockItem(inv.id, 15)}
-                            className="px-2.5 py-1 text-[11px] font-bold rounded bg-slate-200 dark:bg-slate-700 hover:bg-[#D9A514] hover:text-[#071A2F] transition-colors"
+                            className="px-2.5 py-1 text-[11px] font-bold rounded bg-slate-200 dark:bg-slate-700 hover:bg-[#F4B400] hover:text-[#2E2E2E] transition-colors"
                           >
                             + Restock 15
                           </button>
@@ -351,7 +351,7 @@ export const MerchantOSView: React.FC = () => {
             <div className="space-y-4">
               <div
                 className={`p-5 rounded-2xl border ${
-                  isDarkMode ? 'bg-[#0B223D] border-slate-800 text-white' : 'bg-white border-slate-200 text-[#17212B]'
+                  isDarkMode ? 'bg-[#1E1E1E] border-slate-800 text-white' : 'bg-white border-slate-200 text-[#2E2E2E]'
                 }`}
               >
                 <div className="flex items-center justify-between mb-4">
@@ -363,7 +363,7 @@ export const MerchantOSView: React.FC = () => {
                   </div>
                   <button
                     onClick={() => setActivePortal('supplier')}
-                    className="text-xs font-bold text-[#D9A514] hover:underline"
+                    className="text-xs font-bold text-[#F4B400] hover:underline"
                   >
                     Open Supplier Hub →
                   </button>
@@ -386,7 +386,7 @@ export const MerchantOSView: React.FC = () => {
                         <span className="font-mono text-slate-400">Min Order: ₱{sup.minimumOrderValue.toLocaleString()}</span>
                         <button
                           onClick={() => addToast('success', 'PO Draft Created', `Purchase order draft sent to ${sup.name}`)}
-                          className="px-3 py-1 bg-[#FFC928] text-[#071A2F] font-bold rounded-lg hover:bg-[#D9A514]"
+                          className="px-3 py-1 bg-[#F4B400] text-[#2E2E2E] font-bold rounded-lg hover:bg-[#F4B400]"
                         >
                           Create PO
                         </button>
@@ -402,7 +402,7 @@ export const MerchantOSView: React.FC = () => {
           {operateSubTab === 'settlement' && (
             <div
               className={`rounded-2xl border p-5 ${
-                isDarkMode ? 'bg-[#0B223D] border-slate-800 text-white' : 'bg-white border-slate-200 text-[#17212B]'
+                isDarkMode ? 'bg-[#1E1E1E] border-slate-800 text-white' : 'bg-white border-slate-200 text-[#2E2E2E]'
               }`}
             >
               <div className="flex items-center justify-between mb-4">
@@ -437,7 +437,7 @@ export const MerchantOSView: React.FC = () => {
                     {ledger.map((entry) => (
                       <tr key={entry.id}>
                         <td className="p-3 text-slate-400">{entry.timestamp}</td>
-                        <td className="p-3 font-bold text-[#D9A514]">{entry.orderNumber}</td>
+                        <td className="p-3 font-bold text-[#F4B400]">{entry.orderNumber}</td>
                         <td className="p-3 font-bold">₱{entry.grossAmount.toFixed(2)}</td>
                         <td className="p-3 text-slate-400">₱{entry.platformFee.toFixed(2)}</td>
                         <td className="p-3 text-slate-400">₱{entry.deliveryFee.toFixed(2)}</td>
@@ -462,7 +462,7 @@ export const MerchantOSView: React.FC = () => {
         <div className="space-y-4">
           <div
             className={`p-6 rounded-2xl border space-y-4 ${
-              isDarkMode ? 'bg-[#0B223D] border-slate-800 text-white' : 'bg-white border-slate-200 text-[#17212B]'
+              isDarkMode ? 'bg-[#1E1E1E] border-slate-800 text-white' : 'bg-white border-slate-200 text-[#2E2E2E]'
             }`}
           >
             <h3 className="text-base font-bold">Omnichannel Sales Channels (Sell Pillar)</h3>
@@ -472,14 +472,14 @@ export const MerchantOSView: React.FC = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
               <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 space-y-2">
-                <Store className="w-5 h-5 text-[#D9A514]" />
+                <Store className="w-5 h-5 text-[#F4B400]" />
                 <h4 className="font-bold text-xs">Marketplace Listing</h4>
                 <p className="text-[11px] text-slate-400">Active in Metro Manila radius with 25-min delivery SLA.</p>
                 <span className="inline-block text-[10px] text-emerald-500 font-bold">Status: Online</span>
               </div>
 
               <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 space-y-2">
-                <ShoppingBag className="w-5 h-5 text-[#FFC928]" />
+                <ShoppingBag className="w-5 h-5 text-[#F4B400]" />
                 <h4 className="font-bold text-xs">In-Store Pickup</h4>
                 <p className="text-[11px] text-slate-400">Curbside and counter pickup tickets routed to POS.</p>
                 <span className="inline-block text-[10px] text-emerald-500 font-bold">Status: Enabled</span>
@@ -501,7 +501,7 @@ export const MerchantOSView: React.FC = () => {
         <div className="space-y-4">
           <div
             className={`p-6 rounded-2xl border space-y-4 ${
-              isDarkMode ? 'bg-[#0B223D] border-slate-800 text-white' : 'bg-white border-slate-200 text-[#17212B]'
+              isDarkMode ? 'bg-[#1E1E1E] border-slate-800 text-white' : 'bg-white border-slate-200 text-[#2E2E2E]'
             }`}
           >
             <div className="flex items-center justify-between">
@@ -511,7 +511,7 @@ export const MerchantOSView: React.FC = () => {
                   Data-driven customer retention, basket size expansion, and automated copilot pricing
                 </p>
               </div>
-              <span className="text-xs px-2.5 py-1 rounded bg-[#D9A514]/20 text-[#D9A514] font-bold font-mono">
+              <span className="text-xs px-2.5 py-1 rounded bg-[#F4B400]/20 text-[#F4B400] font-bold font-mono">
                 A10-A19 Merchant AI Active
               </span>
             </div>

@@ -25,8 +25,8 @@ export const ShortcutsModal: React.FC = () => {
       <div
         className={`relative w-full max-w-lg rounded-2xl shadow-2xl p-6 sm:p-7 transition-colors ${
           isDarkMode
-            ? 'bg-[#071A2F] border border-slate-700 text-white'
-            : 'bg-white border border-slate-200 text-[#17212B]'
+            ? 'bg-[#2E2E2E] border border-slate-700 text-white'
+            : 'bg-white border border-slate-200 text-[#2E2E2E]'
         }`}
       >
         <button
@@ -38,7 +38,7 @@ export const ShortcutsModal: React.FC = () => {
         </button>
 
         <div className="flex items-center gap-2.5 mb-5">
-          <div className="p-2 rounded-lg bg-[#FFC928]/20 text-[#D9A514]">
+          <div className="p-2 rounded-lg bg-[#F4B400]/20 text-[#F4B400]">
             <Keyboard className="w-5 h-5" />
           </div>
           <div>
@@ -65,7 +65,7 @@ export const ShortcutsModal: React.FC = () => {
         <div className="mt-5 pt-3 border-t border-slate-200 dark:border-slate-800 text-center">
           <button
             onClick={() => setIsShortcutsOpen(false)}
-            className="px-5 py-2 bg-[#FFC928] text-[#071A2F] font-bold text-xs rounded-lg hover:bg-[#D9A514] transition-colors"
+            className="px-5 py-2 bg-[#F4B400] text-[#2E2E2E] font-bold text-xs rounded-lg hover:bg-[#F4B400] transition-colors"
           >
             Got it, return to app
           </button>

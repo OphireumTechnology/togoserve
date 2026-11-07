@@ -20,7 +20,7 @@ export const FleetManagementView: React.FC = () => {
         actions={
           <button
             onClick={() => addToast('info', 'Register Vehicle', 'Vehicle registration flow opened.')}
-            className="px-4 py-2 bg-[#FFC928] hover:bg-[#D9A514] text-[#071A2F] font-bold text-xs rounded-xl transition-colors"
+            className="px-4 py-2 bg-[#F4B400] hover:bg-[#F4B400] text-[#2E2E2E] font-bold text-xs rounded-xl transition-colors"
           >
             + Register Fleet Vehicle
           </button>
@@ -46,7 +46,7 @@ export const FleetManagementView: React.FC = () => {
         <MetricCard
           label="Deliveries Today"
           value={fleetVehicles.reduce((a, b) => a + b.todayDeliveries, 0)}
-          icon={<CheckCircle2 className="w-4 h-4 text-[#FFC928]" />}
+          icon={<CheckCircle2 className="w-4 h-4 text-[#F4B400]" />}
           subValue="Zero reported delays"
           isDark={isDarkMode}
         />
@@ -62,7 +62,7 @@ export const FleetManagementView: React.FC = () => {
       {/* Vehicles Table */}
       <div
         className={`rounded-2xl border p-5 ${
-          isDarkMode ? 'bg-[#0B223D] border-slate-800 text-white' : 'bg-white border-slate-200 text-[#17212B]'
+          isDarkMode ? 'bg-[#1E1E1E] border-slate-800 text-white' : 'bg-white border-slate-200 text-[#2E2E2E]'
         }`}
       >
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
@@ -78,7 +78,7 @@ export const FleetManagementView: React.FC = () => {
                 onClick={() => setFilterType(type)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors ${
                   filterType === type
-                    ? 'bg-[#071A2F] dark:bg-[#FFC928] text-white dark:text-[#071A2F] font-bold'
+                    ? 'bg-[#2E2E2E] dark:bg-[#F4B400] text-white dark:text-[#2E2E2E] font-bold'
                     : 'text-slate-500 hover:text-slate-800 dark:text-slate-400'
                 }`}
               >
@@ -106,7 +106,7 @@ export const FleetManagementView: React.FC = () => {
             <tbody className="divide-y divide-slate-200 dark:divide-slate-800 font-mono">
               {filtered.map((v) => (
                 <tr key={v.id} className="hover:bg-slate-50 dark:hover:bg-slate-850">
-                  <td className="p-3 font-bold text-[#D9A514]">{v.plateNumber}</td>
+                  <td className="p-3 font-bold text-[#F4B400]">{v.plateNumber}</td>
                   <td className="p-3 font-bold">{v.vehicleType}</td>
                   <td className="p-3 font-sans text-slate-400">{v.model}</td>
                   <td className="p-3 font-sans">
@@ -122,7 +122,7 @@ export const FleetManagementView: React.FC = () => {
                   <td className="p-3 font-sans">
                     <button
                       onClick={() => addToast('info', 'Telemetry Ping', `Telemetry requested for ${v.plateNumber}`)}
-                      className="px-2.5 py-1 text-[11px] font-bold rounded bg-slate-200 dark:bg-slate-700 hover:bg-[#D9A514] hover:text-[#071A2F] transition-colors"
+                      className="px-2.5 py-1 text-[11px] font-bold rounded bg-slate-200 dark:bg-slate-700 hover:bg-[#F4B400] hover:text-[#2E2E2E] transition-colors"
                     >
                       Ping Route
                     </button>

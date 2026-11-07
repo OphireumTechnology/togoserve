@@ -40,7 +40,7 @@ export const CommandPalette: React.FC = () => {
       title: 'Platform Overview & Showcase',
       subtitle: 'Public home page, company capabilities, and ecosystem bridge',
       category: 'Navigation',
-      icon: <Store className="w-4 h-4 text-[#D9A514]" />,
+      icon: <Store className="w-4 h-4 text-[#F4B400]" />,
       action: () => {
         setActivePortal('landing');
         setIsCommandPaletteOpen(false);
@@ -51,7 +51,7 @@ export const CommandPalette: React.FC = () => {
       title: 'Customer Marketplace',
       subtitle: 'Browse restaurants, groceries, order food and essentials',
       category: 'Navigation',
-      icon: <ShoppingBag className="w-4 h-4 text-[#D9A514]" />,
+      icon: <ShoppingBag className="w-4 h-4 text-[#F4B400]" />,
       action: () => {
         setActivePortal('marketplace');
         setIsCommandPaletteOpen(false);
@@ -62,7 +62,7 @@ export const CommandPalette: React.FC = () => {
       title: 'TOGO Padala (Express Logistics)',
       subtitle: 'Book point-to-point package courier and freight delivery',
       category: 'Navigation',
-      icon: <Truck className="w-4 h-4 text-[#FFC928]" />,
+      icon: <Truck className="w-4 h-4 text-[#F4B400]" />,
       action: () => {
         setActivePortal('padala');
         setIsCommandPaletteOpen(false);
@@ -181,8 +181,8 @@ export const CommandPalette: React.FC = () => {
       <div
         className={`relative w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden border ${
           isDarkMode
-            ? 'bg-[#071A2F] border-slate-700 text-white'
-            : 'bg-white border-slate-200 text-[#17212B]'
+            ? 'bg-[#2E2E2E] border-slate-700 text-white'
+            : 'bg-white border-slate-200 text-[#2E2E2E]'
         }`}
       >
         <div className="flex items-center px-4 py-3.5 border-b border-slate-200 dark:border-slate-800">
@@ -220,7 +220,7 @@ export const CommandPalette: React.FC = () => {
                 </div>
                 <div className="grow min-w-0">
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-bold truncate group-hover:text-[#D9A514]">
+                    <span className="text-xs font-bold truncate group-hover:text-[#F4B400]">
                       {item.title}
                     </span>
                     <span className="text-[10px] text-slate-400 uppercase tracking-wider font-mono">

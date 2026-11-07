@@ -28,8 +28,8 @@ export const AuthModal: React.FC = () => {
       <div
         className={`relative w-full max-w-md rounded-2xl shadow-2xl p-6 sm:p-8 transition-colors ${
           isDarkMode
-            ? 'bg-[#071A2F] border border-slate-700 text-white'
-            : 'bg-white border border-slate-200 text-[#17212B]'
+            ? 'bg-[#2E2E2E] border border-slate-700 text-white'
+            : 'bg-white border border-slate-200 text-[#2E2E2E]'
         }`}
       >
         <button
@@ -54,7 +54,7 @@ export const AuthModal: React.FC = () => {
         <div className="space-y-4">
           <button
             onClick={loginWithGoogle}
-            className="w-full flex items-center justify-center gap-3 py-2.5 px-4 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-700 font-semibold text-sm shadow-xs transition-colors focus:outline-none focus:ring-2 focus:ring-[#D9A514]"
+            className="w-full flex items-center justify-center gap-3 py-2.5 px-4 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-700 font-semibold text-sm shadow-xs transition-colors focus:outline-none focus:ring-2 focus:ring-[#F4B400]"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path
@@ -92,7 +92,7 @@ export const AuthModal: React.FC = () => {
               <select
                 value={selectedRole}
                 onChange={(e) => setSelectedRole(e.target.value as UserRole)}
-                className="w-full text-xs py-2 px-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-[#D9A514]"
+                className="w-full text-xs py-2 px-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-[#F4B400]"
               >
                 <option value="MERCHANT_OWNER">Merchant Owner (Store Management & POS)</option>
                 <option value="CUSTOMER">Customer (Marketplace & Padala)</option>
@@ -114,7 +114,7 @@ export const AuthModal: React.FC = () => {
                   placeholder="DANILODELACRUZ0909@gmail.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full text-xs pl-9 pr-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-[#D9A514]"
+                  className="w-full text-xs pl-9 pr-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-[#F4B400]"
                 />
               </div>
             </div>
@@ -130,7 +130,7 @@ export const AuthModal: React.FC = () => {
                   placeholder="••••••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full text-xs pl-9 pr-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-[#D9A514]"
+                  className="w-full text-xs pl-9 pr-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-[#F4B400]"
                 />
               </div>
             </div>
@@ -138,7 +138,7 @@ export const AuthModal: React.FC = () => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full py-2.5 px-4 bg-[#071A2F] dark:bg-[#FFC928] text-white dark:text-[#071A2F] font-bold text-xs rounded-xl hover:bg-[#0c2a4b] dark:hover:bg-[#D9A514] transition-colors shadow-sm flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-[#FFC928]"
+              className="w-full py-2.5 px-4 bg-[#2E2E2E] dark:bg-[#F4B400] text-white dark:text-[#2E2E2E] font-bold text-xs rounded-xl hover:bg-[#0c2a4b] dark:hover:bg-[#F4B400] transition-colors shadow-sm flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-[#F4B400]"
             >
               <ShieldCheck className="w-4 h-4" />
               <span>{isSubmitting ? 'Authenticating Cloud Session...' : 'Authenticate & Enter Platform'}</span>

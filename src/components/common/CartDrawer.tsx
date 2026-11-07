@@ -47,8 +47,8 @@ export const CartDrawer: React.FC<{
         <div
           className={`w-screen max-w-md shadow-2xl flex flex-col transition-colors ${
             isDarkMode
-              ? 'bg-[#071A2F] text-white border-l border-slate-700'
-              : 'bg-white text-[#17212B] border-l border-slate-200'
+              ? 'bg-[#2E2E2E] text-white border-l border-slate-700'
+              : 'bg-white text-[#2E2E2E] border-l border-slate-200'
           }`}
         >
           {/* Header */}
@@ -170,7 +170,7 @@ export const CartDrawer: React.FC<{
                       onClick={() => setPaymentMethod('TOGO_PAY')}
                       className={`p-2 rounded-xl text-center border text-xs flex flex-col items-center gap-1 transition-all ${
                         paymentMethod === 'TOGO_PAY'
-                          ? 'border-[#D9A514] bg-[#FFC928]/15 text-[#D9A514] font-bold'
+                          ? 'border-[#F4B400] bg-[#F4B400]/15 text-[#F4B400] font-bold'
                           : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 text-slate-500'
                       }`}
                     >
@@ -182,7 +182,7 @@ export const CartDrawer: React.FC<{
                       onClick={() => setPaymentMethod('CARD')}
                       className={`p-2 rounded-xl text-center border text-xs flex flex-col items-center gap-1 transition-all ${
                         paymentMethod === 'CARD'
-                          ? 'border-[#D9A514] bg-[#FFC928]/15 text-[#D9A514] font-bold'
+                          ? 'border-[#F4B400] bg-[#F4B400]/15 text-[#F4B400] font-bold'
                           : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 text-slate-500'
                       }`}
                     >
@@ -194,7 +194,7 @@ export const CartDrawer: React.FC<{
                       onClick={() => setPaymentMethod('COD')}
                       className={`p-2 rounded-xl text-center border text-xs flex flex-col items-center gap-1 transition-all ${
                         paymentMethod === 'COD'
-                          ? 'border-[#D9A514] bg-[#FFC928]/15 text-[#D9A514] font-bold'
+                          ? 'border-[#F4B400] bg-[#F4B400]/15 text-[#F4B400] font-bold'
                           : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 text-slate-500'
                       }`}
                     >
@@ -226,7 +226,7 @@ export const CartDrawer: React.FC<{
                   )}
                   <div className="pt-2 border-t border-slate-200 dark:border-slate-800 flex justify-between font-bold text-sm">
                     <span>Total Amount</span>
-                    <span className="font-mono tabular-nums text-[#D9A514]">
+                    <span className="font-mono tabular-nums text-[#F4B400]">
                       ₱{finalTotal.toFixed(2)}
                     </span>
                   </div>
@@ -241,7 +241,7 @@ export const CartDrawer: React.FC<{
               <button
                 disabled={isCheckingOut}
                 onClick={handleCheckout}
-                className="w-full py-3 px-4 bg-[#FFC928] hover:bg-[#D9A514] text-[#071A2F] font-bold text-sm rounded-xl shadow-md transition-all flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-[#FFC928]"
+                className="w-full py-3 px-4 bg-[#F4B400] hover:bg-[#F4B400] text-[#2E2E2E] font-bold text-sm rounded-xl shadow-md transition-all flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-[#F4B400]"
               >
                 <span>{isCheckingOut ? 'Dispatching to Merchant...' : `Place Order (₱${finalTotal.toFixed(2)})`}</span>
                 <ArrowRight className="w-4 h-4" />

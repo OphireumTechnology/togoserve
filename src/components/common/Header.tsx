@@ -20,7 +20,6 @@ import {
   BarChart3,
   ShieldCheck,
   User,
-  ExternalLink,
   Layers
 } from 'lucide-react';
 import { UserRole } from '../../types';
@@ -83,35 +82,35 @@ export const Header: React.FC<{
       label: 'POS Register',
       category: 'business',
       description: 'Point-of-Sale cash counter & SKU checkout',
-      icon: <CreditCard className="w-4 h-4 text-[#FFC928]" />,
+      icon: <CreditCard className="w-4 h-4 text-[#F4B400]" />,
     },
     {
       id: 'fleet',
       label: 'Fleet Operations',
       category: 'business',
       description: 'Dispatch, multi-rider routing & SLA telemetry',
-      icon: <PackageCheck className="w-4 h-4 text-[#D9A514]" />,
+      icon: <PackageCheck className="w-4 h-4 text-[#F4B400]" />,
     },
     {
       id: 'supplier',
       label: 'B2B Wholesale',
       category: 'business',
       description: 'Bulk inventory supply catalog & procurement',
-      icon: <Building2 className="w-4 h-4 text-sky-400" />,
+      icon: <Building2 className="w-4 h-4 text-[#2E2E2E] dark:text-[#EBEEEE]" />,
     },
     {
       id: 'ai-center',
       label: 'A00 AI Supervisor',
       category: 'platform',
       description: 'Governed autonomous agent approval & policies',
-      icon: <Cpu className="w-4 h-4 text-purple-400" />,
+      icon: <Cpu className="w-4 h-4 text-[#F4B400]" />,
     },
     {
       id: 'analytics',
       label: 'Executive Analytics',
       category: 'platform',
       description: 'Real-time GMV, funnels & audit reporting',
-      icon: <BarChart3 className="w-4 h-4 text-emerald-400" />,
+      icon: <BarChart3 className="w-4 h-4 text-[#16845B]" />,
     },
   ];
 
@@ -129,23 +128,24 @@ export const Header: React.FC<{
   const activeSecondaryItem = secondaryPortals.find((p) => p.id === activePortal);
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-[#071A2F] text-white border-b border-slate-800/80 shadow-md">
+    <header className="sticky top-0 z-40 w-full bg-white dark:bg-[#181818] text-[#2E2E2E] dark:text-[#FAFAFA] border-b border-[#EBEEEE] dark:border-neutral-800 shadow-xs transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 gap-3">
+        <div className="flex items-center justify-between h-16 sm:h-20 gap-4">
           
           {/* ======================================================== */}
-          {/* ZONE 1: MANDATORY OFFICIAL TOGOSERVE LOGO                */}
-          {/* Unstretched, uncropped, exact official Navy/Gold asset   */}
+          {/* ZONE 1: OFFICIAL TOGOSERVE HORIZONTAL LOGO               */}
+          {/* Displayed sharply, uncropped, with generous space        */}
           {/* ======================================================== */}
           <div className="flex items-center gap-3 shrink-0">
             <button
               onClick={() => setActivePortal('landing')}
-              className="focus:outline-none focus:ring-2 focus:ring-[#FFC928] rounded-lg transition-transform active:scale-95 text-left flex items-center"
+              className="focus:outline-none focus:ring-2 focus:ring-[#F4B400] rounded-xl transition-transform active:scale-95 text-left flex items-center py-1"
               aria-label="TOGOSERVE Home"
             >
               <Logo
-                variant="default"
-                size="sm"
+                variant="header"
+                theme={isDarkMode ? 'dark' : 'light'}
+                size="md"
                 className="hover:opacity-95 transition-opacity"
               />
             </button>
@@ -153,7 +153,7 @@ export const Header: React.FC<{
 
           {/* ======================================================== */}
           {/* ZONE 2: DESKTOP STREAMLINED NAVIGATION                   */}
-          {/* Clean, spacious, uncrowded, uncluttered                  */}
+          {/* Consistent typography, gold active highlights            */}
           {/* ======================================================== */}
           <nav className="hidden lg:flex items-center gap-1.5 xl:gap-2">
             {primaryPortals.map((p) => {
@@ -162,13 +162,15 @@ export const Header: React.FC<{
                 <button
                   key={p.id}
                   onClick={() => setActivePortal(p.id)}
-                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all focus:outline-none focus:ring-2 focus:ring-[#FFC928] ${
+                  className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all focus:outline-none focus:ring-2 focus:ring-[#F4B400] ${
                     isActive
-                      ? 'bg-[#FFC928] text-[#071A2F] font-bold shadow-sm'
-                      : 'text-slate-200 hover:text-white hover:bg-white/10'
+                      ? 'bg-[#F4B400] text-[#2E2E2E] font-bold shadow-xs'
+                      : 'text-[#2E2E2E] dark:text-neutral-200 hover:text-[#2E2E2E] hover:bg-[#EBEEEE] dark:hover:bg-neutral-800'
                   }`}
                 >
-                  {p.icon}
+                  <span className={isActive ? 'text-[#2E2E2E]' : 'text-[#64748B] dark:text-neutral-400'}>
+                    {p.icon}
+                  </span>
                   <span>{p.label}</span>
                 </button>
               );
@@ -178,10 +180,10 @@ export const Header: React.FC<{
             <div className="relative" ref={moreMenuRef}>
               <button
                 onClick={() => setIsMoreMenuOpen(!isMoreMenuOpen)}
-                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all focus:outline-none focus:ring-2 focus:ring-[#FFC928] ${
+                className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all focus:outline-none focus:ring-2 focus:ring-[#F4B400] ${
                   isSecondaryActive
-                    ? 'bg-[#FFC928] text-[#071A2F] font-bold shadow-sm'
-                    : 'text-slate-200 hover:text-white hover:bg-white/10'
+                    ? 'bg-[#F4B400] text-[#2E2E2E] font-bold shadow-xs'
+                    : 'text-[#2E2E2E] dark:text-neutral-200 hover:text-[#2E2E2E] hover:bg-[#EBEEEE] dark:hover:bg-neutral-800'
                 }`}
                 aria-expanded={isMoreMenuOpen}
                 aria-haspopup="true"
@@ -192,9 +194,9 @@ export const Header: React.FC<{
               </button>
 
               {isMoreMenuOpen && (
-                <div className="absolute left-0 mt-2 w-72 bg-[#071A2F] border border-slate-700/80 rounded-xl shadow-2xl p-2 z-50 text-slate-200 backdrop-blur-md">
-                  <div className="px-3 py-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-700/60 mb-1">
-                    Ecosystem Modules
+                <div className="absolute left-0 mt-2 w-72 bg-white dark:bg-[#1E1E1E] border border-[#EBEEEE] dark:border-neutral-800 rounded-2xl shadow-xl p-2 z-50 text-[#2E2E2E] dark:text-neutral-200 animate-in fade-in-50 zoom-in-95 duration-100">
+                  <div className="px-3 py-1.5 text-[10px] font-bold text-[#64748B] dark:text-neutral-400 uppercase tracking-wider border-b border-[#EBEEEE] dark:border-neutral-800 mb-1">
+                    Enterprise Solutions
                   </div>
                   <div className="space-y-1">
                     {secondaryPortals.map((item) => {
@@ -206,23 +208,23 @@ export const Header: React.FC<{
                             setActivePortal(item.id);
                             setIsMoreMenuOpen(false);
                           }}
-                          className={`w-full text-left p-2.5 rounded-lg transition-colors flex items-start gap-2.5 ${
+                          className={`w-full text-left p-2.5 rounded-xl transition-colors flex items-start gap-2.5 ${
                             isItemActive
-                              ? 'bg-white/15 text-white font-bold border border-slate-600'
-                              : 'hover:bg-white/10 text-slate-300 hover:text-white'
+                              ? 'bg-[#EBEEEE] dark:bg-neutral-800 font-bold border border-[#F4B400]/40'
+                              : 'hover:bg-[#EBEEEE]/60 dark:hover:bg-neutral-800/60'
                           }`}
                         >
-                          <div className="p-1 rounded-md bg-white/5 shrink-0 mt-0.5">
+                          <div className="p-1.5 rounded-lg bg-[#EBEEEE] dark:bg-neutral-800 shrink-0 mt-0.5">
                             {item.icon}
                           </div>
                           <div>
                             <div className="flex items-center gap-1.5">
-                              <span className="text-xs font-semibold">{item.label}</span>
+                              <span className="text-xs font-semibold text-[#2E2E2E] dark:text-neutral-100">{item.label}</span>
                               {isItemActive && (
-                                <span className="w-1.5 h-1.5 rounded-full bg-[#FFC928]"></span>
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#F4B400]"></span>
                               )}
                             </div>
-                            <p className="text-[10px] text-slate-400 line-clamp-1">
+                            <p className="text-[10px] text-[#64748B] dark:text-neutral-400 line-clamp-1">
                               {item.description}
                             </p>
                           </div>
@@ -236,10 +238,10 @@ export const Header: React.FC<{
           </nav>
 
           {/* ======================================================== */}
-          {/* ZONE 3: TOP-RIGHT CONTROLS (Clean, Neat, Spacious)       */}
+          {/* ZONE 3: ACTIONS & CONTROLS (Clean, Polished)             */}
           {/* ======================================================== */}
-          <div className="flex items-center gap-1 sm:gap-2 shrink-0">
-            {/* Cloud Sync State (Clean, minimal) */}
+          <div className="flex items-center gap-2 shrink-0">
+            {/* Cloud Sync State */}
             <div className="hidden md:flex items-center">
               <CloudSyncIndicator />
             </div>
@@ -247,13 +249,13 @@ export const Header: React.FC<{
             {/* Quick Command Launcher (Ctrl+K) */}
             <button
               onClick={() => setIsCommandPaletteOpen(true)}
-              className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs text-slate-300 bg-white/5 hover:bg-white/10 border border-slate-700/80 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-[#FFC928]"
-              title="Quick Search & Actions (Ctrl + K)"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 text-xs text-[#2E2E2E] dark:text-neutral-200 bg-[#EBEEEE]/70 dark:bg-neutral-800 hover:bg-[#EBEEEE] dark:hover:bg-neutral-700 border border-[#EBEEEE] dark:border-neutral-700 rounded-xl transition-colors focus:outline-none focus:ring-2 focus:ring-[#F4B400]"
+              title="Search & Command Palette (Ctrl + K)"
               aria-label="Open command palette"
             >
-              <Search className="w-3.5 h-3.5 text-slate-400" />
+              <Search className="w-3.5 h-3.5 text-[#64748B]" />
               <span className="text-[11px] font-medium hidden md:inline">Search</span>
-              <kbd className="font-mono text-[9px] bg-white/10 px-1 py-0.5 rounded text-slate-300 border border-slate-700">
+              <kbd className="font-mono text-[9px] bg-white dark:bg-neutral-900 px-1.5 py-0.5 rounded text-[#2E2E2E] dark:text-neutral-300 border border-neutral-300 dark:border-neutral-700 font-semibold">
                 ⌘K
               </kbd>
             </button>
@@ -261,72 +263,72 @@ export const Header: React.FC<{
             {/* Theme Toggle (Dark / Light) */}
             <button
               onClick={toggleDarkMode}
-              className="p-2 text-slate-300 hover:text-[#FFC928] hover:bg-white/10 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-[#FFC928]"
+              className="p-2.5 text-[#2E2E2E] dark:text-neutral-300 hover:bg-[#EBEEEE] dark:hover:bg-neutral-800 rounded-xl transition-colors focus:outline-none focus:ring-2 focus:ring-[#F4B400]"
               title={isDarkMode ? 'Switch to Light Theme' : 'Switch to Dark Theme'}
               aria-label="Toggle color theme"
             >
               {isDarkMode ? (
-                <Sun className="w-4 h-4 text-[#FFC928]" />
+                <Sun className="w-4 h-4 text-[#F4B400]" />
               ) : (
-                <Moon className="w-4 h-4 text-slate-200" />
+                <Moon className="w-4 h-4 text-[#2E2E2E]" />
               )}
             </button>
 
             {/* Shopping Cart Drawer Trigger */}
             <button
               onClick={onOpenCart}
-              className="relative p-2 text-slate-200 hover:text-white hover:bg-white/10 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-[#FFC928]"
+              className="relative p-2.5 text-[#2E2E2E] dark:text-neutral-300 hover:bg-[#EBEEEE] dark:hover:bg-neutral-800 rounded-xl transition-colors focus:outline-none focus:ring-2 focus:ring-[#F4B400]"
               title={`Cart (${cartItemCount} items)`}
               aria-label={`View cart with ${cartItemCount} items`}
             >
               <ShoppingCart className="w-4 h-4" />
               {cartItemCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-[#FFC928] text-[#071A2F] text-[10px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow-xs">
+                <span className="absolute 1 top-1 right-1 bg-[#F4B400] text-[#2E2E2E] text-[10px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow-xs">
                   {cartItemCount}
                 </span>
               )}
             </button>
 
-            {/* User Profile / Cloud Auth Switcher */}
+            {/* User Profile / Auth Switcher */}
             {currentUser ? (
               <div className="relative" ref={profileMenuRef}>
                 <button
                   onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
-                  className="flex items-center gap-2 px-2 py-1 bg-white/5 hover:bg-white/10 border border-slate-700/80 rounded-full text-xs transition-colors focus:outline-none focus:ring-2 focus:ring-[#FFC928]"
+                  className="flex items-center gap-2 px-2.5 py-1.5 bg-[#EBEEEE]/70 dark:bg-neutral-800 hover:bg-[#EBEEEE] dark:hover:bg-neutral-700 border border-[#EBEEEE] dark:border-neutral-700 rounded-full text-xs transition-colors focus:outline-none focus:ring-2 focus:ring-[#F4B400]"
                   aria-expanded={isProfileMenuOpen}
                   aria-haspopup="true"
                 >
-                  <div className="w-6 h-6 rounded-full bg-[#FFC928] text-[#071A2F] font-bold flex items-center justify-center text-xs">
+                  <div className="w-6 h-6 rounded-full bg-[#F4B400] text-[#2E2E2E] font-bold flex items-center justify-center text-xs">
                     {currentUser.name.charAt(0)}
                   </div>
                   <div className="hidden sm:flex flex-col text-left leading-none">
-                    <span className="font-semibold text-white text-[11px] max-w-[85px] truncate">
+                    <span className="font-semibold text-[#2E2E2E] dark:text-neutral-100 text-[11px] max-w-[85px] truncate">
                       {currentUser.name.split(' ')[0]}
                     </span>
-                    <span className="text-[9px] text-[#FFC928] font-bold uppercase tracking-wider">
+                    <span className="text-[9px] text-[#F4B400] font-bold uppercase tracking-wider">
                       {currentUser.role}
                     </span>
                   </div>
-                  <ChevronDown className="w-3 h-3 text-slate-400 hidden sm:inline" />
+                  <ChevronDown className="w-3 h-3 text-[#64748B] hidden sm:inline" />
                 </button>
 
                 {isProfileMenuOpen && (
                   <div
-                    className="absolute right-0 mt-2 w-64 bg-[#071A2F] border border-slate-700/90 rounded-xl shadow-2xl p-2 z-50 text-slate-200 backdrop-blur-md"
+                    className="absolute right-0 mt-2 w-64 bg-white dark:bg-[#1E1E1E] border border-[#EBEEEE] dark:border-neutral-800 rounded-2xl shadow-xl p-2 z-50 text-[#2E2E2E] dark:text-neutral-200"
                     role="menu"
                   >
-                    <div className="px-3 py-2.5 border-b border-slate-700/80 mb-2">
-                      <p className="text-xs font-bold text-white truncate">{currentUser.name}</p>
-                      <p className="text-[11px] text-slate-400 font-mono truncate">{currentUser.email}</p>
+                    <div className="px-3 py-2.5 border-b border-[#EBEEEE] dark:border-neutral-800 mb-2">
+                      <p className="text-xs font-bold text-[#2E2E2E] dark:text-neutral-100 truncate">{currentUser.name}</p>
+                      <p className="text-[11px] text-[#64748B] dark:text-neutral-400 font-mono truncate">{currentUser.email}</p>
                       <div className="mt-1.5 flex items-center gap-1.5">
-                        <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-                        <span className="text-[10px] text-emerald-400 font-medium">
+                        <ShieldCheck className="w-3.5 h-3.5 text-[#16845B]" />
+                        <span className="text-[10px] text-[#16845B] font-medium">
                           Cloud Identity OAuth Verified
                         </span>
                       </div>
                     </div>
 
-                    <div className="px-3 py-1 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                    <div className="px-3 py-1 text-[10px] font-bold text-[#64748B] dark:text-neutral-400 uppercase tracking-wider">
                       Role-Based Workspace
                     </div>
                     <div className="grid grid-cols-1 gap-0.5 mb-2">
@@ -337,27 +339,27 @@ export const Header: React.FC<{
                             switchRole(r);
                             setIsProfileMenuOpen(false);
                           }}
-                          className={`w-full text-left px-3 py-1.5 text-xs rounded-md transition-colors flex items-center justify-between ${
+                          className={`w-full text-left px-3 py-1.5 text-xs rounded-lg transition-colors flex items-center justify-between ${
                             currentUser.role === r
-                              ? 'bg-[#FFC928]/20 text-[#FFC928] font-bold'
-                              : 'text-slate-300 hover:bg-white/10 hover:text-white'
+                              ? 'bg-[#F4B400]/20 text-[#2E2E2E] dark:text-[#F4B400] font-bold'
+                              : 'hover:bg-[#EBEEEE] dark:hover:bg-neutral-800'
                           }`}
                         >
                           <span>{r}</span>
                           {currentUser.role === r && (
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#FFC928]"></span>
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#F4B400]"></span>
                           )}
                         </button>
                       ))}
                     </div>
 
-                    <div className="border-t border-slate-700/80 pt-1">
+                    <div className="border-t border-[#EBEEEE] dark:border-neutral-800 pt-1">
                       <button
                         onClick={() => {
                           logout();
                           setIsProfileMenuOpen(false);
                         }}
-                        className="w-full text-left px-3 py-1.5 text-xs text-rose-400 hover:bg-rose-950/40 rounded-md font-semibold transition-colors"
+                        className="w-full text-left px-3 py-1.5 text-xs text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 rounded-lg font-semibold transition-colors"
                       >
                         Sign Out
                       </button>
@@ -368,36 +370,36 @@ export const Header: React.FC<{
             ) : (
               <button
                 onClick={() => setIsAuthModalOpen(true)}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#FFC928] hover:bg-[#D9A514] text-[#071A2F] text-xs font-bold rounded-lg shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-[#FFC928] whitespace-nowrap active:scale-95"
+                className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#F4B400] hover:bg-[#FFD54F] text-[#2E2E2E] text-xs font-bold rounded-xl shadow-xs transition-all focus:outline-none focus:ring-2 focus:ring-[#F4B400] whitespace-nowrap active:scale-95"
               >
                 <User className="w-3.5 h-3.5 shrink-0" />
                 <span>Sign In</span>
               </button>
             )}
 
-            {/* Mobile / Tablet Menu Hamburger Toggle */}
+            {/* Mobile / Tablet Hamburger Toggle */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-2 text-slate-300 hover:text-white hover:bg-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FFC928]"
+              className="lg:hidden p-2 text-[#2E2E2E] dark:text-neutral-200 hover:bg-[#EBEEEE] dark:hover:bg-neutral-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#F4B400]"
               aria-label="Toggle navigation menu"
             >
-              {isMobileMenuOpen ? <X className="w-5 h-5 text-white" /> : <Menu className="w-5 h-5" />}
+              {isMobileMenuOpen ? <X className="w-5 h-5 text-[#2E2E2E] dark:text-neutral-100" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </div>
 
         {/* ======================================================== */}
-        {/* RESPONSIVE MOBILE / TABLET MENU DRAWER                   */}
+        {/* RESPONSIVE MOBILE MENU DRAWER                            */}
         {/* ======================================================== */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden border-t border-slate-800 py-3 space-y-3">
-            <div className="px-2 flex items-center justify-between text-xs text-slate-400 pb-2 border-b border-slate-800">
-              <span className="text-slate-400 text-xs">Cloud Status</span>
+          <div className="lg:hidden border-t border-[#EBEEEE] dark:border-neutral-800 py-3 space-y-3">
+            <div className="px-2 flex items-center justify-between text-xs text-[#64748B] pb-2 border-b border-[#EBEEEE] dark:border-neutral-800">
+              <span className="text-xs">Cloud Status</span>
               <CloudSyncIndicator />
             </div>
 
             <div>
-              <p className="px-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">
+              <p className="px-2 text-[10px] font-bold text-[#64748B] dark:text-neutral-400 uppercase tracking-wider mb-1.5">
                 Core Portals
               </p>
               <div className="grid grid-cols-2 gap-1.5 px-1">
@@ -410,10 +412,10 @@ export const Header: React.FC<{
                         setActivePortal(p.id);
                         setIsMobileMenuOpen(false);
                       }}
-                      className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-semibold transition-colors ${
+                      className={`flex items-center gap-2 px-3 py-2.5 rounded-xl text-xs font-semibold transition-colors ${
                         isActive
-                          ? 'bg-[#FFC928] text-[#071A2F] font-bold'
-                          : 'text-slate-300 hover:bg-white/10 hover:text-white'
+                          ? 'bg-[#F4B400] text-[#2E2E2E] font-bold'
+                          : 'text-[#2E2E2E] dark:text-neutral-200 hover:bg-[#EBEEEE] dark:hover:bg-neutral-800'
                       }`}
                     >
                       {p.icon}
@@ -425,7 +427,7 @@ export const Header: React.FC<{
             </div>
 
             <div>
-              <p className="px-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">
+              <p className="px-2 text-[10px] font-bold text-[#64748B] dark:text-neutral-400 uppercase tracking-wider mb-1.5">
                 Business & Platform Solutions
               </p>
               <div className="grid grid-cols-1 gap-1 px-1">
@@ -438,17 +440,17 @@ export const Header: React.FC<{
                         setActivePortal(p.id);
                         setIsMobileMenuOpen(false);
                       }}
-                      className={`flex items-center justify-between px-3 py-2 rounded-lg text-xs font-semibold transition-colors ${
+                      className={`flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold transition-colors ${
                         isActive
-                          ? 'bg-white/15 text-white font-bold border border-slate-600'
-                          : 'text-slate-300 hover:bg-white/10 hover:text-white'
+                          ? 'bg-[#EBEEEE] dark:bg-neutral-800 text-[#2E2E2E] dark:text-neutral-100 font-bold border border-[#F4B400]/40'
+                          : 'text-[#2E2E2E] dark:text-neutral-200 hover:bg-[#EBEEEE] dark:hover:bg-neutral-800'
                       }`}
                     >
                       <div className="flex items-center gap-2">
                         {p.icon}
                         <span>{p.label}</span>
                       </div>
-                      <span className="text-[10px] text-slate-400">{p.description}</span>
+                      <span className="text-[10px] text-[#64748B] dark:text-neutral-400">{p.label}</span>
                     </button>
                   );
                 })}

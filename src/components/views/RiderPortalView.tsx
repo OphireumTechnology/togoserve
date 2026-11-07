@@ -60,14 +60,14 @@ export const RiderPortalView: React.FC = () => {
   return (
     <div className="max-w-2xl mx-auto space-y-5 pb-12">
       {/* Rider Status & Earnings Header */}
-      <div className="bg-[#071A2F] text-white p-5 rounded-2xl border border-slate-800 shadow-xl">
+      <div className="bg-[#2E2E2E] text-white p-5 rounded-2xl border border-slate-800 shadow-xl">
         <div className="flex items-center justify-between pb-4 border-b border-slate-800">
           <div className="flex items-center gap-3">
             <div className="relative">
-              <div className="w-12 h-12 rounded-full bg-[#FFC928] text-[#071A2F] font-extrabold flex items-center justify-center text-base shadow-md">
+              <div className="w-12 h-12 rounded-full bg-[#F4B400] text-[#2E2E2E] font-extrabold flex items-center justify-center text-base shadow-md">
                 MR
               </div>
-              <div className="absolute -bottom-1 -right-1 bg-[#071A2F] p-0.5 rounded-full border border-white/20">
+              <div className="absolute -bottom-1 -right-1 bg-[#2E2E2E] p-0.5 rounded-full border border-white/20">
                 <BrandMark size={16} isDark={true} />
               </div>
             </div>
@@ -105,7 +105,7 @@ export const RiderPortalView: React.FC = () => {
         <div className="grid grid-cols-3 gap-2 pt-4 text-center">
           <div className="p-2.5 rounded-xl bg-white/5">
             <span className="text-[10px] text-slate-400 uppercase font-semibold">Today's Earnings</span>
-            <div className="text-base font-extrabold font-mono text-[#FFC928] mt-0.5">₱1,240.00</div>
+            <div className="text-base font-extrabold font-mono text-[#F4B400] mt-0.5">₱1,240.00</div>
           </div>
           <div className="p-2.5 rounded-xl bg-white/5">
             <span className="text-[10px] text-slate-400 uppercase font-semibold">Completed Trips</span>
@@ -130,7 +130,7 @@ export const RiderPortalView: React.FC = () => {
             onClick={() => setActiveTab(t.id as any)}
             className={`flex-1 py-2 rounded-lg transition-colors text-center ${
               activeTab === t.id
-                ? 'bg-[#071A2F] dark:bg-[#FFC928] text-white dark:text-[#071A2F] shadow-xs'
+                ? 'bg-[#2E2E2E] dark:bg-[#F4B400] text-white dark:text-[#2E2E2E] shadow-xs'
                 : 'text-slate-500 dark:text-slate-400 hover:text-slate-900'
             }`}
           >
@@ -145,7 +145,7 @@ export const RiderPortalView: React.FC = () => {
           {isOnline && currentAssignedOrder ? (
             <div
               className={`rounded-2xl border p-5 shadow-sm space-y-4 ${
-                isDarkMode ? 'bg-[#0B223D] border-slate-800 text-white' : 'bg-white border-slate-200 text-[#17212B]'
+                isDarkMode ? 'bg-[#1E1E1E] border-slate-800 text-white' : 'bg-white border-slate-200 text-[#2E2E2E]'
               }`}
             >
               <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
@@ -154,7 +154,7 @@ export const RiderPortalView: React.FC = () => {
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#16845B] opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#16845B]"></span>
                   </span>
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#D9A514]">
+                  <span className="text-xs font-bold uppercase tracking-wider text-[#F4B400]">
                     Assigned Delivery Dispatch
                   </span>
                 </div>
@@ -164,7 +164,7 @@ export const RiderPortalView: React.FC = () => {
               {/* Stepper info */}
               <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/60 flex items-center justify-between text-xs">
                 <div className="flex items-center gap-2">
-                  <Navigation className="w-4 h-4 text-[#D9A514]" />
+                  <Navigation className="w-4 h-4 text-[#F4B400]" />
                   <span className="font-bold">
                     {activeStep === 1
                       ? 'En Route to Store (Pickup)'
@@ -194,7 +194,7 @@ export const RiderPortalView: React.FC = () => {
                 <div className="border-l-2 border-dashed border-slate-300 dark:border-slate-700 ml-2.5 h-4" />
 
                 <div className="flex items-start gap-2.5">
-                  <div className="w-5 h-5 rounded-full bg-[#FFC928] text-[#071A2F] flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">
+                  <div className="w-5 h-5 rounded-full bg-[#F4B400] text-[#2E2E2E] flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">
                     B
                   </div>
                   <div>
@@ -244,7 +244,7 @@ export const RiderPortalView: React.FC = () => {
               {/* ACTION BUTTON */}
               <button
                 onClick={handleNextRiderStep}
-                className="w-full py-4 bg-[#FFC928] hover:bg-[#D9A514] text-[#071A2F] font-extrabold text-sm rounded-xl shadow-lg transition-transform active:scale-98 flex items-center justify-center gap-2"
+                className="w-full py-4 bg-[#F4B400] hover:bg-[#F4B400] text-[#2E2E2E] font-extrabold text-sm rounded-xl shadow-lg transition-transform active:scale-98 flex items-center justify-center gap-2"
               >
                 <CheckCircle2 className="w-5 h-5" />
                 <span>
@@ -276,17 +276,17 @@ export const RiderPortalView: React.FC = () => {
       {activeTab === 'wallet' && (
         <div
           className={`p-6 rounded-2xl border space-y-5 ${
-            isDarkMode ? 'bg-[#0B223D] border-slate-800 text-white' : 'bg-white border-slate-200 text-[#17212B]'
+            isDarkMode ? 'bg-[#1E1E1E] border-slate-800 text-white' : 'bg-white border-slate-200 text-[#2E2E2E]'
           }`}
         >
           <div className="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-slate-800">
             <div>
               <span className="text-xs text-slate-400 font-medium">Available Payout Balance</span>
-              <div className="text-2xl font-bold font-mono text-[#D9A514]">₱4,820.50</div>
+              <div className="text-2xl font-bold font-mono text-[#F4B400]">₱4,820.50</div>
             </div>
             <button
               onClick={() => addToast('success', 'Disbursement Initiated', 'Instant bank withdrawal of ₱4,820.50 processed.')}
-              className="px-4 py-2 bg-[#FFC928] hover:bg-[#D9A514] text-[#071A2F] font-bold text-xs rounded-xl shadow-sm transition-colors"
+              className="px-4 py-2 bg-[#F4B400] hover:bg-[#F4B400] text-[#2E2E2E] font-bold text-xs rounded-xl shadow-sm transition-colors"
             >
               Withdraw to Bank / E-Wallet
             </button>
@@ -318,11 +318,11 @@ export const RiderPortalView: React.FC = () => {
       {activeTab === 'equipment' && (
         <div
           className={`p-6 rounded-2xl border space-y-4 ${
-            isDarkMode ? 'bg-[#0B223D] border-slate-800 text-white' : 'bg-white border-slate-200 text-[#17212B]'
+            isDarkMode ? 'bg-[#1E1E1E] border-slate-800 text-white' : 'bg-white border-slate-200 text-[#2E2E2E]'
           }`}
         >
           <div className="flex items-center gap-3">
-            <div className="p-3 rounded-2xl bg-[#071A2F] border border-white/10 text-white">
+            <div className="p-3 rounded-2xl bg-[#2E2E2E] border border-white/10 text-white">
               <BrandMark size={32} isDark={true} />
             </div>
             <div>

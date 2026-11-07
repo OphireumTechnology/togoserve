@@ -1,6 +1,6 @@
 import React from 'react';
 import { useApp, ActivePortal } from '../../context/AppContext';
-import { ShoppingBag, Truck, Store, CreditCard, Cpu, BarChart3, ShoppingCart } from 'lucide-react';
+import { ShoppingBag, Truck, Store, CreditCard, Cpu, ShoppingCart } from 'lucide-react';
 
 export const MobileNav: React.FC<{
   onOpenCart: () => void;
@@ -16,7 +16,7 @@ export const MobileNav: React.FC<{
   ];
 
   return (
-    <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#071A2F] border-t border-slate-800 px-2 py-1.5 flex items-center justify-around shadow-2xl safe-area-pb">
+    <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white dark:bg-[#181818] border-t border-[#EBEEEE] dark:border-neutral-800 px-2 py-1.5 flex items-center justify-around shadow-lg safe-area-pb transition-colors">
       {navItems.map((item) => {
         const isActive = activePortal === item.id;
         return (
@@ -25,8 +25,8 @@ export const MobileNav: React.FC<{
             onClick={() => setActivePortal(item.id)}
             className={`flex flex-col items-center justify-center p-1.5 rounded-xl transition-all focus:outline-none min-w-[56px] min-h-[48px] ${
               isActive
-                ? 'text-[#FFC928] font-bold scale-105'
-                : 'text-slate-400 hover:text-slate-200'
+                ? 'text-[#F4B400] font-bold scale-105'
+                : 'text-[#64748B] dark:text-neutral-400 hover:text-[#2E2E2E] dark:hover:text-white'
             }`}
           >
             {item.icon}
@@ -38,12 +38,12 @@ export const MobileNav: React.FC<{
       {/* Cart button */}
       <button
         onClick={onOpenCart}
-        className="relative flex flex-col items-center justify-center p-1.5 rounded-xl text-slate-400 hover:text-slate-200 min-w-[56px] min-h-[48px]"
+        className="relative flex flex-col items-center justify-center p-1.5 rounded-xl text-[#64748B] dark:text-neutral-400 hover:text-[#2E2E2E] dark:hover:text-white min-w-[56px] min-h-[48px]"
         aria-label="Open Shopping Basket"
       >
         <ShoppingCart className="w-5 h-5" />
         {cartItemCount > 0 && (
-          <span className="absolute top-1 right-2.5 bg-[#FFC928] text-[#071A2F] text-[9px] font-extrabold w-4 h-4 rounded-full flex items-center justify-center shadow-xs">
+          <span className="absolute top-1 right-2.5 bg-[#F4B400] text-[#2E2E2E] text-[9px] font-extrabold w-4 h-4 rounded-full flex items-center justify-center shadow-xs">
             {cartItemCount}
           </span>
         )}

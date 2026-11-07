@@ -28,8 +28,8 @@ const AppContent: React.FC = () => {
     <div
       className={`min-h-screen flex flex-col font-sans transition-colors duration-150 ${
         isDarkMode
-          ? 'bg-[#040E1B] text-[#F8FAFC]'
-          : 'bg-[#F5F7FA] text-[#17212B]'
+          ? 'bg-[#181818] text-[#FAFAFA]'
+          : 'bg-[#FAFAFA] text-[#2E2E2E]'
       }`}
     >
       {/* Top Accessible Navigation Header */}

@@ -102,9 +102,9 @@ export const POSRegisterView: React.FC = () => {
   return (
     <div className="space-y-4 pb-12">
       {/* Top POS Header */}
-      <div className="bg-[#071A2F] text-white p-4 rounded-2xl flex flex-wrap items-center justify-between gap-3 shadow-lg border border-slate-800">
+      <div className="bg-[#2E2E2E] text-white p-4 rounded-2xl flex flex-wrap items-center justify-between gap-3 shadow-lg border border-slate-800">
         <div className="flex items-center gap-3">
-          <div className="p-2 rounded-xl bg-[#FFC928] text-[#071A2F] font-bold">
+          <div className="p-2 rounded-xl bg-[#F4B400] text-[#2E2E2E] font-bold">
             <CreditCard className="w-5 h-5" />
           </div>
           <div>
@@ -123,7 +123,7 @@ export const POSRegisterView: React.FC = () => {
               onClick={() => setOrderMode(mode)}
               className={`px-3 py-1.5 rounded-lg transition-colors ${
                 orderMode === mode
-                  ? 'bg-[#FFC928] text-[#071A2F] shadow-sm'
+                  ? 'bg-[#F4B400] text-[#2E2E2E] shadow-sm'
                   : 'text-slate-300 hover:text-white'
               }`}
             >
@@ -145,10 +145,10 @@ export const POSRegisterView: React.FC = () => {
                 placeholder="Scan Barcode or Enter SKU (Enter to add)..."
                 value={barcodeInput}
                 onChange={(e) => setBarcodeInput(e.target.value)}
-                className={`w-full text-xs pl-9 pr-3 py-2.5 rounded-xl border focus:outline-none focus:ring-2 focus:ring-[#D9A514] font-mono ${
+                className={`w-full text-xs pl-9 pr-3 py-2.5 rounded-xl border focus:outline-none focus:ring-2 focus:ring-[#F4B400] font-mono ${
                   isDarkMode
-                    ? 'bg-[#0B223D] border-slate-700 text-white'
-                    : 'bg-white border-slate-300 text-[#17212B]'
+                    ? 'bg-[#1E1E1E] border-slate-700 text-white'
+                    : 'bg-white border-slate-300 text-[#2E2E2E]'
                 }`}
               />
             </form>
@@ -160,10 +160,10 @@ export const POSRegisterView: React.FC = () => {
                 placeholder="Search items by name..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className={`w-full text-xs pl-9 pr-3 py-2.5 rounded-xl border focus:outline-none focus:ring-2 focus:ring-[#D9A514] ${
+                className={`w-full text-xs pl-9 pr-3 py-2.5 rounded-xl border focus:outline-none focus:ring-2 focus:ring-[#F4B400] ${
                   isDarkMode
-                    ? 'bg-[#0B223D] border-slate-700 text-white'
-                    : 'bg-white border-slate-300 text-[#17212B]'
+                    ? 'bg-[#1E1E1E] border-slate-700 text-white'
+                    : 'bg-white border-slate-300 text-[#2E2E2E]'
                 }`}
               />
             </div>
@@ -175,10 +175,10 @@ export const POSRegisterView: React.FC = () => {
               <button
                 key={p.id}
                 onClick={() => addItemToTicket(p)}
-                className={`p-3 rounded-2xl border text-left flex flex-col justify-between transition-all hover:border-[#D9A514] active:scale-98 ${
+                className={`p-3 rounded-2xl border text-left flex flex-col justify-between transition-all hover:border-[#F4B400] active:scale-98 ${
                   isDarkMode
-                    ? 'bg-[#0B223D] border-slate-800 text-white'
-                    : 'bg-white border-slate-200 text-[#17212B] shadow-xs'
+                    ? 'bg-[#1E1E1E] border-slate-800 text-white'
+                    : 'bg-white border-slate-200 text-[#2E2E2E] shadow-xs'
                 }`}
               >
                 <div className="space-y-1">
@@ -186,7 +186,7 @@ export const POSRegisterView: React.FC = () => {
                   <h4 className="text-xs font-bold line-clamp-2 leading-tight">{p.name}</h4>
                 </div>
                 <div className="mt-3 pt-2 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between">
-                  <span className="text-xs font-bold font-mono text-[#D9A514]">
+                  <span className="text-xs font-bold font-mono text-[#F4B400]">
                     ₱{p.price.toFixed(2)}
                   </span>
                   <span className="text-[10px] text-slate-400">{p.stock} in stock</span>
@@ -200,8 +200,8 @@ export const POSRegisterView: React.FC = () => {
         <div
           className={`lg:col-span-5 xl:col-span-4 rounded-2xl border p-4 sm:p-5 flex flex-col justify-between min-h-[500px] ${
             isDarkMode
-              ? 'bg-[#0B223D] border-slate-800 text-white'
-              : 'bg-white border-slate-200 text-[#17212B] shadow-sm'
+              ? 'bg-[#1E1E1E] border-slate-800 text-white'
+              : 'bg-white border-slate-200 text-[#2E2E2E] shadow-sm'
           }`}
         >
           <div>
@@ -268,14 +268,14 @@ export const POSRegisterView: React.FC = () => {
               </div>
               <div className="flex justify-between text-base font-extrabold pt-2 border-t border-slate-200 dark:border-slate-800">
                 <span>Total Due</span>
-                <span className="font-mono text-[#D9A514] text-xl">₱{total.toFixed(2)}</span>
+                <span className="font-mono text-[#F4B400] text-xl">₱{total.toFixed(2)}</span>
               </div>
             </div>
 
             <button
               disabled={ticketItems.length === 0}
               onClick={() => setIsTenderModalOpen(true)}
-              className="w-full py-3 bg-[#FFC928] hover:bg-[#D9A514] disabled:opacity-50 text-[#071A2F] font-extrabold text-sm rounded-xl shadow-md transition-all flex items-center justify-center gap-2"
+              className="w-full py-3 bg-[#F4B400] hover:bg-[#F4B400] disabled:opacity-50 text-[#2E2E2E] font-extrabold text-sm rounded-xl shadow-md transition-all flex items-center justify-center gap-2"
             >
               <span>Collect Payment (Tender)</span>
               <ArrowRight className="w-4 h-4" />
@@ -289,7 +289,7 @@ export const POSRegisterView: React.FC = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in">
           <div
             className={`w-full max-w-md rounded-2xl shadow-2xl p-6 ${
-              isDarkMode ? 'bg-[#071A2F] text-white border border-slate-700' : 'bg-white text-[#17212B]'
+              isDarkMode ? 'bg-[#2E2E2E] text-white border border-slate-700' : 'bg-white text-[#2E2E2E]'
             }`}
           >
             <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
@@ -302,7 +302,7 @@ export const POSRegisterView: React.FC = () => {
             <div className="py-4 space-y-4">
               <div className="text-center py-2 bg-slate-50 dark:bg-slate-800/60 rounded-xl">
                 <span className="text-xs text-slate-400">Total Balance</span>
-                <div className="text-2xl font-mono font-extrabold text-[#D9A514]">
+                <div className="text-2xl font-mono font-extrabold text-[#F4B400]">
                   ₱{total.toFixed(2)}
                 </div>
               </div>
@@ -316,7 +316,7 @@ export const POSRegisterView: React.FC = () => {
                     onClick={() => setTenderMethod(t)}
                     className={`p-2.5 rounded-xl border text-xs font-bold text-center transition-all ${
                       tenderMethod === t
-                        ? 'border-[#D9A514] bg-[#FFC928]/20 text-[#D9A514]'
+                        ? 'border-[#F4B400] bg-[#F4B400]/20 text-[#F4B400]'
                         : 'border-slate-200 dark:border-slate-700 text-slate-400'
                     }`}
                   >
@@ -357,7 +357,7 @@ export const POSRegisterView: React.FC = () => {
 
             <button
               onClick={handleCompleteTransaction}
-              className="w-full py-3 bg-[#FFC928] hover:bg-[#D9A514] text-[#071A2F] font-bold text-xs rounded-xl shadow-md transition-colors"
+              className="w-full py-3 bg-[#F4B400] hover:bg-[#F4B400] text-[#2E2E2E] font-bold text-xs rounded-xl shadow-md transition-colors"
             >
               Confirm Sale & Print Receipt
             </button>

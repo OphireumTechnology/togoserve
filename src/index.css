@@ -1,30 +1,32 @@
 @import "tailwindcss";
 
 :root {
-  --togo-navy: #071A2F;
-  --togo-gold: #D9A514;
-  --togo-yellow: #FFC928;
-  --togo-white: #FFFFFF;
-  --togo-background: #F5F7FA;
-  --togo-text: #17212B;
+  --togo-gold: #F4B400;
+  --togo-yellow: #FFD54F;
+  --togo-charcoal: #2E2E2E;
+  --togo-light-gray: #EBEEEE;
+  --togo-offwhite: #FAFAFA;
+  --togo-beige: #D9C39A;
+  --togo-background: #FAFAFA;
+  --togo-text: #2E2E2E;
   --togo-text-secondary: #64748B;
   --togo-success: #16845B;
   --togo-danger: #D64545;
-  --togo-warning: #F59E0B;
-  --togo-info: #6366F1;
-  --togo-link: #0EA5E9;
-  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --togo-warning: #F4B400;
+  --togo-info: #2E2E2E;
+  --togo-link: #F4B400;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 .dark {
-  --togo-background: #040E1B;
-  --togo-text: #F8FAFC;
-  --togo-text-secondary: #94A3B8;
+  --togo-background: #1A1A1A;
+  --togo-text: #FAFAFA;
+  --togo-text-secondary: #D9C39A;
   color-scheme: dark;
 }
 
 body {
-  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   margin: 0;
   padding: 0;
 }

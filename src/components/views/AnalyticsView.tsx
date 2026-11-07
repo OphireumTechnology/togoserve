@@ -65,7 +65,7 @@ export const AnalyticsView: React.FC = () => {
   return (
     <div className="space-y-6 pb-12 max-w-7xl mx-auto">
       {/* Top Banner */}
-      <div className="bg-[#071A2F] text-white p-6 sm:p-8 rounded-2xl border border-slate-800 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="bg-[#2E2E2E] text-white p-6 sm:p-8 rounded-2xl border border-slate-800 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-bold border border-emerald-500/30 mb-2">
             <BarChart3 className="w-3.5 h-3.5" />
@@ -88,7 +88,7 @@ export const AnalyticsView: React.FC = () => {
                 onClick={() => setDateRange(r)}
                 className={`px-3 py-1.5 rounded-lg transition-colors ${
                   dateRange === r
-                    ? 'bg-[#FFC928] text-[#071A2F] shadow-sm'
+                    ? 'bg-[#F4B400] text-[#2E2E2E] shadow-sm'
                     : 'text-slate-300 hover:text-white'
                 }`}
               >
@@ -99,7 +99,7 @@ export const AnalyticsView: React.FC = () => {
 
           <button
             onClick={handleExportCSV}
-            className="px-4 py-2 bg-[#FFC928] hover:bg-[#D9A514] text-[#071A2F] font-bold text-xs rounded-xl shadow-sm transition-colors flex items-center gap-1.5"
+            className="px-4 py-2 bg-[#F4B400] hover:bg-[#F4B400] text-[#2E2E2E] font-bold text-xs rounded-xl shadow-sm transition-colors flex items-center gap-1.5"
           >
             <Download className="w-4 h-4" />
             <span>Generate CSV Report</span>
@@ -111,14 +111,14 @@ export const AnalyticsView: React.FC = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div
           className={`p-5 rounded-2xl border ${
-            isDarkMode ? 'bg-[#0B223D] border-slate-800 text-white' : 'bg-white border-slate-200 text-[#17212B] shadow-xs'
+            isDarkMode ? 'bg-[#1E1E1E] border-slate-800 text-white' : 'bg-white border-slate-200 text-[#2E2E2E] shadow-xs'
           }`}
         >
           <div className="flex items-center justify-between text-xs text-slate-400 mb-2">
             <span>Live Platform GMV</span>
-            <DollarSign className="w-4 h-4 text-[#FFC928]" />
+            <DollarSign className="w-4 h-4 text-[#F4B400]" />
           </div>
-          <div className="text-2xl font-bold font-mono tabular-nums text-[#D9A514]">
+          <div className="text-2xl font-bold font-mono tabular-nums text-[#F4B400]">
             ₱696,400.00
           </div>
           <div className="mt-2 text-[11px] text-[#16845B] font-semibold flex items-center gap-1">
@@ -129,7 +129,7 @@ export const AnalyticsView: React.FC = () => {
 
         <div
           className={`p-5 rounded-2xl border ${
-            isDarkMode ? 'bg-[#0B223D] border-slate-800 text-white' : 'bg-white border-slate-200 text-[#17212B] shadow-xs'
+            isDarkMode ? 'bg-[#1E1E1E] border-slate-800 text-white' : 'bg-white border-slate-200 text-[#2E2E2E] shadow-xs'
           }`}
         >
           <div className="flex items-center justify-between text-xs text-slate-400 mb-2">
@@ -144,7 +144,7 @@ export const AnalyticsView: React.FC = () => {
 
         <div
           className={`p-5 rounded-2xl border ${
-            isDarkMode ? 'bg-[#0B223D] border-slate-800 text-white' : 'bg-white border-slate-200 text-[#17212B] shadow-xs'
+            isDarkMode ? 'bg-[#1E1E1E] border-slate-800 text-white' : 'bg-white border-slate-200 text-[#2E2E2E] shadow-xs'
           }`}
         >
           <div className="flex items-center justify-between text-xs text-slate-400 mb-2">
@@ -161,7 +161,7 @@ export const AnalyticsView: React.FC = () => {
 
         <div
           className={`p-5 rounded-2xl border ${
-            isDarkMode ? 'bg-[#0B223D] border-slate-800 text-white' : 'bg-white border-slate-200 text-[#17212B] shadow-xs'
+            isDarkMode ? 'bg-[#1E1E1E] border-slate-800 text-white' : 'bg-white border-slate-200 text-[#2E2E2E] shadow-xs'
           }`}
         >
           <div className="flex items-center justify-between text-xs text-slate-400 mb-2">
@@ -180,7 +180,7 @@ export const AnalyticsView: React.FC = () => {
       {/* Hourly GMV & Order Volume Interactive Chart */}
       <div
         className={`p-6 rounded-2xl border ${
-          isDarkMode ? 'bg-[#0B223D] border-slate-800 text-white' : 'bg-white border-slate-200 text-[#17212B] shadow-xs'
+          isDarkMode ? 'bg-[#1E1E1E] border-slate-800 text-white' : 'bg-white border-slate-200 text-[#2E2E2E] shadow-xs'
         }`}
       >
         <div className="flex items-center justify-between mb-6">
@@ -190,7 +190,7 @@ export const AnalyticsView: React.FC = () => {
           </div>
           <div className="flex items-center gap-4 text-xs font-mono">
             <span className="flex items-center gap-1.5 text-slate-400">
-              <span className="w-3 h-3 rounded-sm bg-[#D9A514]" />
+              <span className="w-3 h-3 rounded-sm bg-[#F4B400]" />
               <span>Gross Volume (₱)</span>
             </span>
           </div>
@@ -202,11 +202,11 @@ export const AnalyticsView: React.FC = () => {
             const heightPct = Math.round((item.gmv / maxGmv) * 100);
             return (
               <div key={idx} className="grow flex flex-col items-center gap-2 group h-full justify-end">
-                <div className="opacity-0 group-hover:opacity-100 transition-opacity text-[10px] font-mono font-bold bg-[#071A2F] text-white px-1.5 py-0.5 rounded shadow-sm">
+                <div className="opacity-0 group-hover:opacity-100 transition-opacity text-[10px] font-mono font-bold bg-[#2E2E2E] text-white px-1.5 py-0.5 rounded shadow-sm">
                   ₱{(item.gmv / 1000).toFixed(1)}k
                 </div>
                 <div
-                  className="w-full max-w-[42px] rounded-t-lg bg-gradient-to-t from-[#D9A514] to-[#FFC928] transition-all group-hover:brightness-110"
+                  className="w-full max-w-[42px] rounded-t-lg bg-gradient-to-t from-[#F4B400] to-[#F4B400] transition-all group-hover:brightness-110"
                   style={{ height: `${heightPct}%` }}
                 />
                 <span className="text-[10px] font-mono text-slate-400 mt-1">{item.hour}</span>
@@ -221,7 +221,7 @@ export const AnalyticsView: React.FC = () => {
         {/* Funnel */}
         <div
           className={`p-6 rounded-2xl border ${
-            isDarkMode ? 'bg-[#0B223D] border-slate-800 text-white' : 'bg-white border-slate-200 text-[#17212B] shadow-xs'
+            isDarkMode ? 'bg-[#1E1E1E] border-slate-800 text-white' : 'bg-white border-slate-200 text-[#2E2E2E] shadow-xs'
           }`}
         >
           <h3 className="text-sm font-bold mb-4">Omnichannel Conversion Funnel</h3>
@@ -230,13 +230,13 @@ export const AnalyticsView: React.FC = () => {
               <div key={idx} className="space-y-1">
                 <div className="flex justify-between text-xs font-medium">
                   <span>{step.label}</span>
-                  <span className="font-mono font-bold text-[#D9A514]">
+                  <span className="font-mono font-bold text-[#F4B400]">
                     {step.count.toLocaleString()} ({step.pct})
                   </span>
                 </div>
                 <div className="w-full bg-slate-200 dark:bg-slate-800 h-2.5 rounded-full overflow-hidden">
                   <div
-                    className="bg-[#D9A514] h-full rounded-full transition-all duration-500"
+                    className="bg-[#F4B400] h-full rounded-full transition-all duration-500"
                     style={{ width: step.pct }}
                   />
                 </div>
@@ -248,14 +248,14 @@ export const AnalyticsView: React.FC = () => {
         {/* Logistics & Dispatch Efficiency */}
         <div
           className={`p-6 rounded-2xl border ${
-            isDarkMode ? 'bg-[#0B223D] border-slate-800 text-white' : 'bg-white border-slate-200 text-[#17212B] shadow-xs'
+            isDarkMode ? 'bg-[#1E1E1E] border-slate-800 text-white' : 'bg-white border-slate-200 text-[#2E2E2E] shadow-xs'
           }`}
         >
           <h3 className="text-sm font-bold mb-4">Logistics & Fleet Dispatch Telemetry</h3>
           <div className="grid grid-cols-2 gap-4">
             <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 text-center">
               <span className="text-xs text-slate-400">Total Distance Covered</span>
-              <div className="text-xl font-bold font-mono text-[#D9A514] mt-1">4,812 km</div>
+              <div className="text-xl font-bold font-mono text-[#F4B400] mt-1">4,812 km</div>
               <span className="text-[10px] text-slate-400">Across 224 active riders</span>
             </div>
 

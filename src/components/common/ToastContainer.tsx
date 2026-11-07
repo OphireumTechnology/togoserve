@@ -22,8 +22,8 @@ export const ToastContainer: React.FC = () => {
             key={toast.id}
             className={`pointer-events-auto p-3.5 rounded-xl shadow-lg border transition-all flex items-start gap-2.5 animate-in slide-in-from-right-5 ${
               isDarkMode
-                ? 'bg-[#071A2F] border-slate-700 text-white'
-                : 'bg-white border-slate-200 text-[#17212B]'
+                ? 'bg-[#2E2E2E] border-slate-700 text-white'
+                : 'bg-white border-slate-200 text-[#2E2E2E]'
             }`}
           >
             {icons[toast.type]}

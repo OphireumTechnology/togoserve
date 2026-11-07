@@ -1,7 +1,6 @@
 import React from 'react';
 import { useApp } from '../../context/AppContext';
-import { BrandLogo } from '../brand/BrandLogo';
-import { ImageWithFallback } from '../common/ImageWithFallback';
+import { Logo } from '../brand/Logo';
 import {
   ArrowRight,
   ShoppingBag,
@@ -10,195 +9,393 @@ import {
   Bike,
   ShieldCheck,
   Cpu,
-  Star,
-  CheckCircle2,
-  Clock,
   Sparkles,
   BarChart3,
-  CreditCard
+  CreditCard,
+  Utensils,
+  ShoppingCart,
+  Pill,
+  Flower2,
+  PawPrint,
+  TrendingUp,
+  PackageCheck,
+  CheckCircle2,
+  ChevronRight,
+  Building2,
+  Clock,
+  Layers
 } from 'lucide-react';
 
 export const PublicLandingView: React.FC = () => {
-  const { setActivePortal, isDarkMode, setIsAuthModalOpen } = useApp();
+  const { setActivePortal, isDarkMode } = useApp();
+
+  const serviceCategories = [
+    { id: 'restaurants', name: 'Restaurants', icon: <Utensils className="w-5 h-5" />, portal: 'marketplace' as const },
+    { id: 'groceries', name: 'Groceries', icon: <ShoppingCart className="w-5 h-5" />, portal: 'marketplace' as const },
+    { id: 'convenience', name: 'Convenience', icon: <Store className="w-5 h-5" />, portal: 'marketplace' as const },
+    { id: 'pharmacy', name: 'Pharmacy', icon: <Pill className="w-5 h-5" />, portal: 'marketplace' as const },
+    { id: 'retail', name: 'Retail', icon: <ShoppingBag className="w-5 h-5" />, portal: 'marketplace' as const },
+    { id: 'flowers', name: 'Flowers', icon: <Flower2 className="w-5 h-5" />, portal: 'marketplace' as const },
+    { id: 'petcare', name: 'Pet Care', icon: <PawPrint className="w-5 h-5" />, portal: 'marketplace' as const },
+    { id: 'padala', name: 'TOGO Padala', icon: <Truck className="w-5 h-5 text-[#F4B400]" />, portal: 'padala' as const },
+  ];
+
+  const enterprisePillars = [
+    {
+      title: 'AI-Powered Operations',
+      desc: 'Autonomous multi-agent orchestration for dynamic demand dispatch, fraud detection, and automated inventory sync.',
+      icon: <Cpu className="w-5 h-5 text-[#2E2E2E] dark:text-[#FAFAFA]" />,
+      badge: 'A00 Supervisor',
+    },
+    {
+      title: 'Integrated Logistics',
+      desc: 'End-to-end on-demand courier routing, multi-vehicle dispatch, and electronic proof of delivery (e-POD).',
+      icon: <PackageCheck className="w-5 h-5 text-[#2E2E2E] dark:text-[#FAFAFA]" />,
+      badge: 'TOGO Padala',
+    },
+    {
+      title: 'Business Growth',
+      desc: 'Omnichannel POS, online ordering, low-stock threshold management, and wholesale B2B supplier sourcing.',
+      icon: <TrendingUp className="w-5 h-5 text-[#2E2E2E] dark:text-[#FAFAFA]" />,
+      badge: 'Merchant OS',
+    },
+  ];
 
   return (
-    <div className="space-y-16 pb-16">
-      {/* 1. HERO SECTION */}
-      <section className="relative overflow-hidden rounded-3xl bg-[#071A2F] text-white p-8 sm:p-14 lg:p-20 shadow-2xl border border-slate-800">
-        <div className="relative z-10 max-w-3xl space-y-6">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-xs text-[#FFC928] font-bold border border-white/20">
-            <Sparkles className="w-4 h-4 text-[#FFC928]" />
-            <span>AI-Native Commerce, Delivery & Multi-Agent Operating Platform</span>
+    <div className="space-y-16 pb-16 font-['Inter']">
+      
+      {/* ======================================================== */}
+      {/* 1. HERO SECTION — LUXURY CORPORATE REDESIGN               */}
+      {/* Clean White Background, Elegant Gold Geometric Accents   */}
+      {/* ======================================================== */}
+      <section className="relative overflow-hidden rounded-3xl bg-white dark:bg-[#1C1C1C] text-[#2E2E2E] dark:text-[#FAFAFA] p-6 sm:p-12 lg:p-16 border border-[#EBEEEE] dark:border-neutral-800 shadow-sm">
+        {/* Subtle Luxury Gold Geometric Accent Wave in Background */}
+        <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-[#F4B400]/10 blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-24 -left-24 w-96 h-96 rounded-full bg-[#FFD54F]/10 blur-3xl pointer-events-none" />
+
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          
+          {/* Left Column: Official Headings & Interactive CTAs */}
+          <div className="lg:col-span-7 space-y-6">
+            
+            {/* Tag / Micro-header */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EBEEEE] dark:bg-neutral-800 text-xs text-[#2E2E2E] dark:text-[#FFD54F] font-bold border border-[#D9C39A]/40">
+              <span className="w-2 h-2 rounded-full bg-[#F4B400]"></span>
+              <span className="tracking-wide">AI-Native Commerce, Logistics &amp; Multi-Agent Operating Platform</span>
+            </div>
+
+            {/* Primary Heading (Official Directive Specification) */}
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-[1.15] text-[#2E2E2E] dark:text-white">
+              Everything Your Business <br className="hidden sm:inline" />
+              <span className="text-[#F4B400]">Needs to Move Forward</span>
+            </h1>
+
+            {/* Official Description */}
+            <p className="text-base sm:text-lg text-[#64748B] dark:text-neutral-300 leading-relaxed max-w-xl font-normal">
+              Connecting people, businesses and communities through intelligent commerce, seamless logistics and AI-powered solutions.
+            </p>
+
+            {/* Platform Feature Checklist */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1 text-xs text-[#2E2E2E] dark:text-neutral-300 font-medium">
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-[#F4B400] shrink-0" />
+                <span>Unified Marketplace &amp; Fast Delivery</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-[#F4B400] shrink-0" />
+                <span>TOGO Padala Express Courier</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-[#F4B400] shrink-0" />
+                <span>Merchant Cloud POS &amp; Inventory</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-[#F4B400] shrink-0" />
+                <span>Governed A00 Multi-Agent AI</span>
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="pt-3 flex flex-wrap gap-3">
+              <button
+                onClick={() => setActivePortal('marketplace')}
+                className="px-6 py-3.5 bg-[#F4B400] hover:bg-[#FFD54F] text-[#2E2E2E] font-extrabold text-sm rounded-xl shadow-xs transition-all active:scale-95 flex items-center gap-2"
+              >
+                <span>Explore Marketplace</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+
+              <button
+                onClick={() => setActivePortal('padala')}
+                className="px-6 py-3.5 bg-[#EBEEEE] dark:bg-neutral-800 hover:bg-[#EBEEEE]/80 dark:hover:bg-neutral-700 text-[#2E2E2E] dark:text-white font-bold text-sm rounded-xl border border-neutral-300 dark:border-neutral-700 transition-colors flex items-center gap-2"
+              >
+                <Truck className="w-4 h-4 text-[#F4B400]" />
+                <span>Send with TOGO Padala</span>
+              </button>
+
+              <button
+                onClick={() => setActivePortal('merchant')}
+                className="px-5 py-3.5 bg-transparent hover:bg-[#EBEEEE]/60 dark:hover:bg-neutral-800 text-[#2E2E2E] dark:text-neutral-200 font-semibold text-sm rounded-xl border border-neutral-300 dark:border-neutral-700 transition-colors flex items-center gap-1.5"
+              >
+                <Store className="w-4 h-4 text-[#64748B]" />
+                <span>Merchant OS</span>
+              </button>
+            </div>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
-            Commerce. Delivery. Intelligence. <br />
-            <span className="text-[#FFC928]">One Connected Platform.</span>
-          </h1>
-
-          <p className="text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl">
-            Discover local businesses, shop fresh groceries and essentials, send parcels with
-            point-to-point courier speed, and empower merchants with real-time operations.
-          </p>
-
-          <div className="pt-2 flex flex-wrap gap-3.5">
-            <button
-              onClick={() => setActivePortal('marketplace')}
-              className="px-6 py-3.5 bg-[#FFC928] hover:bg-[#D9A514] text-[#071A2F] font-extrabold text-sm rounded-xl shadow-lg transition-transform active:scale-95 flex items-center gap-2"
-            >
-              <span>Explore TOGOSERVE</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-
-            <button
-              onClick={() => setActivePortal('padala')}
-              className="px-6 py-3.5 bg-white/10 hover:bg-white/20 text-white font-bold text-sm rounded-xl border border-white/20 transition-colors flex items-center gap-2"
-            >
-              <Truck className="w-4 h-4 text-[#FFC928]" />
-              <span>Send with TOGO Padala</span>
-            </button>
-
-            <button
-              onClick={() => setActivePortal('merchant')}
-              className="px-6 py-3.5 bg-white/5 hover:bg-white/10 text-slate-200 font-semibold text-sm rounded-xl border border-slate-700 transition-colors flex items-center gap-2"
-            >
-              <Store className="w-4 h-4" />
-              <span>For Business</span>
-            </button>
+          {/* Right Column: Hardware Showcase & Realistic Presentation */}
+          <div className="lg:col-span-5 flex flex-col items-center justify-center relative">
+            <div className="relative w-full max-w-md rounded-2xl overflow-hidden shadow-lg border border-[#EBEEEE] dark:border-neutral-700 bg-[#FAFAFA] dark:bg-neutral-900 p-2">
+              <img
+                src="/branding/togoserve/hero-hardware-showcase.png"
+                alt="TOGOSERVE Platform Hardware & Courier Presentation"
+                className="w-full h-auto object-cover rounded-xl"
+              />
+              <div className="p-3 text-center bg-white dark:bg-[#1E1E1E] rounded-b-xl border-t border-[#EBEEEE] dark:border-neutral-800">
+                <p className="text-[11px] font-bold text-[#2E2E2E] dark:text-white uppercase tracking-wider">
+                  People • Businesses • Communities — All in Motion
+                </p>
+                <p className="text-[10px] text-[#F4B400] font-semibold mt-0.5">
+                  Faster • Smarter • Together
+                </p>
+              </div>
+            </div>
           </div>
+
         </div>
-
-        {/* Ambient background decoration */}
-        <div className="absolute -right-20 -bottom-20 w-[500px] h-[500px] rounded-full bg-gradient-to-tr from-[#D9A514]/25 to-[#FFC928]/15 blur-3xl pointer-events-none" />
       </section>
 
-      {/* 2. HOW TOGOSERVE WORKS */}
-      <section className="space-y-6">
-        <div className="text-center max-w-2xl mx-auto space-y-2">
-          <span className="text-xs font-bold font-mono uppercase tracking-wider text-[#D9A514]">
-            Unified Architecture
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-            How TOGOSERVE Connects the Ecosystem
-          </h2>
-          <p className="text-sm text-slate-500 dark:text-slate-400">
-            A seamless bridge linking customers, merchant storefronts, dispatch riders, and enterprise suppliers.
-          </p>
+      {/* ======================================================== */}
+      {/* 2. OFFICIAL SERVICE CATEGORIES BAR                        */}
+      {/* Standardized stroke, Lucide icons, Gold active states    */}
+      {/* ======================================================== */}
+      <section className="space-y-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-xl sm:text-2xl font-black text-[#2E2E2E] dark:text-white">
+              Essential Commerce &amp; Delivery Services
+            </h2>
+            <p className="text-xs text-[#64748B] dark:text-neutral-400">
+              Order from verified local merchants or dispatch instant point-to-point courier delivery.
+            </p>
+          </div>
+          <button
+            onClick={() => setActivePortal('marketplace')}
+            className="hidden sm:flex items-center gap-1 text-xs font-bold text-[#F4B400] hover:underline"
+          >
+            <span>View All</span>
+            <ChevronRight className="w-3.5 h-3.5" />
+          </button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
+          {serviceCategories.map((cat) => (
+            <button
+              key={cat.id}
+              onClick={() => setActivePortal(cat.portal)}
+              className="p-4 rounded-2xl bg-white dark:bg-[#1C1C1C] border border-[#EBEEEE] dark:border-neutral-800 hover:border-[#F4B400] dark:hover:border-[#F4B400] transition-all flex flex-col items-center justify-center text-center gap-2.5 shadow-2xs hover:shadow-sm group active:scale-95"
+            >
+              <div className="w-12 h-12 rounded-full bg-[#EBEEEE] dark:bg-neutral-800 flex items-center justify-center text-[#2E2E2E] dark:text-[#FAFAFA] group-hover:bg-[#F4B400] group-hover:text-[#2E2E2E] transition-colors">
+                {cat.icon}
+              </div>
+              <span className="text-xs font-bold text-[#2E2E2E] dark:text-white group-hover:text-[#F4B400] transition-colors">
+                {cat.name}
+              </span>
+            </button>
+          ))}
+        </div>
+      </section>
+
+      {/* ======================================================== */}
+      {/* 3. ENTERPRISE VALUE PILLARS & HIGHLIGHTS                  */}
+      {/* AI Operations, Integrated Logistics, Business Growth      */}
+      {/* ======================================================== */}
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {enterprisePillars.map((p, idx) => (
+          <div
+            key={idx}
+            className="p-6 rounded-2xl bg-white dark:bg-[#1C1C1C] border border-[#EBEEEE] dark:border-neutral-800 shadow-2xs flex flex-col justify-between space-y-4"
+          >
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="p-2.5 rounded-xl bg-[#EBEEEE] dark:bg-neutral-800 text-[#2E2E2E] dark:text-neutral-100">
+                  {p.icon}
+                </div>
+                <span className="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-[#EBEEEE] dark:bg-neutral-800 text-[#2E2E2E] dark:text-[#D9C39A] border border-[#EBEEEE] dark:border-neutral-700">
+                  {p.badge}
+                </span>
+              </div>
+              <h3 className="text-base font-bold text-[#2E2E2E] dark:text-white">
+                {p.title}
+              </h3>
+              <p className="text-xs text-[#64748B] dark:text-neutral-400 leading-relaxed">
+                {p.desc}
+              </p>
+            </div>
+            <div className="pt-2">
+              <button
+                onClick={() => {
+                  if (idx === 0) setActivePortal('ai-center');
+                  else if (idx === 1) setActivePortal('padala');
+                  else setActivePortal('merchant');
+                }}
+                className="inline-flex items-center gap-1 text-xs font-bold text-[#F4B400] hover:text-[#2E2E2E] dark:hover:text-white transition-colors"
+              >
+                <span>Learn More</span>
+                <ChevronRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+        ))}
+      </section>
+
+      {/* ======================================================== */}
+      {/* 4. REALISTIC LOGISTICS & MERCHANT SHOWCASE                */}
+      {/* Brand box packaging & storefront photos                  */}
+      {/* ======================================================== */}
+      <section className="rounded-3xl bg-[#EBEEEE]/50 dark:bg-neutral-900/60 p-6 sm:p-10 border border-[#EBEEEE] dark:border-neutral-800">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+          
+          <div className="space-y-4">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F4B400]/20 text-[#2E2E2E] dark:text-[#FFD54F] text-xs font-bold">
+              <Truck className="w-3.5 h-3.5" />
+              <span>TOGO Padala Express Courier</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-black text-[#2E2E2E] dark:text-white">
+              Engineered for High-Velocity Philippine Commerce
+            </h2>
+            <p className="text-xs sm:text-sm text-[#64748B] dark:text-neutral-400 leading-relaxed font-normal">
+              Whether you are an e-commerce brand sending fragile luxury goods, a food merchant dispatching hot meals, or an enterprise managing freight across urban centers, TOGOSERVE unifies real-time tracking, volumetric pricing, and verified electronic signatures.
+            </p>
+            <div className="pt-2 flex flex-wrap gap-3">
+              <button
+                onClick={() => setActivePortal('padala')}
+                className="px-5 py-2.5 bg-[#2E2E2E] dark:bg-[#F4B400] text-white dark:text-[#2E2E2E] font-bold text-xs rounded-xl flex items-center gap-2 hover:opacity-95"
+              >
+                <span>Book Courier Now</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => setActivePortal('fleet')}
+                className="px-5 py-2.5 bg-white dark:bg-neutral-800 text-[#2E2E2E] dark:text-white border border-neutral-300 dark:border-neutral-700 font-bold text-xs rounded-xl flex items-center gap-2 hover:bg-neutral-50"
+              >
+                <span>Fleet Telematics</span>
+              </button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="rounded-2xl overflow-hidden border border-[#EBEEEE] dark:border-neutral-700 shadow-xs bg-white dark:bg-neutral-800">
+              <img
+                src="/branding/togoserve/brand-packaging-box.png"
+                alt="TOGOSERVE Branded Delivery Packaging"
+                className="w-full h-44 object-cover"
+              />
+              <div className="p-3">
+                <p className="text-xs font-bold text-[#2E2E2E] dark:text-white">Official TOGOSERVE Logistics</p>
+                <p className="text-[10px] text-[#64748B] dark:text-neutral-400">Tamper-evident parcel delivery &amp; freight boxes</p>
+              </div>
+            </div>
+
+            <div className="rounded-2xl overflow-hidden border border-[#EBEEEE] dark:border-neutral-700 shadow-xs bg-white dark:bg-neutral-800">
+              <img
+                src="/branding/togoserve/brand-storefront-3d.png"
+                alt="TOGOSERVE Merchant Storefront"
+                className="w-full h-44 object-cover"
+              />
+              <div className="p-3">
+                <p className="text-xs font-bold text-[#2E2E2E] dark:text-white">Merchant Partner Network</p>
+                <p className="text-[10px] text-[#64748B] dark:text-neutral-400">Integrated storefront signage &amp; POS terminals</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ======================================================== */}
+      {/* 5. ECOSYSTEM PORTAL DIRECTORY                            */}
+      {/* Easy access to all modules without altering logic        */}
+      {/* ======================================================== */}
+      <section className="space-y-4">
+        <h2 className="text-xl font-black text-[#2E2E2E] dark:text-white">
+          Complete Platform Architecture
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {[
             {
-              step: '01',
-              title: 'Customer Discovery',
-              desc: 'Browse hundreds of verified local restaurants, grocers, and services with sub-second recommendations.',
-              icon: <ShoppingBag className="w-5 h-5 text-[#D9A514]" />,
+              title: 'Customer Marketplace',
+              desc: 'Discover food, groceries, pharmacy, and retail stores with unified cart & secure checkout.',
+              portal: 'marketplace' as const,
+              icon: <ShoppingBag className="w-5 h-5 text-[#F4B400]" />,
             },
             {
-              step: '02',
-              title: 'Merchant OS Acceptance',
-              desc: 'Orders sync immediately to POS and Kitchen Display Systems with authoritative stock reservations.',
-              icon: <Store className="w-5 h-5 text-[#16845B]" />,
+              title: 'Merchant OS & POS',
+              desc: 'Manage counter sales, kitchen order display, low-stock alerts, and financial reconciliations.',
+              portal: 'merchant' as const,
+              icon: <Store className="w-5 h-5 text-[#2E2E2E] dark:text-[#FAFAFA]" />,
             },
             {
-              step: '03',
-              title: 'AI Fleet Dispatch',
-              desc: 'Specialist A21 algorithms match optimal vehicles by route distance, traffic, and volumetric parcel weight.',
-              icon: <Bike className="w-5 h-5 text-indigo-400" />,
+              title: 'Rider & Fleet Hub',
+              desc: 'Turn-by-turn route optimization, parcel batching, digital OTP handover, and payout wallets.',
+              portal: 'rider' as const,
+              icon: <Bike className="w-5 h-5 text-[#F4B400]" />,
             },
             {
-              step: '04',
-              title: 'Verified e-POD Handover',
-              desc: 'Real-time GPS tracking terminates in tamper-proof OTP and digital signature proof of delivery.',
-              icon: <ShieldCheck className="w-5 h-5 text-emerald-500" />,
+              title: 'A00 AI Supervisor',
+              desc: 'Multi-agent governance, policy rules, Human-in-the-Loop review, and operational telemetry.',
+              portal: 'ai-center' as const,
+              icon: <Cpu className="w-5 h-5 text-[#2E2E2E] dark:text-[#FAFAFA]" />,
             },
           ].map((item) => (
             <div
-              key={item.step}
-              className={`p-6 rounded-2xl border transition-all ${
-                isDarkMode ? 'bg-[#0B223D] border-slate-800 text-white' : 'bg-white border-slate-200 text-[#17212B] shadow-xs'
-              }`}
+              key={item.portal}
+              onClick={() => setActivePortal(item.portal)}
+              className="p-5 rounded-2xl bg-white dark:bg-[#1C1C1C] border border-[#EBEEEE] dark:border-neutral-800 hover:border-[#F4B400] transition-all cursor-pointer shadow-2xs group flex flex-col justify-between"
             >
-              <div className="flex items-center justify-between mb-4">
-                <span className="font-mono text-xs font-extrabold text-[#D9A514]">{item.step}</span>
-                <div className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800">{item.icon}</div>
+              <div className="space-y-2.5">
+                <div className="w-10 h-10 rounded-xl bg-[#EBEEEE] dark:bg-neutral-800 flex items-center justify-center group-hover:bg-[#F4B400] group-hover:text-[#2E2E2E] transition-colors">
+                  {item.icon}
+                </div>
+                <h3 className="text-sm font-bold text-[#2E2E2E] dark:text-white group-hover:text-[#F4B400] transition-colors">
+                  {item.title}
+                </h3>
+                <p className="text-xs text-[#64748B] dark:text-neutral-400 leading-relaxed font-normal">
+                  {item.desc}
+                </p>
               </div>
-              <h3 className="text-base font-bold mb-1.5">{item.title}</h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">{item.desc}</p>
+              <div className="pt-3 flex items-center gap-1 text-xs font-bold text-[#2E2E2E] dark:text-neutral-300 group-hover:text-[#F4B400] transition-colors">
+                <span>Open Portal</span>
+                <ChevronRight className="w-3.5 h-3.5" />
+              </div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* 3. FOUR PLATFORM PILLARS SHOWCASE */}
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Pillar 1: TOGO Padala */}
-        <div
-          className={`p-8 rounded-3xl border space-y-4 flex flex-col justify-between ${
-            isDarkMode ? 'bg-[#0B223D] border-slate-800 text-white' : 'bg-white border-slate-200 text-[#17212B] shadow-sm'
-          }`}
-        >
-          <div className="space-y-3">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FFC928]/20 text-[#D9A514] text-xs font-bold">
-              <Truck className="w-3.5 h-3.5" />
-              <span>TOGO Padala Logistics</span>
-            </div>
-            <h3 className="text-xl sm:text-2xl font-bold">On-Demand Parcel & Freight Courier</h3>
-            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
-              From important legal contracts on motorcycles to 2,500kg pallets in cargo vans.
-              Calculate guaranteed volumetric pricing in seconds.
-            </p>
-          </div>
-          <button
-            onClick={() => setActivePortal('padala')}
-            className="self-start px-5 py-2.5 bg-[#071A2F] dark:bg-[#FFC928] text-white dark:text-[#071A2F] font-bold text-xs rounded-xl flex items-center gap-2 hover:opacity-90"
-          >
-            <span>Book a Delivery</span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
-        </div>
-
-        {/* Pillar 2: TOGOSERVE Business */}
-        <div
-          className={`p-8 rounded-3xl border space-y-4 flex flex-col justify-between ${
-            isDarkMode ? 'bg-[#0B223D] border-slate-800 text-white' : 'bg-white border-slate-200 text-[#17212B] shadow-sm'
-          }`}
-        >
-          <div className="space-y-3">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#16845B]/20 text-emerald-500 text-xs font-bold">
-              <Store className="w-3.5 h-3.5" />
-              <span>TOGOSERVE Business OS</span>
-            </div>
-            <h3 className="text-xl sm:text-2xl font-bold">Powering Merchants. Delivering Growth.</h3>
-            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
-              Sell on marketplace, operate counter POS, manage low-stock thresholds, and source
-              wholesale ingredients directly from verified suppliers.
-            </p>
-          </div>
-          <button
-            onClick={() => setActivePortal('merchant')}
-            className="self-start px-5 py-2.5 bg-[#071A2F] dark:bg-[#FFC928] text-white dark:text-[#071A2F] font-bold text-xs rounded-xl flex items-center gap-2 hover:opacity-90"
-          >
-            <span>Merchant Portal</span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
-        </div>
-      </section>
-
-      {/* 4. TRUST & SECURITY */}
-      <section className="rounded-3xl bg-slate-100 dark:bg-slate-800/40 p-8 sm:p-12 border border-slate-200 dark:border-slate-800 text-center space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-bold">
+      {/* ======================================================== */}
+      {/* 6. GOVERNANCE & PRODUCTION SECURITY ASSURANCE            */}
+      {/* ======================================================== */}
+      <section className="rounded-3xl bg-white dark:bg-[#1C1C1C] p-8 border border-[#EBEEEE] dark:border-neutral-800 text-center space-y-4 shadow-2xs">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#16845B]/10 text-[#16845B] text-xs font-bold">
           <ShieldCheck className="w-4 h-4" />
-          <span>Enterprise Governance & Privacy</span>
+          <span>Enterprise Governance &amp; Data Isolation</span>
         </div>
-        <h3 className="text-xl sm:text-2xl font-extrabold tracking-tight">
-          Built for Security, Trust and Reliability
+        <h3 className="text-xl sm:text-2xl font-black text-[#2E2E2E] dark:text-white">
+          Engineered for Trust, Security &amp; Compliance
         </h3>
-        <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 max-w-xl mx-auto leading-relaxed">
-          Double-entry ledger reconciliation, tokenized payment gateways, and Human-in-the-Loop
-          (HITL) policy oversight protect customer privacy and merchant revenues.
+        <p className="text-xs sm:text-sm text-[#64748B] dark:text-neutral-400 max-w-xl mx-auto leading-relaxed">
+          Double-entry financial ledgers, tokenized payment gateways, and Human-in-the-Loop policy oversight protect customer privacy and merchant revenues.
         </p>
+        <div className="pt-2 flex items-center justify-center gap-6 text-xs text-[#64748B] dark:text-neutral-400 font-semibold">
+          <span>Official Domain: artax.services</span>
+          <span>•</span>
+          <span>Philippine Operations</span>
+          <span>•</span>
+          <span>AI-Supervised</span>
+        </div>
       </section>
+
     </div>
   );
 };

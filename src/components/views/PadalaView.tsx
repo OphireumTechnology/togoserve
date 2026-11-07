@@ -103,9 +103,9 @@ export const PadalaView: React.FC = () => {
   return (
     <div className="space-y-6 pb-12 max-w-5xl mx-auto">
       {/* Top Header Banner */}
-      <div className="bg-[#071A2F] text-white rounded-2xl p-6 sm:p-8 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xl">
+      <div className="bg-[#2E2E2E] text-white rounded-2xl p-6 sm:p-8 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xl">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#FFC928]/20 text-[#FFC928] text-xs font-bold border border-[#FFC928]/30 mb-2">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#F4B400]/20 text-[#F4B400] text-xs font-bold border border-[#F4B400]/30 mb-2">
             <Truck className="w-3.5 h-3.5" />
             <span>TOGO Padala Logistics Core</span>
           </div>
@@ -124,7 +124,7 @@ export const PadalaView: React.FC = () => {
             onClick={() => setActiveTab('book')}
             className={`px-4 py-2 text-xs font-bold rounded-lg transition-colors ${
               activeTab === 'book'
-                ? 'bg-[#FFC928] text-[#071A2F] shadow-sm'
+                ? 'bg-[#F4B400] text-[#2E2E2E] shadow-sm'
                 : 'text-slate-300 hover:text-white'
             }`}
           >
@@ -134,7 +134,7 @@ export const PadalaView: React.FC = () => {
             onClick={() => setActiveTab('tracking')}
             className={`px-4 py-2 text-xs font-bold rounded-lg transition-colors ${
               activeTab === 'tracking'
-                ? 'bg-[#FFC928] text-[#071A2F] shadow-sm'
+                ? 'bg-[#F4B400] text-[#2E2E2E] shadow-sm'
                 : 'text-slate-300 hover:text-white'
             }`}
           >
@@ -147,29 +147,29 @@ export const PadalaView: React.FC = () => {
         <div
           className={`rounded-2xl border p-6 sm:p-8 transition-colors ${
             isDarkMode
-              ? 'bg-[#0B223D] border-slate-800 text-white'
-              : 'bg-white border-slate-200 text-[#17212B] shadow-sm'
+              ? 'bg-[#1E1E1E] border-slate-800 text-white'
+              : 'bg-white border-slate-200 text-[#2E2E2E] shadow-sm'
           }`}
         >
           {/* 4-Step Stepper Header */}
           <div className="mb-8">
             <div className="flex items-center justify-between text-xs font-bold mb-2">
-              <span className={currentStep >= 1 ? 'text-[#D9A514]' : 'text-slate-400'}>
+              <span className={currentStep >= 1 ? 'text-[#F4B400]' : 'text-slate-400'}>
                 1. Pickup Origin
               </span>
-              <span className={currentStep >= 2 ? 'text-[#D9A514]' : 'text-slate-400'}>
+              <span className={currentStep >= 2 ? 'text-[#F4B400]' : 'text-slate-400'}>
                 2. Recipient Dropoff
               </span>
-              <span className={currentStep >= 3 ? 'text-[#D9A514]' : 'text-slate-400'}>
+              <span className={currentStep >= 3 ? 'text-[#F4B400]' : 'text-slate-400'}>
                 3. Parcel & Vehicle
               </span>
-              <span className={currentStep >= 4 ? 'text-[#D9A514]' : 'text-slate-400'}>
+              <span className={currentStep >= 4 ? 'text-[#F4B400]' : 'text-slate-400'}>
                 4. Quote & Dispatch
               </span>
             </div>
             <div className="w-full bg-slate-200 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
               <div
-                className="bg-[#D9A514] h-full transition-all duration-300"
+                className="bg-[#F4B400] h-full transition-all duration-300"
                 style={{ width: `${(currentStep / 4) * 100}%` }}
               />
             </div>
@@ -216,7 +216,7 @@ export const PadalaView: React.FC = () => {
               <div className="pt-4 flex justify-end">
                 <button
                   onClick={() => setCurrentStep(2)}
-                  className="px-5 py-2.5 bg-[#FFC928] text-[#071A2F] font-bold text-xs rounded-xl flex items-center gap-2 hover:bg-[#D9A514] transition-colors"
+                  className="px-5 py-2.5 bg-[#F4B400] text-[#2E2E2E] font-bold text-xs rounded-xl flex items-center gap-2 hover:bg-[#F4B400] transition-colors"
                 >
                   <span>Continue to Recipient</span>
                   <ArrowRight className="w-4 h-4" />
@@ -275,7 +275,7 @@ export const PadalaView: React.FC = () => {
                 </button>
                 <button
                   onClick={() => setCurrentStep(3)}
-                  className="px-5 py-2.5 bg-[#FFC928] text-[#071A2F] font-bold text-xs rounded-xl flex items-center gap-2 hover:bg-[#D9A514] transition-colors"
+                  className="px-5 py-2.5 bg-[#F4B400] text-[#2E2E2E] font-bold text-xs rounded-xl flex items-center gap-2 hover:bg-[#F4B400] transition-colors"
                 >
                   <span>Continue to Package Details</span>
                   <ArrowRight className="w-4 h-4" />
@@ -367,7 +367,7 @@ export const PadalaView: React.FC = () => {
                       onClick={() => setVehicle(v.type)}
                       className={`p-3 rounded-xl border text-left flex items-start gap-2.5 transition-all ${
                         vehicle === v.type
-                          ? 'border-[#D9A514] bg-[#FFC928]/15 text-[#D9A514] font-bold shadow-xs'
+                          ? 'border-[#F4B400] bg-[#F4B400]/15 text-[#F4B400] font-bold shadow-xs'
                           : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 text-slate-600 dark:text-slate-300'
                       }`}
                     >
@@ -390,7 +390,7 @@ export const PadalaView: React.FC = () => {
                 </button>
                 <button
                   onClick={() => setCurrentStep(4)}
-                  className="px-5 py-2.5 bg-[#FFC928] text-[#071A2F] font-bold text-xs rounded-xl flex items-center gap-2 hover:bg-[#D9A514] transition-colors"
+                  className="px-5 py-2.5 bg-[#F4B400] text-[#2E2E2E] font-bold text-xs rounded-xl flex items-center gap-2 hover:bg-[#F4B400] transition-colors"
                 >
                   <span>Review Instant Quote</span>
                   <ArrowRight className="w-4 h-4" />
@@ -429,7 +429,7 @@ export const PadalaView: React.FC = () => {
 
                 <div className="pt-2 border-t border-slate-200 dark:border-slate-700 flex items-center justify-between font-bold text-sm">
                   <span>Guaranteed Quote</span>
-                  <span className="text-xl font-mono text-[#D9A514]">₱{calculatedQuote}.00</span>
+                  <span className="text-xl font-mono text-[#F4B400]">₱{calculatedQuote}.00</span>
                 </div>
               </div>
 
@@ -447,7 +447,7 @@ export const PadalaView: React.FC = () => {
                 </button>
                 <button
                   onClick={handleBooking}
-                  className="px-6 py-2.5 bg-[#FFC928] hover:bg-[#D9A514] text-[#071A2F] font-extrabold text-xs rounded-xl shadow-md transition-all flex items-center gap-2"
+                  className="px-6 py-2.5 bg-[#F4B400] hover:bg-[#F4B400] text-[#2E2E2E] font-extrabold text-xs rounded-xl shadow-md transition-all flex items-center gap-2"
                 >
                   <span>Dispatch & Book Shipment</span>
                   <Check className="w-4 h-4" />
@@ -472,21 +472,21 @@ export const PadalaView: React.FC = () => {
                 key={shipment.id}
                 className={`p-5 rounded-2xl border transition-all ${
                   isDarkMode
-                    ? 'bg-[#0B223D] border-slate-800 text-white'
-                    : 'bg-white border-slate-200 text-[#17212B] shadow-xs'
+                    ? 'bg-[#1E1E1E] border-slate-800 text-white'
+                    : 'bg-white border-slate-200 text-[#2E2E2E] shadow-xs'
                 }`}
               >
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-200 dark:border-slate-800">
                   <div className="flex items-center gap-2">
-                    <Package className="w-4 h-4 text-[#D9A514]" />
+                    <Package className="w-4 h-4 text-[#F4B400]" />
                     <span className="font-mono text-xs font-bold">{shipment.trackingNumber}</span>
-                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#FFC928]/20 text-[#D9A514]">
+                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#F4B400]/20 text-[#F4B400]">
                       {shipment.vehicle}
                     </span>
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-mono font-bold text-[#D9A514]">
+                    <span className="text-xs font-mono font-bold text-[#F4B400]">
                       ₱{shipment.quoteAmount.toFixed(2)}
                     </span>
                     <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-emerald-500/15 text-emerald-500">
@@ -513,7 +513,7 @@ export const PadalaView: React.FC = () => {
                   <div className="flex items-center gap-3">
                     <div className="font-mono text-[11px]">
                       <span className="text-slate-400">e-POD OTP: </span>
-                      <strong className="text-[#FFC928] bg-black/30 px-1.5 py-0.5 rounded">
+                      <strong className="text-[#F4B400] bg-black/30 px-1.5 py-0.5 rounded">
                         {shipment.otpCode || '9241'}
                       </strong>
                     </div>

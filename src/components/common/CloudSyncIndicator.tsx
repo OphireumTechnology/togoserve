@@ -12,15 +12,15 @@ export const CloudSyncIndicator: React.FC = () => {
       onClick={triggerManualSync}
       disabled={isSyncing}
       title={`Cloud sync: ${cloudSync.status}. Last sync: ${cloudSync.lastSyncedAt}. Click to force sync.`}
-      className={`inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-full transition-all focus:outline-none focus:ring-2 focus:ring-[#D9A514] ${
+      className={`inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-full transition-all focus:outline-none focus:ring-2 focus:ring-[#F4B400] ${
         isDarkMode
-          ? 'bg-[#0B223D] border border-slate-700/60 text-slate-300 hover:text-white hover:border-slate-600'
+          ? 'bg-[#1E1E1E] border border-slate-700/60 text-slate-300 hover:text-white hover:border-slate-600'
           : 'bg-white border border-slate-200 text-slate-700 hover:text-slate-900 hover:border-slate-300 shadow-xs'
       }`}
       aria-label="Cloud sync status and manual sync trigger"
     >
       {isSyncing ? (
-        <RefreshCw className="w-3.5 h-3.5 text-[#D9A514] animate-spin" />
+        <RefreshCw className="w-3.5 h-3.5 text-[#F4B400] animate-spin" />
       ) : cloudSync.status === 'error' ? (
         <AlertCircle className="w-3.5 h-3.5 text-[#D64545]" />
       ) : (

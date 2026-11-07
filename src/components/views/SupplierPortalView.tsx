@@ -16,7 +16,7 @@ export const SupplierPortalView: React.FC = () => {
         actions={
           <button
             onClick={() => addToast('info', 'Vendor Application', 'New vendor onboarding workflow opened.')}
-            className="px-4 py-2 bg-[#FFC928] hover:bg-[#D9A514] text-[#071A2F] font-bold text-xs rounded-xl transition-colors flex items-center gap-1.5"
+            className="px-4 py-2 bg-[#F4B400] hover:bg-[#F4B400] text-[#2E2E2E] font-bold text-xs rounded-xl transition-colors flex items-center gap-1.5"
           >
             <Plus className="w-4 h-4" />
             <span>Onboard New Supplier</span>
@@ -36,7 +36,7 @@ export const SupplierPortalView: React.FC = () => {
         <MetricCard
           label="Active Purchase Orders"
           value={suppliers.reduce((a, b) => a + b.activePurchaseOrders, 0)}
-          icon={<FileText className="w-4 h-4 text-[#FFC928]" />}
+          icon={<FileText className="w-4 h-4 text-[#F4B400]" />}
           subValue="Scheduled for delivery this week"
           isDark={isDarkMode}
         />
@@ -67,15 +67,15 @@ export const SupplierPortalView: React.FC = () => {
                 onClick={() => setSelectedSupplier(sup)}
                 className={`w-full text-left p-4 rounded-xl border transition-all ${
                   selectedSupplier?.id === sup.id
-                    ? 'border-[#D9A514] bg-[#FFC928]/10 text-slate-900 dark:text-white shadow-xs'
+                    ? 'border-[#F4B400] bg-[#F4B400]/10 text-slate-900 dark:text-white shadow-xs'
                     : isDarkMode
-                    ? 'bg-[#0B223D] border-slate-800 text-slate-300 hover:border-slate-700'
+                    ? 'bg-[#1E1E1E] border-slate-800 text-slate-300 hover:border-slate-700'
                     : 'bg-white border-slate-200 text-slate-800 hover:border-slate-300'
                 }`}
               >
                 <div className="flex items-center justify-between mb-1">
                   <span className="font-bold text-xs">{sup.name}</span>
-                  <span className="text-[10px] font-mono font-bold text-[#D9A514]">★ {sup.rating}</span>
+                  <span className="text-[10px] font-mono font-bold text-[#F4B400]">★ {sup.rating}</span>
                 </div>
                 <p className="text-[11px] text-slate-400">{sup.category}</p>
                 <p className="text-[10px] text-slate-500 mt-1">{sup.location}</p>
@@ -87,7 +87,7 @@ export const SupplierPortalView: React.FC = () => {
         {/* Selected Supplier Details */}
         <div
           className={`lg:col-span-2 p-6 rounded-2xl border space-y-5 ${
-            isDarkMode ? 'bg-[#0B223D] border-slate-800 text-white' : 'bg-white border-slate-200 text-[#17212B]'
+            isDarkMode ? 'bg-[#1E1E1E] border-slate-800 text-white' : 'bg-white border-slate-200 text-[#2E2E2E]'
           }`}
         >
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-200 dark:border-slate-800">
@@ -100,7 +100,7 @@ export const SupplierPortalView: React.FC = () => {
             </div>
             <button
               onClick={() => addToast('success', 'RFQ Sent', `Request for quotation generated for ${selectedSupplier.name}`)}
-              className="px-4 py-2 bg-[#FFC928] hover:bg-[#D9A514] text-[#071A2F] font-bold text-xs rounded-xl transition-colors"
+              className="px-4 py-2 bg-[#F4B400] hover:bg-[#F4B400] text-[#2E2E2E] font-bold text-xs rounded-xl transition-colors"
             >
               Issue Purchase Order
             </button>
@@ -135,7 +135,7 @@ export const SupplierPortalView: React.FC = () => {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-500">Minimum Order Value</span>
-                  <span className="font-bold font-mono text-[#D9A514]">
+                  <span className="font-bold font-mono text-[#F4B400]">
                     ₱{selectedSupplier.minimumOrderValue.toLocaleString()}.00
                   </span>
                 </div>
