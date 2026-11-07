@@ -1,4 +1,7 @@
-name: Deploy TOGOSERVE to GitHub Pages
+name: Deploy TOGOSERVE to GitHub Pages (Static Mirror Only)
+
+# NOTE: GitHub Pages only hosts static client files (dist/).
+# Full-stack backend APIs (/api/auth/*, /api/ai/*) require the production Express container (Dockerfile).
 
 on:
   push:

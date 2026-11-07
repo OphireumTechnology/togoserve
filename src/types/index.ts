@@ -48,6 +48,9 @@ export interface EnterpriseLoginResponse {
   success: boolean;
   requiresMfa?: boolean;
   mfaSessionToken?: string;
+  isEnrollment?: boolean;
+  totpSecret?: string;
+  totpUri?: string;
   session?: EnterpriseSession;
   error?: string;
   attemptsRemaining?: number;

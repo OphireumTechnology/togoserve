@@ -13,9 +13,10 @@ import {
   ArrowRight,
   CheckCircle2,
   RefreshCw,
-  Info
+  Copy,
+  Check,
+  ExternalLink
 } from 'lucide-react';
-import { ENTERPRISE_ROLES } from '../../auth/AccessControlService';
 
 export const EnterpriseLoginModal: React.FC = () => {
   const {
@@ -29,11 +30,15 @@ export const EnterpriseLoginModal: React.FC = () => {
   } = useApp();
 
   const [step, setStep] = useState<'credentials' | 'mfa' | 'success'>('credentials');
-  const [username, setUsername] = useState('root');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [mfaCode, setMfaCode] = useState('');
   const [mfaSessionToken, setMfaSessionToken] = useState<string | null>(null);
+  const [isEnrollment, setIsEnrollment] = useState(false);
+  const [totpSecret, setTotpSecret] = useState<string | null>(null);
+  const [totpUri, setTotpUri] = useState<string | null>(null);
+  const [isCopied, setIsCopied] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -44,8 +49,14 @@ export const EnterpriseLoginModal: React.FC = () => {
   const handleClose = () => {
     setIsEnterpriseLoginOpen(false);
     setStep('credentials');
-    setErrorMessage(null);
+    setUsername('');
+    setPassword('');
     setMfaCode('');
+    setErrorMessage(null);
+    setIsEnrollment(false);
+    setTotpSecret(null);
+    setTotpUri(null);
+    setIsCopied(false);
   };
 
   const handleCredentialSubmit = async (e: React.FormEvent) => {
@@ -63,12 +74,14 @@ export const EnterpriseLoginModal: React.FC = () => {
 
       if (res.requiresMfa && res.mfaSessionToken) {
         setMfaSessionToken(res.mfaSessionToken);
+        setIsEnrollment(Boolean(res.isEnrollment));
+        setTotpSecret(res.totpSecret || null);
+        setTotpUri(res.totpUri || null);
         setStep('mfa');
         setIsLoading(false);
         return;
       }
 
-      // No MFA needed (e.g. non-privileged role)
       if (res.session) {
         const session = res.session;
         setSessionDetails(session);
@@ -97,7 +110,7 @@ export const EnterpriseLoginModal: React.FC = () => {
     try {
       const res = await verifyEnterpriseMFA(mfaSessionToken, mfaCode);
       if (!res.success || !res.session) {
-        setErrorMessage(res.error || 'Invalid 6-digit MFA code.');
+        setErrorMessage(res.error || 'Invalid 6-digit TOTP authenticator code.');
         setIsLoading(false);
         return;
       }
@@ -105,7 +118,7 @@ export const EnterpriseLoginModal: React.FC = () => {
       const session = res.session;
       setSessionDetails(session);
       setStep('success');
-      addToast('success', 'MFA Verified', `Root session granted: ${session.user.role}`);
+      addToast('success', 'MFA Verified', `Enterprise Session Granted: ${session.user.role}`);
       setTimeout(() => {
         handleClose();
         if (session.user.role === 'SUPER_ADMIN') {
@@ -125,10 +138,10 @@ export const EnterpriseLoginModal: React.FC = () => {
     }
   };
 
-  const applyPresetAccount = (user: string, pass: string) => {
-    setUsername(user);
-    setPassword(pass);
-    setErrorMessage(null);
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text);
+    setIsCopied(true);
+    setTimeout(() => setIsCopied(false), 2000);
   };
 
   return (
@@ -173,7 +186,7 @@ export const EnterpriseLoginModal: React.FC = () => {
           {errorMessage && (
             <div className="mb-5 p-3.5 rounded-xl bg-red-500/10 border border-red-500/30 text-red-500 text-xs flex items-start gap-2.5">
               <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
-              <span>{errorMessage}</span>
+              <span className="leading-relaxed">{errorMessage}</span>
             </div>
           )}
 
@@ -182,21 +195,22 @@ export const EnterpriseLoginModal: React.FC = () => {
               <div className="p-3 rounded-xl bg-[#F4B400]/10 border border-[#F4B400]/25 text-xs text-neutral-700 dark:text-neutral-300 flex items-start gap-2">
                 <ShieldCheck className="w-4 h-4 text-[#F4B400] shrink-0 mt-0.5" />
                 <span>
-                  Authorizes personnel to operational dashboards, A00 AI governance, cloud infrastructure, and financial ledgers.
+                  Authorized access only. All authentication events, IP telemetry, and session activities are cryptographically logged.
                 </span>
               </div>
 
               <div>
                 <label className="block text-xs font-semibold mb-1 text-neutral-700 dark:text-neutral-300">
-                  Enterprise Username or Corporate ID
+                  Enterprise Username
                 </label>
                 <div className="relative">
                   <input
                     type="text"
                     required
+                    autoFocus
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    placeholder="e.g. root"
+                    placeholder="Enter enterprise username (e.g. root)"
                     className={`w-full px-3.5 py-2.5 rounded-xl text-sm border font-mono transition-all focus:outline-none focus:ring-2 focus:ring-[#F4B400] ${
                       isDarkMode
                         ? 'bg-neutral-900 border-neutral-700 text-white'
@@ -237,48 +251,6 @@ export const EnterpriseLoginModal: React.FC = () => {
                 </div>
               </div>
 
-              {/* Quick Preset Selector for Evaluators & Testing */}
-              <div className="pt-2">
-                <div className="text-[11px] font-semibold text-neutral-400 mb-2 flex items-center gap-1.5">
-                  <Info className="w-3.5 h-3.5 text-[#F4B400]" />
-                  <span>Authorized Test Roles (Click to Autofill):</span>
-                </div>
-                <div className="grid grid-cols-2 gap-1.5 text-xs">
-                  <button
-                    type="button"
-                    onClick={() => applyPresetAccount('root', 'TogoServe#2026!RootAdmin')}
-                    className="p-2 rounded-lg text-left border border-[#F4B400]/40 bg-[#F4B400]/10 hover:bg-[#F4B400]/20 transition-all"
-                  >
-                    <div className="font-bold text-[#F4B400] text-[11px]">root (SUPER_ADMIN)</div>
-                    <div className="text-[10px] text-neutral-400">Master Enterprise Admin</div>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => applyPresetAccount('ai.supervisor', 'TogoServe#AIGov2026')}
-                    className="p-2 rounded-lg text-left border border-neutral-700 bg-neutral-800/50 hover:bg-neutral-800 transition-all"
-                  >
-                    <div className="font-bold text-neutral-200 text-[11px]">ai.supervisor</div>
-                    <div className="text-[10px] text-neutral-400">AI Workforce Command</div>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => applyPresetAccount('infra.admin', 'TogoServe#Infra2026')}
-                    className="p-2 rounded-lg text-left border border-neutral-700 bg-neutral-800/50 hover:bg-neutral-800 transition-all"
-                  >
-                    <div className="font-bold text-neutral-200 text-[11px]">infra.admin</div>
-                    <div className="text-[10px] text-neutral-400">Cloud Sync &amp; Infra</div>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => applyPresetAccount('merchant.admin', 'TogoServe#Merchant2026')}
-                    className="p-2 rounded-lg text-left border border-neutral-700 bg-neutral-800/50 hover:bg-neutral-800 transition-all"
-                  >
-                    <div className="font-bold text-neutral-200 text-[11px]">merchant.admin</div>
-                    <div className="text-[10px] text-neutral-400">Merchant OS &amp; POS</div>
-                  </button>
-                </div>
-              </div>
-
               <button
                 type="submit"
                 disabled={isLoading}
@@ -305,14 +277,48 @@ export const EnterpriseLoginModal: React.FC = () => {
               <div className="p-4 rounded-xl bg-[#F4B400]/10 border border-[#F4B400]/30 text-xs space-y-2">
                 <div className="flex items-center gap-2 font-bold text-[#F4B400]">
                   <Smartphone className="w-4 h-4" />
-                  <span>Mandatory Multi-Factor Authentication</span>
+                  <span>
+                    {isEnrollment ? 'TOTP Authenticator Enrollment' : 'Multi-Factor Authentication'}
+                  </span>
                 </div>
                 <p className="text-neutral-600 dark:text-neutral-300 leading-relaxed">
-                  Clearance level for <span className="font-mono font-bold text-[#F4B400]">{username}</span> requires secondary TOTP verification. Enter the 6-digit code from your corporate authenticator.
+                  {isEnrollment
+                    ? 'Initial setup: Add this private Base32 key to your authenticator app (Google Authenticator, Microsoft Authenticator, or 1Password), then enter the 6-digit verification code below.'
+                    : `Enter the current 6-digit TOTP code from your registered authenticator app for user ${username}.`}
                 </p>
-                <div className="pt-1 text-[11px] text-neutral-400">
-                  Evaluation master deployment code: <span className="font-mono font-bold text-[#FFD54F]">846201</span>
-                </div>
+
+                {isEnrollment && totpSecret && (
+                  <div className="pt-2 space-y-2">
+                    <div className="text-[11px] font-semibold text-neutral-400">
+                      Private Base32 Secret Key:
+                    </div>
+                    <div className="flex items-center gap-2 p-2 bg-neutral-900 border border-neutral-700 rounded-lg">
+                      <span className="font-mono text-xs text-[#FFD54F] tracking-wider select-all break-all">
+                        {totpSecret}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => copyToClipboard(totpSecret)}
+                        className="ml-auto p-1.5 text-neutral-400 hover:text-white rounded bg-neutral-800"
+                        title="Copy Secret Key"
+                      >
+                        {isCopied ? <Check className="w-3.5 h-3.5 text-green-400" /> : <Copy className="w-3.5 h-3.5" />}
+                      </button>
+                    </div>
+
+                    {totpUri && (
+                      <div className="pt-1">
+                        <a
+                          href={totpUri}
+                          className="inline-flex items-center gap-1 text-[11px] text-[#F4B400] hover:underline"
+                        >
+                          <span>Open in Authenticator App</span>
+                          <ExternalLink className="w-3 h-3" />
+                        </a>
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
 
               <div>
@@ -321,12 +327,14 @@ export const EnterpriseLoginModal: React.FC = () => {
                 </label>
                 <input
                   type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
                   maxLength={6}
                   required
                   autoFocus
                   value={mfaCode}
                   onChange={(e) => setMfaCode(e.target.value.replace(/\D/g, ''))}
-                  placeholder="846201"
+                  placeholder="000000"
                   className={`w-full py-3 text-center tracking-[0.5em] text-2xl font-mono font-bold rounded-xl border transition-all focus:outline-none focus:ring-2 focus:ring-[#F4B400] ${
                     isDarkMode
                       ? 'bg-neutral-900 border-neutral-700 text-[#FFD54F]'
@@ -353,7 +361,7 @@ export const EnterpriseLoginModal: React.FC = () => {
                   ) : (
                     <>
                       <ShieldCheck className="w-4 h-4" />
-                      <span>Confirm MFA Verification</span>
+                      <span>Verify &amp; Enter Dashboard</span>
                     </>
                   )}
                 </button>
@@ -376,7 +384,7 @@ export const EnterpriseLoginModal: React.FC = () => {
               </div>
               <div className="p-3 rounded-xl bg-neutral-900 border border-neutral-800 text-[11px] font-mono text-neutral-400 text-left space-y-1">
                 <div>Session ID: {sessionDetails.sessionId}</div>
-                <div>MFA Verified: Yes (Cryptographic Token)</div>
+                <div>MFA Verified: Yes (RFC 6238 TOTP)</div>
                 <div>Expires: {new Date(sessionDetails.expiresAt).toLocaleTimeString()}</div>
               </div>
             </div>

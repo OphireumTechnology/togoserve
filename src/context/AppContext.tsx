@@ -345,6 +345,35 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     addToast('success', 'Session Established', `Authenticated as ${role}`);
   };
 
+  const parseAuthResponse = async (res: Response): Promise<{ ok: boolean; data: any; error?: string }> => {
+    const contentType = res.headers.get('content-type') || '';
+    const isJson = contentType.toLowerCase().includes('application/json');
+
+    if (!isJson) {
+      const statusText = res.status ? `(HTTP ${res.status})` : '';
+      return {
+        ok: false,
+        data: null,
+        error: `Authentication service returned an unexpected HTML response ${statusText}. The production Express backend service is required to process enterprise authentication. Please ensure the full-stack server is running.`,
+      };
+    }
+
+    try {
+      const data = await res.json();
+      return {
+        ok: res.ok && Boolean(data.success),
+        data,
+        error: data?.error || (res.ok ? undefined : `Authentication request failed (HTTP ${res.status}).`),
+      };
+    } catch (err: any) {
+      return {
+        ok: false,
+        data: null,
+        error: `Failed to parse authentication server response: ${err.message || 'Invalid JSON format'}.`,
+      };
+    }
+  };
+
   const loginEnterprise = async (username: string, password: string): Promise<EnterpriseLoginResponse> => {
     try {
       const res = await fetch('/api/auth/enterprise-login', {
@@ -352,22 +381,37 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
       });
-      const data = await res.json();
-      if (!res.ok || !data.success) {
-        return { success: false, error: data.error || 'Authentication failed' };
+
+      const { ok, data, error } = await parseAuthResponse(res);
+
+      if (!ok || !data) {
+        return { success: false, error: error || 'Authentication failed' };
       }
+
       if (data.requiresMfa) {
-        return { success: true, requiresMfa: true, mfaSessionToken: data.mfaSessionToken };
+        return {
+          success: true,
+          requiresMfa: true,
+          mfaSessionToken: data.mfaSessionToken,
+          isEnrollment: data.isEnrollment,
+          totpSecret: data.totpSecret,
+          totpUri: data.totpUri,
+        };
       }
+
       if (data.session) {
         setEnterpriseSession(data.session);
         setCurrentUser(data.session.user);
         localStorage.setItem('togoserve_enterprise_session', JSON.stringify(data.session));
         return { success: true, session: data.session };
       }
-      return { success: false, error: 'Unexpected response' };
+
+      return { success: false, error: 'Unexpected authentication server response format.' };
     } catch (err: any) {
-      return { success: false, error: err.message || 'Network error during enterprise authentication' };
+      return {
+        success: false,
+        error: `Cannot connect to the TOGOSERVE Enterprise Authentication service (${err.message || 'Network unreachable'}). Ensure the Express server is running.`,
+      };
     }
   };
 
@@ -378,19 +422,26 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ mfaSessionToken, mfaCode }),
       });
-      const data = await res.json();
-      if (!res.ok || !data.success) {
-        return { success: false, error: data.error || 'MFA verification failed' };
+
+      const { ok, data, error } = await parseAuthResponse(res);
+
+      if (!ok || !data) {
+        return { success: false, error: error || 'MFA verification failed' };
       }
+
       if (data.session) {
         setEnterpriseSession(data.session);
         setCurrentUser(data.session.user);
         localStorage.setItem('togoserve_enterprise_session', JSON.stringify(data.session));
         return { success: true, session: data.session };
       }
-      return { success: false, error: 'Invalid MFA verification response' };
+
+      return { success: false, error: 'Invalid MFA verification response format.' };
     } catch (err: any) {
-      return { success: false, error: err.message || 'Network error during MFA verification' };
+      return {
+        success: false,
+        error: `Cannot connect to the TOGOSERVE Enterprise Authentication service for MFA validation (${err.message || 'Network unreachable'}).`,
+      };
     }
   };
 

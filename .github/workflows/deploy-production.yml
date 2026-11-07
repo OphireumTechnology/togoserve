@@ -1,0 +1,40 @@
+name: Deploy TOGOSERVE Production Container
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  build-and-deploy:
+    name: Build & Verify Full-Stack Express Container
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Security and Auth Acceptance Tests
+        run: npm test
+
+      - name: Build frontend distribution
+        run: npm run build
+
+      - name: Build Docker Container
+        run: |
+          docker build -t togoserve-enterprise:latest .
+          echo "TOGOSERVE Full-Stack Container verified successfully."
