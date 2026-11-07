@@ -12,8 +12,11 @@ import {
   SupplierItem,
   FleetVehicle,
   CloudSyncState,
-  OrderStatus
+  OrderStatus,
+  EnterpriseSession,
+  EnterpriseLoginResponse
 } from '../types';
+import { AccessControlService } from '../auth/AccessControlService';
 import {
   INITIAL_PRODUCTS,
   INITIAL_ORDERS,
@@ -66,6 +69,14 @@ interface AppContextType {
   loginWithGoogle: () => void;
   loginWithEmail: (email: string, role?: UserRole) => void;
   logout: () => void;
+
+  // Enterprise Private Access & RBAC
+  enterpriseSession: EnterpriseSession | null;
+  isEnterpriseLoginOpen: boolean;
+  setIsEnterpriseLoginOpen: (open: boolean) => void;
+  loginEnterprise: (username: string, password: string) => Promise<EnterpriseLoginResponse>;
+  verifyEnterpriseMFA: (mfaSessionToken: string, mfaCode: string) => Promise<EnterpriseLoginResponse>;
+  revokeEnterpriseSession: () => Promise<void>;
 
   // Modals & Panels
   isCommandPaletteOpen: boolean;
@@ -120,16 +131,6 @@ interface AppContextType {
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
-const DEFAULT_USER: UserProfile = {
-  id: 'usr-danilo-09',
-  name: 'Danilo Dela Cruz',
-  email: 'DANILODELACRUZ0909@gmail.com',
-  role: 'MERCHANT_OWNER',
-  provider: 'google',
-  verified: true,
-  storeId: 'store-1',
-};
-
 export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   // Theme state
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
@@ -160,9 +161,41 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     }
   };
 
-  // Auth
-  const [currentUser, setCurrentUser] = useState<UserProfile | null>(DEFAULT_USER);
+  // Enterprise Session state & Persistent Auth restoration
+  const [enterpriseSession, setEnterpriseSession] = useState<EnterpriseSession | null>(() => {
+    if (typeof window === 'undefined') return null;
+    try {
+      const stored = localStorage.getItem('togoserve_enterprise_session');
+      if (stored) {
+        const parsed = JSON.parse(stored) as EnterpriseSession;
+        if (new Date(parsed.expiresAt).getTime() > Date.now()) {
+          return parsed;
+        }
+        localStorage.removeItem('togoserve_enterprise_session');
+      }
+    } catch {
+      // ignore JSON parse error
+    }
+    return null;
+  });
+
+  const [currentUser, setCurrentUser] = useState<UserProfile | null>(() => {
+    if (typeof window === 'undefined') return null;
+    try {
+      const stored = localStorage.getItem('togoserve_enterprise_session');
+      if (stored) {
+        const parsed = JSON.parse(stored) as EnterpriseSession;
+        if (new Date(parsed.expiresAt).getTime() > Date.now()) {
+          return parsed.user;
+        }
+      }
+    } catch {}
+    return null; // Public unauthenticated visitor by default
+  });
+
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isEnterpriseLoginOpen, setIsEnterpriseLoginOpen] = useState(false);
+
 
   // Modals
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
@@ -285,10 +318,10 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 
   const loginWithGoogle = () => {
     const user: UserProfile = {
-      id: 'usr-google-909',
-      name: 'Danilo Dela Cruz',
-      email: 'DANILODELACRUZ0909@gmail.com',
-      role: 'ADMIN',
+      id: 'usr-customer-88',
+      name: 'Verified Customer',
+      email: 'customer@togoserve.com',
+      role: 'CUSTOMER',
       provider: 'google',
       verified: true,
       avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80',
@@ -312,12 +345,91 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     addToast('success', 'Session Established', `Authenticated as ${role}`);
   };
 
-  const logout = () => {
+  const loginEnterprise = async (username: string, password: string): Promise<EnterpriseLoginResponse> => {
+    try {
+      const res = await fetch('/api/auth/enterprise-login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        return { success: false, error: data.error || 'Authentication failed' };
+      }
+      if (data.requiresMfa) {
+        return { success: true, requiresMfa: true, mfaSessionToken: data.mfaSessionToken };
+      }
+      if (data.session) {
+        setEnterpriseSession(data.session);
+        setCurrentUser(data.session.user);
+        localStorage.setItem('togoserve_enterprise_session', JSON.stringify(data.session));
+        return { success: true, session: data.session };
+      }
+      return { success: false, error: 'Unexpected response' };
+    } catch (err: any) {
+      return { success: false, error: err.message || 'Network error during enterprise authentication' };
+    }
+  };
+
+  const verifyEnterpriseMFA = async (mfaSessionToken: string, mfaCode: string): Promise<EnterpriseLoginResponse> => {
+    try {
+      const res = await fetch('/api/auth/verify-mfa', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ mfaSessionToken, mfaCode }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        return { success: false, error: data.error || 'MFA verification failed' };
+      }
+      if (data.session) {
+        setEnterpriseSession(data.session);
+        setCurrentUser(data.session.user);
+        localStorage.setItem('togoserve_enterprise_session', JSON.stringify(data.session));
+        return { success: true, session: data.session };
+      }
+      return { success: false, error: 'Invalid MFA verification response' };
+    } catch (err: any) {
+      return { success: false, error: err.message || 'Network error during MFA verification' };
+    }
+  };
+
+  const revokeEnterpriseSession = async () => {
+    if (enterpriseSession?.token) {
+      try {
+        await fetch('/api/auth/revoke', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ token: enterpriseSession.token, reason: 'User sign-out' }),
+        });
+      } catch {
+        // Continue clearing client session on network failure
+      }
+    }
+    setEnterpriseSession(null);
     setCurrentUser(null);
-    addToast('info', 'Signed Out', 'You have signed out of TOGOSERVE');
+    localStorage.removeItem('togoserve_enterprise_session');
+    addToast('info', 'Enterprise Session Terminated', 'All revocable tokens invalidated.');
+  };
+
+  const logout = () => {
+    if (enterpriseSession) {
+      revokeEnterpriseSession();
+    } else {
+      setCurrentUser(null);
+      addToast('info', 'Signed Out', 'You have signed out of TOGOSERVE');
+    }
   };
 
   const triggerManualSync = () => {
+    if (!AccessControlService.canTriggerCloudSync(currentUser)) {
+      addToast(
+        'error',
+        'Authorization Denied',
+        'Force Cloud Synchronization is restricted to INFRASTRUCTURE_ADMIN and SUPER_ADMIN.'
+      );
+      return;
+    }
     setCloudSync(prev => ({ ...prev, status: 'syncing' }));
     setTimeout(() => {
       setCloudSync({
@@ -547,6 +659,12 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         loginWithGoogle,
         loginWithEmail,
         logout,
+        enterpriseSession,
+        isEnterpriseLoginOpen,
+        setIsEnterpriseLoginOpen,
+        loginEnterprise,
+        verifyEnterpriseMFA,
+        revokeEnterpriseSession,
         isCommandPaletteOpen,
         setIsCommandPaletteOpen,
         isShortcutsOpen,

@@ -1,10 +1,10 @@
 import React from 'react';
 import { Logo } from '../brand/Logo';
-import { ShieldCheck, ArrowUpRight } from 'lucide-react';
+import { ShieldCheck, ArrowUpRight, Lock, KeyRound } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 
 export const Footer: React.FC = () => {
-  const { setActivePortal } = useApp();
+  const { setActivePortal, setIsEnterpriseLoginOpen } = useApp();
 
   return (
     <footer className="mt-20 bg-[#2E2E2E] text-neutral-300 border-t border-neutral-700 text-xs py-14 px-4 sm:px-6 lg:px-8">
@@ -21,26 +21,18 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* Portals */}
+        {/* Public Offerings & Portals */}
         <div>
           <h4 className="text-white font-bold mb-4 uppercase tracking-widest text-[11px] text-[#FFD54F]">
-            Platform Ecosystem
+            Public Services
           </h4>
           <ul className="space-y-2.5 text-neutral-400">
-            <li>
-              <button
-                onClick={() => setActivePortal('landing')}
-                className="hover:text-white transition-colors flex items-center gap-1"
-              >
-                <span>Platform Overview</span>
-              </button>
-            </li>
             <li>
               <button
                 onClick={() => setActivePortal('marketplace')}
                 className="hover:text-white transition-colors flex items-center gap-1"
               >
-                <span>Customer Marketplace</span>
+                <span>Customer Marketplace (Food &amp; Mart)</span>
               </button>
             </li>
             <li>
@@ -53,99 +45,80 @@ export const Footer: React.FC = () => {
             </li>
             <li>
               <button
-                onClick={() => setActivePortal('merchant')}
+                onClick={() => setActivePortal('landing')}
                 className="hover:text-white transition-colors flex items-center gap-1"
               >
-                <span>TOGOSERVE Merchant OS</span>
+                <span>Solutions &amp; Business Overview</span>
               </button>
             </li>
             <li>
-              <button
-                onClick={() => setActivePortal('pos')}
-                className="hover:text-white transition-colors flex items-center gap-1"
-              >
-                <span>Counter POS Terminal</span>
-              </button>
+              <span className="text-neutral-500">Merchant Storefront Partnership</span>
             </li>
             <li>
-              <button
-                onClick={() => setActivePortal('rider')}
-                className="hover:text-white transition-colors flex items-center gap-1"
-              >
-                <span>Rider &amp; Courier Portal</span>
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => setActivePortal('fleet')}
-                className="hover:text-white transition-colors flex items-center gap-1"
-              >
-                <span>Fleet Telematics &amp; Dispatch</span>
-              </button>
+              <span className="text-neutral-500">Courier Partner Opportunities</span>
             </li>
           </ul>
         </div>
 
-        {/* Intelligence & Governance */}
+        {/* Governance & Architecture */}
         <div>
           <h4 className="text-white font-bold mb-4 uppercase tracking-widest text-[11px] text-[#FFD54F]">
-            AI &amp; Governance
+            Governance &amp; Trust
           </h4>
           <ul className="space-y-2.5 text-neutral-400">
-            <li>
-              <button
-                onClick={() => setActivePortal('ai-center')}
-                className="hover:text-white transition-colors flex items-center gap-1"
-              >
-                <span>A00 Supervisor Command</span>
-              </button>
+            <li className="flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#16845B]"></span>
+              <span>A00 Autonomous AI Supervision</span>
             </li>
-            <li>
-              <button
-                onClick={() => setActivePortal('ai-center')}
-                className="hover:text-white transition-colors flex items-center gap-1"
-              >
-                <span>Human-in-the-Loop (HITL) Queue</span>
-              </button>
+            <li className="flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#16845B]"></span>
+              <span>Human-in-the-Loop (HITL) Gate</span>
             </li>
-            <li>
-              <button
-                onClick={() => setActivePortal('analytics')}
-                className="hover:text-white transition-colors flex items-center gap-1"
-              >
-                <span>Executive Analytics &amp; Telemetry</span>
-              </button>
+            <li className="flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#F4B400]"></span>
+              <span>Role-Based Access Control (RBAC)</span>
             </li>
-            <li>
-              <button
-                onClick={() => setActivePortal('supplier')}
-                className="hover:text-white transition-colors flex items-center gap-1"
-              >
-                <span>Supplier &amp; B2B Procurement</span>
-              </button>
+            <li className="flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#F4B400]"></span>
+              <span>256-Bit Cryptographic Audit Trails</span>
             </li>
           </ul>
         </div>
 
-        {/* Corporate Standard & Production Domain */}
+        {/* Corporate Standard & Enterprise Gateway Entry */}
         <div>
           <h4 className="text-white font-bold mb-4 uppercase tracking-widest text-[11px] text-[#FFD54F]">
-            Corporate Identity
+            Corporate Access
           </h4>
-          <p className="text-neutral-400 leading-relaxed text-[11px]">
-            Mustard Gold (#F4B400) • Premium Yellow (#FFD54F) • Charcoal Black (#2E2E2E) • Light Gray (#EBEEEE) • Off White (#FAFAFA) • Earth Beige (#D9C39A)
+          <p className="text-neutral-400 leading-relaxed text-[11px] mb-3">
+            Operational dashboards, AI controls, and cloud infrastructure require verified enterprise credentials and MFA.
           </p>
-          <div className="mt-4 p-3.5 rounded-xl bg-neutral-800/80 border border-neutral-700 text-[11px] text-neutral-300 space-y-1.5">
-            <div className="flex items-center justify-between">
-              <span className="font-bold text-[#FFD54F]">Official Standard:</span>
-              <span className="text-[10px] text-[#D9C39A] uppercase tracking-wider font-semibold">Verified</span>
+
+          <button
+            onClick={() => setIsEnterpriseLoginOpen(true)}
+            className="w-full inline-flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl bg-neutral-800 hover:bg-neutral-700 border border-neutral-600 text-xs font-semibold text-[#FFD54F] transition-all"
+          >
+            <Lock className="w-3.5 h-3.5 text-[#F4B400]" />
+            <span>Enterprise Personnel Login</span>
+          </button>
+
+          <div className="mt-4 p-3 rounded-xl bg-neutral-800/80 border border-neutral-700 text-[10px] text-neutral-400 space-y-1">
+            <div className="flex items-center justify-between text-neutral-300 font-semibold">
+              <span>Environment:</span>
+              <span className="text-[#FFD54F]">PRODUCTION LIVE</span>
             </div>
-            <p className="text-[11px] text-neutral-300">
-              Commerce • Logistics • AI
-            </p>
-            <div className="pt-1 text-[10px] text-neutral-400 flex items-center gap-1">
-              <span>Production: </span>
-              <a href="https://artax.services/" target="_blank" rel="noopener noreferrer" className="text-[#FFD54F] hover:underline inline-flex items-center gap-0.5">
+            <div className="flex items-center justify-between">
+              <span>Domain:</span>
+              <span className="font-mono text-neutral-300">togoserve.com</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span>Active Gateway:</span>
+              <a
+                href="https://artax.services/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#FFD54F] hover:underline inline-flex items-center gap-0.5"
+              >
                 artax.services <ArrowUpRight className="w-2.5 h-2.5" />
               </a>
             </div>

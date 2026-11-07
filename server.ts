@@ -7,6 +7,7 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { createAIRouter } from './src/server/aiServer';
+import { createAuthRouter } from './src/server/authServer';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -16,7 +17,8 @@ async function startServer() {
   const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
   const isProd = process.env.NODE_ENV === 'production';
 
-  // Mount server-side AI API gateway
+  // Mount server-side authentication & AI API gateways
+  app.use('/api/auth', createAuthRouter());
   app.use('/api/ai', createAIRouter());
 
   if (!isProd) {

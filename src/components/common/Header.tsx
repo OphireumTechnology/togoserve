@@ -20,17 +20,13 @@ import {
   BarChart3,
   ShieldCheck,
   User,
-  Layers
+  Lock,
+  KeyRound,
+  LogOut,
+  HelpCircle,
+  Briefcase
 } from 'lucide-react';
-import { UserRole } from '../../types';
-
-interface PortalOption {
-  id: ActivePortal;
-  label: string;
-  category: 'primary' | 'business' | 'platform';
-  description: string;
-  icon: React.ReactNode;
-}
+import { AccessControlService, ENTERPRISE_ROLES, PORTAL_ACCESS_RULES } from '../../auth/AccessControlService';
 
 export const Header: React.FC<{
   onOpenCart: () => void;
@@ -41,25 +37,28 @@ export const Header: React.FC<{
     activePortal,
     setActivePortal,
     currentUser,
-    switchRole,
+    enterpriseSession,
     setIsAuthModalOpen,
+    setIsEnterpriseLoginOpen,
     setIsCommandPaletteOpen,
+    setIsShortcutsOpen,
     cartItemCount,
     logout,
+    revokeEnterpriseSession,
   } = useApp();
 
-  const [isMoreMenuOpen, setIsMoreMenuOpen] = useState(false);
+  const [isEnterpriseMenuOpen, setIsEnterpriseMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const moreMenuRef = useRef<HTMLDivElement>(null);
+  const enterpriseMenuRef = useRef<HTMLDivElement>(null);
   const profileMenuRef = useRef<HTMLDivElement>(null);
 
   // Close dropdowns on outside click
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (moreMenuRef.current && !moreMenuRef.current.contains(event.target as Node)) {
-        setIsMoreMenuOpen(false);
+      if (enterpriseMenuRef.current && !enterpriseMenuRef.current.contains(event.target as Node)) {
+        setIsEnterpriseMenuOpen(false);
       }
       if (profileMenuRef.current && !profileMenuRef.current.contains(event.target as Node)) {
         setIsProfileMenuOpen(false);
@@ -69,76 +68,92 @@ export const Header: React.FC<{
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const primaryPortals: { id: ActivePortal; label: string; icon: React.ReactNode }[] = [
-    { id: 'marketplace', label: 'Marketplace', icon: <ShoppingBag className="w-4 h-4" /> },
-    { id: 'padala', label: 'TOGO Padala', icon: <Truck className="w-4 h-4" /> },
-    { id: 'merchant', label: 'Merchant OS', icon: <Store className="w-4 h-4" /> },
-    { id: 'rider', label: 'Rider Hub', icon: <Truck className="w-4 h-4" /> },
+  const isEnterpriseUser = Boolean(
+    enterpriseSession ||
+    (currentUser && currentUser.role !== 'CUSTOMER')
+  );
+
+  const roleMeta = currentUser ? ENTERPRISE_ROLES[currentUser.role] : null;
+  const canSyncCloud = AccessControlService.canTriggerCloudSync(currentUser);
+
+  // Public navigation links
+  const publicNavLinks = [
+    { id: 'marketplace' as ActivePortal, label: 'Marketplace', icon: <ShoppingBag className="w-4 h-4" /> },
+    { id: 'padala' as ActivePortal, label: 'TOGO Padala', icon: <Truck className="w-4 h-4" /> },
+    { id: 'landing' as ActivePortal, label: 'Solutions', icon: <Briefcase className="w-4 h-4" /> },
   ];
 
-  const secondaryPortals: PortalOption[] = [
-    {
-      id: 'pos',
-      label: 'POS Register',
-      category: 'business',
-      description: 'Point-of-Sale cash counter & SKU checkout',
-      icon: <CreditCard className="w-4 h-4 text-[#F4B400]" />,
-    },
-    {
-      id: 'fleet',
-      label: 'Fleet Operations',
-      category: 'business',
-      description: 'Dispatch, multi-rider routing & SLA telemetry',
-      icon: <PackageCheck className="w-4 h-4 text-[#F4B400]" />,
-    },
-    {
-      id: 'supplier',
-      label: 'B2B Wholesale',
-      category: 'business',
-      description: 'Bulk inventory supply catalog & procurement',
-      icon: <Building2 className="w-4 h-4 text-[#2E2E2E] dark:text-[#EBEEEE]" />,
-    },
-    {
-      id: 'ai-center',
-      label: 'A00 AI Supervisor',
-      category: 'platform',
-      description: 'Governed autonomous agent approval & policies',
-      icon: <Cpu className="w-4 h-4 text-[#F4B400]" />,
-    },
-    {
-      id: 'analytics',
-      label: 'Executive Analytics',
-      category: 'platform',
-      description: 'Real-time GMV, funnels & audit reporting',
-      icon: <BarChart3 className="w-4 h-4 text-[#16845B]" />,
-    },
-  ];
+  // Authorized operational portals for authenticated enterprise user
+  const accessiblePortals = currentUser
+    ? AccessControlService.getAccessiblePortals(currentUser).filter(
+        (p) => !['marketplace', 'padala', 'landing', 'customer'].includes(p)
+      )
+    : [];
 
-  const roles: UserRole[] = [
-    'CUSTOMER',
-    'MERCHANT_OWNER',
-    'MERCHANT_STAFF',
-    'RIDER',
-    'FINANCE',
-    'SUPPORT',
-    'ADMIN',
-  ];
-
-  const isSecondaryActive = secondaryPortals.some((p) => p.id === activePortal);
-  const activeSecondaryItem = secondaryPortals.find((p) => p.id === activePortal);
+  const getPortalIcon = (id: string) => {
+    switch (id) {
+      case 'merchant':
+        return <Store className="w-4 h-4 text-[#F4B400]" />;
+      case 'pos':
+        return <CreditCard className="w-4 h-4 text-[#F4B400]" />;
+      case 'rider':
+        return <Truck className="w-4 h-4 text-[#F4B400]" />;
+      case 'fleet':
+        return <PackageCheck className="w-4 h-4 text-[#F4B400]" />;
+      case 'supplier':
+        return <Building2 className="w-4 h-4 text-[#2E2E2E] dark:text-[#EBEEEE]" />;
+      case 'ai-center':
+        return <Cpu className="w-4 h-4 text-[#F4B400]" />;
+      case 'analytics':
+        return <BarChart3 className="w-4 h-4 text-[#16845B]" />;
+      default:
+        return <ShieldCheck className="w-4 h-4 text-[#F4B400]" />;
+    }
+  };
 
   return (
     <header className="sticky top-0 z-40 w-full bg-white dark:bg-[#181818] text-[#2E2E2E] dark:text-[#FAFAFA] border-b border-[#EBEEEE] dark:border-neutral-800 shadow-xs transition-colors">
+      {/* Enterprise Privileged Session Banner (Only for authenticated staff) */}
+      {isEnterpriseUser && currentUser && (
+        <div className="bg-[#2E2E2E] text-[#FAFAFA] text-[11px] px-4 py-1 border-b border-neutral-700/80">
+          <div className="max-w-7xl mx-auto flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#16845B] animate-pulse"></span>
+              <span className="font-semibold text-[#FFD54F]">ENTERPRISE ENVIRONMENT</span>
+              <span className="text-neutral-400">|</span>
+              <span className="font-mono text-neutral-300">
+                {roleMeta?.title || currentUser.role}
+              </span>
+              {enterpriseSession?.mfaVerified && (
+                <span className="hidden sm:inline-flex items-center gap-1 text-[10px] text-[#16845B] bg-[#16845B]/20 px-2 py-0.5 rounded-full font-bold">
+                  <ShieldCheck className="w-3 h-3" /> MFA Active
+                </span>
+              )}
+            </div>
+
+            <div className="flex items-center gap-3">
+              <span className="hidden md:inline text-neutral-400 font-mono text-[10px]">
+                Clearance: Level {roleMeta?.clearanceLevel || 1}
+              </span>
+              <button
+                onClick={revokeEnterpriseSession}
+                className="text-[10px] text-rose-400 hover:text-rose-300 flex items-center gap-1 transition-colors font-medium"
+              >
+                <LogOut className="w-3 h-3" />
+                <span>Revoke Session</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20 gap-4">
           
-          {/* ======================================================== */}
-          {/* ZONE 1: OFFICIAL TOGOSERVE HORIZONTAL LOGO               */}
-          {/* Displayed sharply, uncropped, with generous space        */}
-          {/* ======================================================== */}
+          {/* ZONE 1: OFFICIAL TOGOSERVE HORIZONTAL LOGO */}
           <div className="flex items-center gap-3 shrink-0">
             <button
-              onClick={() => setActivePortal('landing')}
+              onClick={() => setActivePortal('marketplace')}
               className="focus:outline-none focus:ring-2 focus:ring-[#F4B400] rounded-xl transition-transform active:scale-95 text-left flex items-center py-1"
               aria-label="TOGOSERVE Home"
             >
@@ -151,102 +166,119 @@ export const Header: React.FC<{
             </button>
           </div>
 
-          {/* ======================================================== */}
-          {/* ZONE 2: DESKTOP STREAMLINED NAVIGATION                   */}
-          {/* Consistent typography, gold active highlights            */}
-          {/* ======================================================== */}
+          {/* ZONE 2: DESKTOP NAVIGATION (Public vs Private) */}
           <nav className="hidden lg:flex items-center gap-1.5 xl:gap-2">
-            {primaryPortals.map((p) => {
-              const isActive = activePortal === p.id;
+            {/* PUBLIC NAVIGATION */}
+            {publicNavLinks.map((link) => {
+              const isActive = activePortal === link.id;
               return (
                 <button
-                  key={p.id}
-                  onClick={() => setActivePortal(p.id)}
+                  key={link.id}
+                  onClick={() => setActivePortal(link.id)}
                   className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all focus:outline-none focus:ring-2 focus:ring-[#F4B400] ${
                     isActive
                       ? 'bg-[#F4B400] text-[#2E2E2E] font-bold shadow-xs'
-                      : 'text-[#2E2E2E] dark:text-neutral-200 hover:text-[#2E2E2E] hover:bg-[#EBEEEE] dark:hover:bg-neutral-800'
+                      : 'text-[#2E2E2E] dark:text-neutral-200 hover:bg-[#EBEEEE] dark:hover:bg-neutral-800'
                   }`}
                 >
                   <span className={isActive ? 'text-[#2E2E2E]' : 'text-[#64748B] dark:text-neutral-400'}>
-                    {p.icon}
+                    {link.icon}
                   </span>
-                  <span>{p.label}</span>
+                  <span>{link.label}</span>
                 </button>
               );
             })}
 
-            {/* Dropdown for More Platform Ecosystem Modules */}
-            <div className="relative" ref={moreMenuRef}>
-              <button
-                onClick={() => setIsMoreMenuOpen(!isMoreMenuOpen)}
-                className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all focus:outline-none focus:ring-2 focus:ring-[#F4B400] ${
-                  isSecondaryActive
-                    ? 'bg-[#F4B400] text-[#2E2E2E] font-bold shadow-xs'
-                    : 'text-[#2E2E2E] dark:text-neutral-200 hover:text-[#2E2E2E] hover:bg-[#EBEEEE] dark:hover:bg-neutral-800'
-                }`}
-                aria-expanded={isMoreMenuOpen}
-                aria-haspopup="true"
-              >
-                <Layers className="w-3.5 h-3.5" />
-                <span>{isSecondaryActive && activeSecondaryItem ? activeSecondaryItem.label : 'Solutions'}</span>
-                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isMoreMenuOpen ? 'rotate-180' : ''}`} />
-              </button>
+            {/* Public Partner Inquiries */}
+            {!isEnterpriseUser && (
+              <>
+                <button
+                  onClick={() => setIsAuthModalOpen(true)}
+                  className="px-3 py-2 rounded-xl text-xs font-semibold text-[#64748B] dark:text-neutral-300 hover:text-[#2E2E2E] dark:hover:text-white hover:bg-[#EBEEEE] dark:hover:bg-neutral-800 transition-colors"
+                >
+                  Become a Merchant
+                </button>
+                <button
+                  onClick={() => setIsAuthModalOpen(true)}
+                  className="px-3 py-2 rounded-xl text-xs font-semibold text-[#64748B] dark:text-neutral-300 hover:text-[#2E2E2E] dark:hover:text-white hover:bg-[#EBEEEE] dark:hover:bg-neutral-800 transition-colors"
+                >
+                  Become a Rider
+                </button>
+              </>
+            )}
 
-              {isMoreMenuOpen && (
-                <div className="absolute left-0 mt-2 w-72 bg-white dark:bg-[#1E1E1E] border border-[#EBEEEE] dark:border-neutral-800 rounded-2xl shadow-xl p-2 z-50 text-[#2E2E2E] dark:text-neutral-200 animate-in fade-in-50 zoom-in-95 duration-100">
-                  <div className="px-3 py-1.5 text-[10px] font-bold text-[#64748B] dark:text-neutral-400 uppercase tracking-wider border-b border-[#EBEEEE] dark:border-neutral-800 mb-1">
-                    Enterprise Solutions
-                  </div>
-                  <div className="space-y-1">
-                    {secondaryPortals.map((item) => {
-                      const isItemActive = activePortal === item.id;
-                      return (
-                        <button
-                          key={item.id}
-                          onClick={() => {
-                            setActivePortal(item.id);
-                            setIsMoreMenuOpen(false);
-                          }}
-                          className={`w-full text-left p-2.5 rounded-xl transition-colors flex items-start gap-2.5 ${
-                            isItemActive
-                              ? 'bg-[#EBEEEE] dark:bg-neutral-800 font-bold border border-[#F4B400]/40'
-                              : 'hover:bg-[#EBEEEE]/60 dark:hover:bg-neutral-800/60'
-                          }`}
-                        >
-                          <div className="p-1.5 rounded-lg bg-[#EBEEEE] dark:bg-neutral-800 shrink-0 mt-0.5">
-                            {item.icon}
-                          </div>
-                          <div>
-                            <div className="flex items-center gap-1.5">
-                              <span className="text-xs font-semibold text-[#2E2E2E] dark:text-neutral-100">{item.label}</span>
-                              {isItemActive && (
-                                <span className="w-1.5 h-1.5 rounded-full bg-[#F4B400]"></span>
-                              )}
+            {/* AUTHENTICATED ENTERPRISE WORKSPACES DROPDOWN */}
+            {isEnterpriseUser && accessiblePortals.length > 0 && (
+              <div className="relative" ref={enterpriseMenuRef}>
+                <button
+                  onClick={() => setIsEnterpriseMenuOpen(!isEnterpriseMenuOpen)}
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold bg-[#EBEEEE] dark:bg-neutral-800 hover:bg-[#EBEEEE]/80 text-[#2E2E2E] dark:text-[#FAFAFA] border border-[#F4B400]/40 transition-all focus:outline-none focus:ring-2 focus:ring-[#F4B400]"
+                  aria-expanded={isEnterpriseMenuOpen}
+                  aria-haspopup="true"
+                >
+                  <Lock className="w-3.5 h-3.5 text-[#F4B400]" />
+                  <span>Enterprise Workspaces</span>
+                  <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isEnterpriseMenuOpen ? 'rotate-180' : ''}`} />
+                </button>
+
+                {isEnterpriseMenuOpen && (
+                  <div className="absolute left-0 mt-2 w-72 bg-white dark:bg-[#1E1E1E] border border-[#EBEEEE] dark:border-neutral-800 rounded-2xl shadow-xl p-2 z-50 text-[#2E2E2E] dark:text-neutral-200 animate-in fade-in-50 zoom-in-95 duration-100">
+                    <div className="px-3 py-1.5 text-[10px] font-bold text-[#64748B] dark:text-neutral-400 uppercase tracking-wider border-b border-[#EBEEEE] dark:border-neutral-800 mb-1">
+                      Authorized Operational Modules
+                    </div>
+                    <div className="space-y-1">
+                      {accessiblePortals.map((pId) => {
+                        const rule = PORTAL_ACCESS_RULES[pId];
+                        const isItemActive = activePortal === pId;
+                        return (
+                          <button
+                            key={pId}
+                            onClick={() => {
+                              setActivePortal(pId as ActivePortal);
+                              setIsEnterpriseMenuOpen(false);
+                            }}
+                            className={`w-full text-left p-2.5 rounded-xl transition-colors flex items-start gap-2.5 ${
+                              isItemActive
+                                ? 'bg-[#EBEEEE] dark:bg-neutral-800 font-bold border border-[#F4B400]/40'
+                                : 'hover:bg-[#EBEEEE]/60 dark:hover:bg-neutral-800/60'
+                            }`}
+                          >
+                            <div className="p-1.5 rounded-lg bg-[#EBEEEE] dark:bg-neutral-800 shrink-0 mt-0.5">
+                              {getPortalIcon(pId)}
                             </div>
-                            <p className="text-[10px] text-[#64748B] dark:text-neutral-400 line-clamp-1">
-                              {item.description}
-                            </p>
-                          </div>
-                        </button>
-                      );
-                    })}
+                            <div>
+                              <div className="flex items-center gap-1.5">
+                                <span className="text-xs font-semibold text-[#2E2E2E] dark:text-neutral-100">
+                                  {rule?.name || pId}
+                                </span>
+                                {isItemActive && (
+                                  <span className="w-1.5 h-1.5 rounded-full bg-[#F4B400]"></span>
+                                )}
+                              </div>
+                              <p className="text-[10px] text-[#64748B] dark:text-neutral-400 line-clamp-1">
+                                {rule?.description}
+                              </p>
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
-              )}
-            </div>
+                )}
+              </div>
+            )}
           </nav>
 
-          {/* ======================================================== */}
-          {/* ZONE 3: ACTIONS & CONTROLS (Clean, Polished)             */}
-          {/* ======================================================== */}
+          {/* ZONE 3: ACTIONS & CONTROLS */}
           <div className="flex items-center gap-2 shrink-0">
-            {/* Cloud Sync State */}
-            <div className="hidden md:flex items-center">
-              <CloudSyncIndicator />
-            </div>
+            {/* Cloud Sync State (Strictly restricted to INFRASTRUCTURE_ADMIN / SUPER_ADMIN) */}
+            {canSyncCloud && (
+              <div className="hidden md:flex items-center">
+                <CloudSyncIndicator />
+              </div>
+            )}
 
-            {/* Quick Command Launcher (Ctrl+K) */}
+            {/* Quick Command Launcher */}
             <button
               onClick={() => setIsCommandPaletteOpen(true)}
               className="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 text-xs text-[#2E2E2E] dark:text-neutral-200 bg-[#EBEEEE]/70 dark:bg-neutral-800 hover:bg-[#EBEEEE] dark:hover:bg-neutral-700 border border-[#EBEEEE] dark:border-neutral-700 rounded-xl transition-colors focus:outline-none focus:ring-2 focus:ring-[#F4B400]"
@@ -260,7 +292,17 @@ export const Header: React.FC<{
               </kbd>
             </button>
 
-            {/* Theme Toggle (Dark / Light) */}
+            {/* Help / Shortcuts modal */}
+            <button
+              onClick={() => setIsShortcutsOpen(true)}
+              className="p-2.5 text-[#2E2E2E] dark:text-neutral-300 hover:bg-[#EBEEEE] dark:hover:bg-neutral-800 rounded-xl transition-colors focus:outline-none focus:ring-2 focus:ring-[#F4B400]"
+              title="Help & Keyboard Shortcuts"
+              aria-label="Open Help"
+            >
+              <HelpCircle className="w-4 h-4" />
+            </button>
+
+            {/* Theme Toggle */}
             <button
               onClick={toggleDarkMode}
               className="p-2.5 text-[#2E2E2E] dark:text-neutral-300 hover:bg-[#EBEEEE] dark:hover:bg-neutral-800 rounded-xl transition-colors focus:outline-none focus:ring-2 focus:ring-[#F4B400]"
@@ -278,18 +320,30 @@ export const Header: React.FC<{
             <button
               onClick={onOpenCart}
               className="relative p-2.5 text-[#2E2E2E] dark:text-neutral-300 hover:bg-[#EBEEEE] dark:hover:bg-neutral-800 rounded-xl transition-colors focus:outline-none focus:ring-2 focus:ring-[#F4B400]"
-              title={`Cart (${cartItemCount} items)`}
-              aria-label={`View cart with ${cartItemCount} items`}
+              title={`Basket (${cartItemCount} items)`}
+              aria-label={`View basket with ${cartItemCount} items`}
             >
               <ShoppingCart className="w-4 h-4" />
               {cartItemCount > 0 && (
-                <span className="absolute 1 top-1 right-1 bg-[#F4B400] text-[#2E2E2E] text-[10px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow-xs">
+                <span className="absolute top-1 right-1 bg-[#F4B400] text-[#2E2E2E] text-[10px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow-xs">
                   {cartItemCount}
                 </span>
               )}
             </button>
 
-            {/* User Profile / Auth Switcher */}
+            {/* Discreet Enterprise Access Entry Point */}
+            {!isEnterpriseUser && (
+              <button
+                onClick={() => setIsEnterpriseLoginOpen(true)}
+                className="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold border border-neutral-300 dark:border-neutral-700 hover:border-[#F4B400] text-[#2E2E2E] dark:text-neutral-200 hover:text-[#F4B400] transition-colors focus:outline-none focus:ring-2 focus:ring-[#F4B400]"
+                title="Restricted Enterprise Personnel Gateway"
+              >
+                <Lock className="w-3.5 h-3.5 text-[#F4B400]" />
+                <span>Enterprise</span>
+              </button>
+            )}
+
+            {/* User Profile / Auth State */}
             {currentUser ? (
               <div className="relative" ref={profileMenuRef}>
                 <button
@@ -323,34 +377,9 @@ export const Header: React.FC<{
                       <div className="mt-1.5 flex items-center gap-1.5">
                         <ShieldCheck className="w-3.5 h-3.5 text-[#16845B]" />
                         <span className="text-[10px] text-[#16845B] font-medium">
-                          Cloud Identity OAuth Verified
+                          {isEnterpriseUser ? 'Enterprise RBAC Session' : 'Customer Account'}
                         </span>
                       </div>
-                    </div>
-
-                    <div className="px-3 py-1 text-[10px] font-bold text-[#64748B] dark:text-neutral-400 uppercase tracking-wider">
-                      Role-Based Workspace
-                    </div>
-                    <div className="grid grid-cols-1 gap-0.5 mb-2">
-                      {roles.map((r) => (
-                        <button
-                          key={r}
-                          onClick={() => {
-                            switchRole(r);
-                            setIsProfileMenuOpen(false);
-                          }}
-                          className={`w-full text-left px-3 py-1.5 text-xs rounded-lg transition-colors flex items-center justify-between ${
-                            currentUser.role === r
-                              ? 'bg-[#F4B400]/20 text-[#2E2E2E] dark:text-[#F4B400] font-bold'
-                              : 'hover:bg-[#EBEEEE] dark:hover:bg-neutral-800'
-                          }`}
-                        >
-                          <span>{r}</span>
-                          {currentUser.role === r && (
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#F4B400]"></span>
-                          )}
-                        </button>
-                      ))}
                     </div>
 
                     <div className="border-t border-[#EBEEEE] dark:border-neutral-800 pt-1">
@@ -359,9 +388,10 @@ export const Header: React.FC<{
                           logout();
                           setIsProfileMenuOpen(false);
                         }}
-                        className="w-full text-left px-3 py-1.5 text-xs text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 rounded-lg font-semibold transition-colors"
+                        className="w-full text-left px-3 py-1.5 text-xs text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 rounded-lg font-semibold transition-colors flex items-center gap-1.5"
                       >
-                        Sign Out
+                        <LogOut className="w-3.5 h-3.5" />
+                        <span>Sign Out</span>
                       </button>
                     </div>
                   </div>
@@ -388,22 +418,15 @@ export const Header: React.FC<{
           </div>
         </div>
 
-        {/* ======================================================== */}
-        {/* RESPONSIVE MOBILE MENU DRAWER                            */}
-        {/* ======================================================== */}
+        {/* RESPONSIVE MOBILE MENU DRAWER */}
         {isMobileMenuOpen && (
           <div className="lg:hidden border-t border-[#EBEEEE] dark:border-neutral-800 py-3 space-y-3">
-            <div className="px-2 flex items-center justify-between text-xs text-[#64748B] pb-2 border-b border-[#EBEEEE] dark:border-neutral-800">
-              <span className="text-xs">Cloud Status</span>
-              <CloudSyncIndicator />
-            </div>
-
             <div>
               <p className="px-2 text-[10px] font-bold text-[#64748B] dark:text-neutral-400 uppercase tracking-wider mb-1.5">
-                Core Portals
+                Public Portals
               </p>
               <div className="grid grid-cols-2 gap-1.5 px-1">
-                {primaryPortals.map((p) => {
+                {publicNavLinks.map((p) => {
                   const isActive = activePortal === p.id;
                   return (
                     <button
@@ -426,35 +449,44 @@ export const Header: React.FC<{
               </div>
             </div>
 
-            <div>
-              <p className="px-2 text-[10px] font-bold text-[#64748B] dark:text-neutral-400 uppercase tracking-wider mb-1.5">
-                Business & Platform Solutions
-              </p>
-              <div className="grid grid-cols-1 gap-1 px-1">
-                {secondaryPortals.map((p) => {
-                  const isActive = activePortal === p.id;
-                  return (
-                    <button
-                      key={p.id}
-                      onClick={() => {
-                        setActivePortal(p.id);
-                        setIsMobileMenuOpen(false);
-                      }}
-                      className={`flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold transition-colors ${
-                        isActive
-                          ? 'bg-[#EBEEEE] dark:bg-neutral-800 text-[#2E2E2E] dark:text-neutral-100 font-bold border border-[#F4B400]/40'
-                          : 'text-[#2E2E2E] dark:text-neutral-200 hover:bg-[#EBEEEE] dark:hover:bg-neutral-800'
-                      }`}
-                    >
-                      <div className="flex items-center gap-2">
-                        {p.icon}
-                        <span>{p.label}</span>
-                      </div>
-                      <span className="text-[10px] text-[#64748B] dark:text-neutral-400">{p.label}</span>
-                    </button>
-                  );
-                })}
-              </div>
+            {/* Mobile Enterprise Login or Workspaces */}
+            <div className="pt-2 border-t border-[#EBEEEE] dark:border-neutral-800 px-1">
+              {isEnterpriseUser && accessiblePortals.length > 0 ? (
+                <div>
+                  <p className="px-2 text-[10px] font-bold text-[#64748B] dark:text-neutral-400 uppercase tracking-wider mb-1.5">
+                    Authorized Enterprise Dashboards
+                  </p>
+                  <div className="grid grid-cols-1 gap-1">
+                    {accessiblePortals.map((pId) => {
+                      const rule = PORTAL_ACCESS_RULES[pId];
+                      return (
+                        <button
+                          key={pId}
+                          onClick={() => {
+                            setActivePortal(pId as ActivePortal);
+                            setIsMobileMenuOpen(false);
+                          }}
+                          className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs text-left text-neutral-700 dark:text-neutral-200 hover:bg-[#EBEEEE] dark:hover:bg-neutral-800"
+                        >
+                          {getPortalIcon(pId)}
+                          <span>{rule?.name || pId}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              ) : (
+                <button
+                  onClick={() => {
+                    setIsEnterpriseLoginOpen(true);
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-neutral-900 text-[#FFD54F] border border-neutral-700 text-xs font-bold"
+                >
+                  <Lock className="w-4 h-4 text-[#F4B400]" />
+                  <span>Enterprise Personnel Login</span>
+                </button>
+              )}
             </div>
           </div>
         )}

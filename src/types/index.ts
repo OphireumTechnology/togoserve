@@ -1,13 +1,24 @@
 export type UserRole =
+  // 12 Centrally Managed Enterprise Roles
+  | 'SUPER_ADMIN'
+  | 'SECURITY_ADMIN'
+  | 'INFRASTRUCTURE_ADMIN'
+  | 'AI_SUPERVISOR'
+  | 'FINANCE_ADMIN'
+  | 'MERCHANT_ADMIN'
+  | 'MERCHANT_STAFF'
+  | 'LOGISTICS_ADMIN'
+  | 'RIDER'
+  | 'ANALYST'
+  | 'CUSTOMER_SUPPORT'
+  | 'CLIENT'
+  // Public & Legacy Compatibility Aliases
   | 'CUSTOMER'
   | 'MERCHANT_OWNER'
-  | 'MERCHANT_STAFF'
-  | 'RIDER'
   | 'DISPATCHER'
   | 'FINANCE'
   | 'SUPPORT'
-  | 'ADMIN'
-  | 'SUPER_ADMIN';
+  | 'ADMIN';
 
 export interface UserProfile {
   id: string;
@@ -17,9 +28,31 @@ export interface UserProfile {
   avatarUrl?: string;
   provider: 'google' | 'email' | 'enterprise';
   verified: boolean;
+  mfaEnabled?: boolean;
   storeId?: string;
   riderVehicle?: string;
 }
+
+export interface EnterpriseSession {
+  sessionId: string;
+  token: string;
+  user: UserProfile;
+  mfaVerified: boolean;
+  issuedAt: string;
+  expiresAt: string;
+  ipAddress?: string;
+  userAgent?: string;
+}
+
+export interface EnterpriseLoginResponse {
+  success: boolean;
+  requiresMfa?: boolean;
+  mfaSessionToken?: string;
+  session?: EnterpriseSession;
+  error?: string;
+  attemptsRemaining?: number;
+}
+
 
 export type OrderStatus =
   | 'CREATED'

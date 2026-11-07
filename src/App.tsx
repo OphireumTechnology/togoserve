@@ -5,9 +5,11 @@ import { Footer } from './components/common/Footer';
 import { MobileNav } from './components/common/MobileNav';
 import { CartDrawer } from './components/common/CartDrawer';
 import { AuthModal } from './components/common/AuthModal';
+import { EnterpriseLoginModal } from './components/auth/EnterpriseLoginModal';
 import { ShortcutsModal } from './components/common/ShortcutsModal';
 import { CommandPalette } from './components/common/CommandPalette';
 import { ToastContainer } from './components/common/ToastContainer';
+import { RouteGuard } from './components/common/RouteGuard';
 
 import { PublicLandingView } from './components/views/PublicLandingView';
 import { MarketplaceView } from './components/views/MarketplaceView';
@@ -35,25 +37,57 @@ const AppContent: React.FC = () => {
       {/* Top Accessible Navigation Header */}
       <Header onOpenCart={() => setIsCartOpen(true)} />
 
-      {/* Main View Area */}
+      {/* Main View Area with Public Access & Route Guards */}
       <main className="grow max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 pt-6 pb-20 lg:pb-10">
+        {/* PUBLIC ENVIRONMENT */}
         {activePortal === 'landing' && <PublicLandingView />}
         {(activePortal === 'marketplace' || activePortal === 'customer') && (
           <MarketplaceView onOpenCart={() => setIsCartOpen(true)} />
         )}
         {activePortal === 'padala' && <PadalaView />}
-        {activePortal === 'merchant' && <MerchantOSView />}
-        {activePortal === 'pos' && <POSRegisterView />}
-        {activePortal === 'rider' && <RiderPortalView />}
-        {activePortal === 'supplier' && <SupplierPortalView />}
-        {activePortal === 'fleet' && <FleetManagementView />}
-        {(activePortal === 'ai-center' || activePortal === 'admin') && <AICommandCenterView />}
-        {activePortal === 'analytics' && <AnalyticsView />}
+
+        {/* RESTRICTED PRIVATE ENTERPRISE ENVIRONMENT */}
+        {activePortal === 'merchant' && (
+          <RouteGuard requiredPortal="merchant">
+            <MerchantOSView />
+          </RouteGuard>
+        )}
+        {activePortal === 'pos' && (
+          <RouteGuard requiredPortal="pos">
+            <POSRegisterView />
+          </RouteGuard>
+        )}
+        {activePortal === 'rider' && (
+          <RouteGuard requiredPortal="rider">
+            <RiderPortalView />
+          </RouteGuard>
+        )}
+        {activePortal === 'supplier' && (
+          <RouteGuard requiredPortal="supplier">
+            <SupplierPortalView />
+          </RouteGuard>
+        )}
+        {activePortal === 'fleet' && (
+          <RouteGuard requiredPortal="fleet">
+            <FleetManagementView />
+          </RouteGuard>
+        )}
+        {(activePortal === 'ai-center' || activePortal === 'admin') && (
+          <RouteGuard requiredPortal="ai-center">
+            <AICommandCenterView />
+          </RouteGuard>
+        )}
+        {activePortal === 'analytics' && (
+          <RouteGuard requiredPortal="analytics">
+            <AnalyticsView />
+          </RouteGuard>
+        )}
       </main>
 
       {/* Global Modals & Drawers */}
       <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
       <AuthModal />
+      <EnterpriseLoginModal />
       <ShortcutsModal />
       <CommandPalette />
       <ToastContainer />
