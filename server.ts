@@ -17,14 +17,22 @@ async function startServer() {
   const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
   const isProd = process.env.NODE_ENV === 'production';
 
-  // CORS & Security headers
+  // Restrict cross-origin API access to explicitly configured origins.
+  // Same-origin browser requests need no CORS response headers.
+  const allowedOrigins = new Set((process.env.CORS_ALLOWED_ORIGINS || '')
+    .split(',').map(value => value.trim()).filter(Boolean));
   app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+    const origin = req.headers.origin;
+    if (origin && allowedOrigins.has(origin)) {
+      res.setHeader('Access-Control-Allow-Origin', origin);
+      res.setHeader('Vary', 'Origin');
+      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+    }
     if (req.method === 'OPTIONS') {
-      return res.sendStatus(204);
+      return res.sendStatus(origin && !allowedOrigins.has(origin) ? 403 : 204);
     }
     next();
   });
