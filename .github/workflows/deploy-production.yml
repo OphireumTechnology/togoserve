@@ -31,6 +31,9 @@ jobs:
       - name: Run Security and Auth Acceptance Tests
         run: npm test
 
+      - name: TypeScript static analysis
+        run: npm run lint
+
       - name: Build frontend distribution
         run: npm run build
 
