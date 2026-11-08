@@ -489,7 +489,13 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   };
 
   // Cart operations
-  const addToCart = (product: ProductItem, quantity = 1) => {
+  const addToCart = (product: ProductItem | (ProductItem & { isSample?: boolean; isDemo?: boolean }), quantity = 1) => {
+    // Strict Phase 3 Security Guard: Block demo/sample items from being added to a live cart
+    if ((product as any).isSample === true || (product as any).isDemo === true) {
+      addToast('warning', 'Preview Only', 'Demonstration products cannot be added to a live cart or checked out.');
+      return;
+    }
+
     setCart(prev => {
       const existing = prev.find(item => item.product.id === product.id);
       if (existing) {
@@ -525,6 +531,14 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     address = 'Tower 2 Unit 1804, BGC, Taguig City',
     phone = '+63 917 555 0192'
   ): Order => {
+    // Strict Guard: Prevent any demo items in cart from checking out
+    const hasDemoItems = cart.some(
+      (item) => (item.product as any).isSample === true || (item.product as any).isDemo === true
+    );
+    if (hasDemoItems) {
+      addToast('error', 'Checkout Blocked', 'Cart contains demonstration sample products. Real checkout is blocked.');
+      throw new Error('DEMO_CHECKOUT_BLOCKED: Demonstration products cannot be checked out.');
+    }
     const subtotal = cartTotal;
     const deliveryFee = 65;
     const platformFee = 15;

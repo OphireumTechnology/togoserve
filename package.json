@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "tsx server.ts",
     "start": "node server.ts",
-    "build": "vite build",
+    "verify:files": "node scripts/verify-required-files.mjs",
+    "build": "npm run verify:files && vite build",
     "test": "node --import tsx --test \"src/ai/tests/**/*.test.ts\"",
     "preview": "vite preview",
     "clean": "rm -rf dist server.js",

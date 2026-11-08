@@ -48,6 +48,9 @@ export const MerchantStorefrontModal: React.FC<MerchantStorefrontModalProps> = (
   if (!isOpen || !merchant) return null;
 
   const handleAdd = (product: DemoProductItem) => {
+    if (product.isSample) {
+      return;
+    }
     onAddToCart(product);
     setAddedItems((prev) => ({ ...prev, [product.id]: true }));
     setTimeout(() => {
@@ -240,27 +243,38 @@ export const MerchantStorefrontModal: React.FC<MerchantStorefrontModalProps> = (
                       )}
                     </div>
 
-                    <button
-                      type="button"
-                      onClick={() => handleAdd(product)}
-                      className={`inline-flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                        isAdded
-                          ? 'bg-emerald-600 text-white'
-                          : 'bg-[#F4B400] text-[#2E2E2E] hover:bg-[#FFD54F]'
-                      }`}
-                    >
-                      {isAdded ? (
-                        <>
-                          <Check className="w-3.5 h-3.5" />
-                          <span>Added</span>
-                        </>
-                      ) : (
-                        <>
-                          <Plus className="w-3.5 h-3.5" />
-                          <span>Add to Basket</span>
-                        </>
-                      )}
-                    </button>
+                    {product.isSample ? (
+                      <button
+                        type="button"
+                        disabled
+                        aria-label={`${product.name} is a demo product`}
+                        className="rounded-xl bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 px-3 py-1.5 text-neutral-500 dark:text-neutral-400 font-semibold text-xs cursor-not-allowed select-none"
+                      >
+                        Preview Only
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => handleAdd(product)}
+                        className={`inline-flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                          isAdded
+                            ? 'bg-emerald-600 text-white'
+                            : 'bg-[#F4B400] text-[#2E2E2E] hover:bg-[#FFD54F]'
+                        }`}
+                      >
+                        {isAdded ? (
+                          <>
+                            <Check className="w-3.5 h-3.5" />
+                            <span>Added</span>
+                          </>
+                        ) : (
+                          <>
+                            <Plus className="w-3.5 h-3.5" />
+                            <span>Add to Basket</span>
+                          </>
+                        )}
+                      </button>
+                    )}
                   </div>
                 </div>
               );

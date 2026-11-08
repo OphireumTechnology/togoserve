@@ -35,6 +35,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Verify required source files
+        run: npm run verify:files
+
       - name: Build TOGOSERVE
         run: npm run build
 

@@ -512,28 +512,39 @@ export const MarketplaceView: React.FC<{
                             )}
                           </div>
 
-                          <button
-                            type="button"
-                            onClick={() => handleAddToCart(product)}
-                            className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-xl transition-all shadow-2xs active:scale-95 cursor-pointer ${
-                              isAdded
-                                ? 'bg-emerald-600 text-white'
-                                : 'bg-[#F4B400] hover:bg-[#FFD54F] text-[#2E2E2E]'
-                            }`}
-                            aria-label={`Add ${product.name} to basket`}
-                          >
-                            {isAdded ? (
-                              <>
-                                <Check className="w-3.5 h-3.5" />
-                                <span>Added</span>
-                              </>
-                            ) : (
-                              <>
-                                <Plus className="w-3.5 h-3.5" />
-                                <span>Add</span>
-                              </>
-                            )}
-                          </button>
+                          {'isSample' in product && product.isSample ? (
+                            <button
+                              type="button"
+                              disabled
+                              aria-label={`${product.name} is a demo product`}
+                              className="rounded-xl bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 px-3 py-1.5 text-neutral-500 dark:text-neutral-400 font-semibold text-xs cursor-not-allowed select-none"
+                            >
+                              Preview Only
+                            </button>
+                          ) : (
+                            <button
+                              type="button"
+                              onClick={() => handleAddToCart(product)}
+                              className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-xl transition-all shadow-2xs active:scale-95 cursor-pointer ${
+                                isAdded
+                                  ? 'bg-emerald-600 text-white'
+                                  : 'bg-[#F4B400] hover:bg-[#FFD54F] text-[#2E2E2E]'
+                              }`}
+                              aria-label={`Add ${product.name} to basket`}
+                            >
+                              {isAdded ? (
+                                <>
+                                  <Check className="w-3.5 h-3.5" />
+                                  <span>Added</span>
+                                </>
+                              ) : (
+                                <>
+                                  <Plus className="w-3.5 h-3.5" />
+                                  <span>Add</span>
+                                </>
+                              )}
+                            </button>
+                          )}
                         </div>
                       </div>
                     </div>
