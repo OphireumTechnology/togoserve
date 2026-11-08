@@ -26,13 +26,13 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 ENV PORT=3000
-ENV NODE_OPTIONS="--import tsx"
 
 # Install production and runtime dependencies
 COPY package*.json ./
 # tsx is required at runtime by NODE_OPTIONS=--import tsx; NODE_ENV=production
 # otherwise causes npm ci to omit devDependencies and fail its own lifecycle.
 RUN npm ci --include=dev
+ENV NODE_OPTIONS="--import tsx"
 
 # Copy build artifacts and server source
 COPY --from=builder /app/dist ./dist
