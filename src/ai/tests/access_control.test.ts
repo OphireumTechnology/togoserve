@@ -4,13 +4,13 @@ import { AccessControlService, ENTERPRISE_ROLES, PORTAL_ACCESS_RULES } from '../
 import { UserProfile } from '../../types';
 
 test('AccessControlService: Guest is permitted on public portals and blocked on private operational portals', () => {
-  const publicPortals = ['marketplace', 'padala', 'landing', 'customer'];
+  const publicPortals = ['marketplace', 'padala', 'landing'];
   for (const portal of publicPortals) {
     const res = AccessControlService.canAccessPortal(null, portal);
     assert.equal(res.allowed, true, `Guest should access public portal: ${portal}`);
   }
 
-  const privatePortals = ['merchant', 'pos', 'rider', 'fleet', 'supplier', 'ai-center', 'admin', 'analytics'];
+  const privatePortals = ['customer', 'merchant', 'pos', 'rider', 'fleet', 'supplier', 'ai-center', 'admin', 'analytics'];
   for (const portal of privatePortals) {
     const res = AccessControlService.canAccessPortal(null, portal);
     assert.equal(res.allowed, false, `Guest must NOT access private portal: ${portal}`);
