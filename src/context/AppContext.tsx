@@ -255,8 +255,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 
   // Sync state
   const [cloudSync, setCloudSync] = useState<CloudSyncState>({
-    status: 'synced',
-    lastSyncedAt: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+    status: 'error',
+    lastSyncedAt: '',
     pendingChangesCount: 0,
   });
 
@@ -290,22 +290,6 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     };
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
-  }, []);
-
-  // Periodic background cloud synchronization
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCloudSync(prev => ({ ...prev, status: 'syncing' }));
-      setTimeout(() => {
-        setCloudSync({
-          status: 'synced',
-          lastSyncedAt: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
-          pendingChangesCount: 0,
-        });
-      }, 900);
-    }, 45000);
-
-    return () => clearInterval(interval);
   }, []);
 
   // Global Keyboard Shortcuts
@@ -358,43 +342,18 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const toggleDarkMode = () => setIsDarkMode(prev => !prev);
   const toggleHighContrast = () => setIsHighContrast(prev => !prev);
 
-  const switchRole = (newRole: UserRole) => {
-    if (currentUser) {
-      setCurrentUser({
-        ...currentUser,
-        role: newRole,
-      });
-      addToast('info', 'Workspace Role Updated', `Active role switched to ${newRole}`);
-    }
+  // Roles are issued by the backend and must never be changed in the browser.
+  const switchRole = (_newRole: UserRole) => {
+    addToast('error', 'Role Change Denied', 'Account permissions can only be changed by an authorized server administrator.');
   };
 
+  // Customer identity providers must be integrated with verified backend sessions.
   const loginWithGoogle = () => {
-    const user: UserProfile = {
-      id: 'usr-customer-88',
-      name: 'Verified Customer',
-      email: 'customer@togoserve.com',
-      role: 'CUSTOMER',
-      provider: 'google',
-      verified: true,
-      avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80',
-    };
-    setCurrentUser(user);
-    setIsAuthModalOpen(false);
-    addToast('success', 'OAuth Session Verified', 'Authenticated via Google Cloud Identity OAuth 2.0');
+    addToast('warning', 'Sign In Unavailable', 'Google sign-in requires a configured, verified OAuth backend.');
   };
 
-  const loginWithEmail = (email: string, role: UserRole = 'CUSTOMER') => {
-    const user: UserProfile = {
-      id: `usr-${Date.now().toString().slice(-4)}`,
-      name: email.split('@')[0],
-      email: email,
-      role: role,
-      provider: 'email',
-      verified: true,
-    };
-    setCurrentUser(user);
-    setIsAuthModalOpen(false);
-    addToast('success', 'Session Established', `Authenticated as ${role}`);
+  const loginWithEmail = (_email: string, _role: UserRole = 'CUSTOMER') => {
+    addToast('warning', 'Sign In Unavailable', 'Customer sign-in requires a verified authentication backend.');
   };
 
   const parseAuthResponse = async (res: Response): Promise<{ ok: boolean; data: any; error?: string }> => {
@@ -525,23 +484,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   };
 
   const triggerManualSync = () => {
-    if (!AccessControlService.canTriggerCloudSync(currentUser)) {
-      addToast(
-        'error',
-        'Authorization Denied',
-        'Force Cloud Synchronization is restricted to INFRASTRUCTURE_ADMIN and SUPER_ADMIN.'
-      );
-      return;
-    }
-    setCloudSync(prev => ({ ...prev, status: 'syncing' }));
-    setTimeout(() => {
-      setCloudSync({
-        status: 'synced',
-        lastSyncedAt: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
-        pendingChangesCount: 0,
-      });
-      addToast('success', 'Cloud Synced', 'All distributed entities synchronized to Firestore & Cloud Run');
-    }, 700);
+    addToast('warning', 'Cloud Sync Unavailable', 'No verified synchronization backend is configured. No changes were synchronized.');
+    setCloudSync(prev => ({ ...prev, status: 'error' }));
   };
 
   // Cart operations
