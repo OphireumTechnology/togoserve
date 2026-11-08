@@ -229,3 +229,64 @@ export interface FleetVehicle {
   todayDeliveries: number;
 }
 
+// ==========================================
+// DEMO MERCHANTS & ACCREDITATION DATA TYPES
+// ==========================================
+export type AccreditationStatus =
+  | 'DEMO'
+  | 'SAMPLE'
+  | 'PENDING'
+  | 'ACCREDITED'
+  | 'REJECTED'
+  | 'SUSPENDED';
+
+export type MerchantOnboardingStatus =
+  | 'DRAFT'
+  | 'DOCUMENTS_SUBMITTED'
+  | 'UNDER_REVIEW'
+  | 'APPROVED'
+  | 'ACTIVE';
+
+export interface DemoProductItem {
+  id: string;
+  name: string;
+  storeId: string;
+  storeName: string;
+  category: string;
+  price: number;
+  originalPrice?: number;
+  stock: number;
+  sku: string;
+  image: string;
+  description: string;
+  popular?: boolean;
+  isSample: boolean;
+  preparationMin?: number;
+}
+
+export interface DemoMerchantProfile {
+  id: string;
+  slug: string;
+  name: string;
+  category: string;
+  description: string;
+  storefrontImage: string;
+  logo: string;
+  indicativeRating: number;
+  operatingHours: string;
+  isOpen: boolean;
+  address: string;
+  city: string;
+  estimatedDeliveryMin: number;
+  minimumOrder: number;
+  deliveryFee: number;
+  deliveryOptions: ('MOTORCYCLE' | 'CAR' | 'VAN' | 'PICKUP')[];
+  onboardingStatus: MerchantOnboardingStatus;
+  accreditationStatus: AccreditationStatus;
+  isDemo: boolean;
+  publicVisibility: boolean;
+  featuredTags: string[];
+  products: DemoProductItem[];
+}
+
+

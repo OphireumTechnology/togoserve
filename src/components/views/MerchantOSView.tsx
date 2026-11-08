@@ -15,7 +15,12 @@ import {
   Layers,
   Sparkles,
   Truck,
-  Building2
+  Building2,
+  ShieldCheck,
+  FileText,
+  ShieldAlert,
+  CheckCircle2,
+  XCircle,
 } from 'lucide-react';
 import { OrderStatus } from '../../types';
 import { Logo } from '../brand/Logo';
@@ -35,7 +40,7 @@ export const MerchantOSView: React.FC = () => {
 
   // Three primary merchant pillars: SELL | OPERATE | GROW
   const [activePillar, setActivePillar] = useState<'OPERATE' | 'SELL' | 'GROW'>('OPERATE');
-  const [operateSubTab, setOperateSubTab] = useState<'overview' | 'orders' | 'inventory' | 'procurement' | 'settlement'>('overview');
+  const [operateSubTab, setOperateSubTab] = useState<'overview' | 'orders' | 'inventory' | 'procurement' | 'settlement' | 'accreditation'>('overview');
 
   // Compute metrics
   const todaySales = orders
@@ -119,6 +124,7 @@ export const MerchantOSView: React.FC = () => {
               { id: 'inventory', label: `Inventory & SKUs (${lowStockItems.length} low)` },
               { id: 'procurement', label: 'B2B Supply Procurement' },
               { id: 'settlement', label: 'Financial Settlement' },
+              { id: 'accreditation', label: 'Accreditation & Compliance' },
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -455,6 +461,191 @@ export const MerchantOSView: React.FC = () => {
                     ))}
                   </tbody>
                 </table>
+              </div>
+            </div>
+          )}
+
+          {/* ACCREDITATION & COMPLIANCE TAB */}
+          {operateSubTab === 'accreditation' && (
+            <div className="space-y-6">
+              {/* Compliance Mandate Banner */}
+              <div className="p-4 sm:p-5 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-900/60 flex items-start gap-3.5">
+                <ShieldAlert className="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+                <div className="space-y-1 text-xs text-amber-900 dark:text-amber-200">
+                  <h4 className="font-extrabold text-sm text-amber-950 dark:text-amber-100">
+                    Accreditation &amp; KYC/KYB Governance Policy
+                  </h4>
+                  <p className="leading-relaxed">
+                    <strong>Critical Compliance Mandate:</strong> Demonstration merchants are strictly restricted to <code>DEMO</code> or <code>SAMPLE</code> status. Real enterprise accreditation requires verified documentary review (DTI/SEC registration, BIR Form 2303, and Mayor’s Permit) and dual-authorization maker-checker approval.
+                  </p>
+                </div>
+              </div>
+
+              {/* Maker-Checker Review Queue */}
+              <div
+                className={`p-6 rounded-2xl border space-y-5 ${
+                  isDarkMode ? 'bg-[#1E1E1E] border-slate-800 text-white' : 'bg-white border-slate-200 text-[#2E2E2E]'
+                }`}
+              >
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div>
+                    <h3 className="text-base font-bold flex items-center gap-2">
+                      <ShieldCheck className="w-4 h-4 text-[#F4B400]" />
+                      <span>Merchant Accreditation Pipeline (Maker-Checker Queue)</span>
+                    </h3>
+                    <p className="text-xs text-slate-400 mt-0.5">
+                      Production applications pending document audit and administrative review
+                    </p>
+                  </div>
+                  <span className="px-3 py-1 rounded-full text-xs font-bold bg-[#EBEEEE] dark:bg-slate-800 text-[#2E2E2E] dark:text-slate-200 border border-slate-200 dark:border-slate-700">
+                    2 Applications Pending Review
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  {/* Case 1 */}
+                  <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 space-y-3 text-xs">
+                    <div className="flex items-start justify-between gap-2">
+                      <div>
+                        <span className="font-black text-sm text-[#2E2E2E] dark:text-white">
+                          Manila Heritage Artisan Provisions Co.
+                        </span>
+                        <p className="text-slate-400 text-[11px]">BGC High Street • Food &amp; Retail • ID: APP-2026-0881</p>
+                      </div>
+                      <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-300/40">
+                        UNDER REVIEW
+                      </span>
+                    </div>
+
+                    <div className="space-y-1.5 pt-1 text-[11px] text-slate-600 dark:text-slate-300">
+                      <div className="flex items-center gap-2">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                        <span>DTI Certificate: <strong>#DTI-NCR-89421</strong> (Verified)</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                        <span>BIR 2303 (TIN): <strong>009-482-192-000</strong> (Active Regular)</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Clock className="w-3.5 h-3.5 text-amber-500" />
+                        <span>Taguig City Business Permit: Awaiting on-site health inspection</span>
+                      </div>
+                    </div>
+
+                    <div className="pt-3 border-t border-slate-200 dark:border-slate-700 flex items-center justify-between gap-2">
+                      <span className="text-[10px] text-slate-400 font-mono">Stage: Checker Sign-Off</span>
+                      <div className="flex items-center gap-1.5">
+                        <button
+                          onClick={() => addToast('info', 'Document Audit Requested', 'Clarification requested for Sanitary Permit validity.')}
+                          className="px-2.5 py-1 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 rounded text-xs font-semibold"
+                        >
+                          Request Revision
+                        </button>
+                        <button
+                          onClick={() => addToast('success', 'Maker Approved', 'Audit sign-off submitted. Awaiting secondary checker sign-off.')}
+                          className="px-3 py-1 bg-[#F4B400] text-[#2E2E2E] font-bold rounded hover:bg-[#FFD54F]"
+                        >
+                          Approve (Maker)
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Case 2 */}
+                  <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 space-y-3 text-xs">
+                    <div className="flex items-start justify-between gap-2">
+                      <div>
+                        <span className="font-black text-sm text-[#2E2E2E] dark:text-white">
+                          Luzon Express Cold-Chain Logistics Hub
+                        </span>
+                        <p className="text-slate-400 text-[11px]">Pasig Cargo Terminal • Logistics • ID: APP-2026-0904</p>
+                      </div>
+                      <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-500/15 text-blue-600 dark:text-blue-400 border border-blue-300/40">
+                        DOCS SUBMITTED
+                      </span>
+                    </div>
+
+                    <div className="space-y-1.5 pt-1 text-[11px] text-slate-600 dark:text-slate-300">
+                      <div className="flex items-center gap-2">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                        <span>SEC Certificate: <strong>#CS2023-901842</strong> (Verified)</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Clock className="w-3.5 h-3.5 text-amber-500" />
+                        <span>LTFRB Truck Freight Franchise: Under audit</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                        <span>Pasig City Mayor’s Permit: Current 2026 Tax Year</span>
+                      </div>
+                    </div>
+
+                    <div className="pt-3 border-t border-slate-200 dark:border-slate-700 flex items-center justify-between gap-2">
+                      <span className="text-[10px] text-slate-400 font-mono">Stage: Maker Document Review</span>
+                      <div className="flex items-center gap-1.5">
+                        <button
+                          onClick={() => addToast('info', 'Inspection Scheduled', 'On-site fleet terminal audit queued.')}
+                          className="px-2.5 py-1 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 rounded text-xs font-semibold"
+                        >
+                          Queue Inspection
+                        </button>
+                        <button
+                          onClick={() => addToast('success', 'Documents Verified', 'Document package certified. Forwarded to Lead Inspector.')}
+                          className="px-3 py-1 bg-[#F4B400] text-[#2E2E2E] font-bold rounded hover:bg-[#FFD54F]"
+                        >
+                          Verify Package
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Demonstration Entities Isolation Overview */}
+              <div
+                className={`p-6 rounded-2xl border space-y-4 ${
+                  isDarkMode ? 'bg-[#1E1E1E] border-slate-800 text-white' : 'bg-white border-slate-200 text-[#2E2E2E]'
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-base font-bold flex items-center gap-2">
+                      <Store className="w-4 h-4 text-[#F4B400]" />
+                      <span>Demonstration Merchants Isolation Registry</span>
+                    </h3>
+                    <p className="text-xs text-slate-400 mt-0.5">
+                      48 showcase merchant profiles across 12 sectors strictly isolated from production accreditation
+                    </p>
+                  </div>
+                  <span className="px-2.5 py-0.5 rounded text-[10px] font-black uppercase bg-neutral-800 text-neutral-300">
+                    STATUS: DEMO ONLY
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-2.5 text-xs">
+                  {[
+                    { cat: 'Food & Dining', count: '4 Demo Stores' },
+                    { cat: 'Fresh Grocery', count: '4 Demo Stores' },
+                    { cat: 'Convenience', count: '4 Demo Stores' },
+                    { cat: 'Pharmacy', count: '4 Demo Stores' },
+                    { cat: 'Retail & Lifestyle', count: '4 Demo Stores' },
+                    { cat: 'Flowers & Gifts', count: '4 Demo Stores' },
+                    { cat: 'Pet Care', count: '4 Demo Stores' },
+                    { cat: 'Beauty & Wellness', count: '4 Demo Stores' },
+                    { cat: 'Home & Office', count: '4 Demo Stores' },
+                    { cat: 'Electronics', count: '4 Demo Stores' },
+                    { cat: 'Local Services', count: '4 Demo Stores' },
+                    { cat: 'TOGO Padala', count: '4 Fleet Hubs' },
+                  ].map((item, idx) => (
+                    <div
+                      key={idx}
+                      className="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30 text-center"
+                    >
+                      <p className="font-bold text-[11px] truncate">{item.cat}</p>
+                      <span className="text-[10px] text-amber-500 font-mono font-semibold">{item.count}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           )}

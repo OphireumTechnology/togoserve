@@ -29,6 +29,10 @@ export const CartDrawer: React.FC<{
 
   if (!isOpen) return null;
 
+  const hasDemoItems = cart.some(
+    (item) => item.product.storeId?.startsWith('merch-') || item.product.id?.startsWith('prod-')
+  );
+
   const deliveryFee = 65;
   const platformFee = 15;
   const discount = cartTotal > 600 ? 50 : 0;
@@ -248,12 +252,23 @@ export const CartDrawer: React.FC<{
           {/* Footer CTA */}
           {cart.length > 0 && (
             <div className="p-4 sm:p-5 border-t border-slate-200 dark:border-slate-800 space-y-3">
+              {hasDemoItems && (
+                <div className="p-2.5 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-900/60 text-[11px] text-amber-800 dark:text-amber-200 leading-tight">
+                  <span className="font-bold">Preview Simulation:</span> Basket contains items from demonstration merchants. Live payment gateways are disabled; order simulation is simulated without financial charges.
+                </div>
+              )}
               <button
                 disabled={isCheckingOut}
                 onClick={handleCheckout}
-                className="w-full py-3 px-4 bg-[#F4B400] hover:bg-[#F4B400] text-[#2E2E2E] font-bold text-sm rounded-xl shadow-md transition-all flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-[#F4B400]"
+                className="w-full py-3 px-4 bg-[#F4B400] hover:bg-[#FFD54F] text-[#2E2E2E] font-bold text-sm rounded-xl shadow-md transition-all flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-[#F4B400] cursor-pointer"
               >
-                <span>{isCheckingOut ? 'Dispatching to Merchant...' : `Place Order (₱${finalTotal.toFixed(2)})`}</span>
+                <span>
+                  {isCheckingOut
+                    ? 'Dispatching Order...'
+                    : hasDemoItems
+                    ? `Simulate Demo Order (Preview Only - ₱0.00 Charged)`
+                    : `Place Order (₱${finalTotal.toFixed(2)})`}
+                </span>
                 <ArrowRight className="w-4 h-4" />
               </button>
               <div className="flex items-center justify-center gap-2 text-[10px] text-slate-400">

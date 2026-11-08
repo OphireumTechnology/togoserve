@@ -4,7 +4,12 @@
 
 import { AgentTool } from '../core/types';
 import { ToolRegistry } from './ToolRegistry';
-import { INITIAL_PRODUCTS, INITIAL_ORDERS, INITIAL_INVENTORY, INITIAL_LEDGER } from '../../data/mockData';
+import {
+  PRODUCTION_PRODUCTS,
+  PRODUCTION_ORDERS,
+  PRODUCTION_INVENTORY,
+  PRODUCTION_LEDGER
+} from '../../data/productionRegistry';
 
 // 1. searchProducts
 export const searchProductsTool: AgentTool = {
@@ -16,7 +21,7 @@ export const searchProductsTool: AgentTool = {
   maximumRisk: 'L1',
   requiresHITL: false,
   execute: async (input: { query?: string; category?: string; storeId?: string }) => {
-    let results = INITIAL_PRODUCTS;
+    let results = PRODUCTION_PRODUCTS;
     if (input.query) {
       const q = input.query.toLowerCase();
       results = results.filter((p) => p.name.toLowerCase().includes(q) || p.description.toLowerCase().includes(q));
@@ -62,9 +67,9 @@ export const getOrderTool: AgentTool = {
   maximumRisk: 'L1',
   requiresHITL: false,
   execute: async (input: { orderNumber?: string; orderId?: string }) => {
-    const order = INITIAL_ORDERS.find(
+    const order = PRODUCTION_ORDERS.find(
       (o) => o.orderNumber === input.orderNumber || o.id === input.orderId
-    ) || INITIAL_ORDERS[0];
+    ) || PRODUCTION_ORDERS[0];
     return { order };
   },
 };
@@ -99,7 +104,7 @@ export const getInventoryTool: AgentTool = {
   maximumRisk: 'L1',
   requiresHITL: false,
   execute: async (input: { sku?: string; lowStockOnly?: boolean }) => {
-    let items = INITIAL_INVENTORY;
+    let items = PRODUCTION_INVENTORY;
     if (input.lowStockOnly) {
       items = items.filter((i) => i.status === 'LOW_STOCK');
     }
@@ -123,7 +128,7 @@ export const getSettlementTool: AgentTool = {
     return {
       pendingSettlementTotal: 18450.0,
       settledThisWeek: 94200.0,
-      recentEntries: INITIAL_LEDGER.slice(0, 5),
+      recentEntries: PRODUCTION_LEDGER.slice(0, 5),
     };
   },
 };

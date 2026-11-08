@@ -14,19 +14,21 @@ import {
   CloudSyncState,
   OrderStatus,
   EnterpriseSession,
-  EnterpriseLoginResponse
+  EnterpriseLoginResponse,
+  DemoMerchantProfile,
 } from '../types';
 import { AccessControlService } from '../auth/AccessControlService';
 import {
-  INITIAL_PRODUCTS,
-  INITIAL_ORDERS,
-  INITIAL_PADALA_SHIPMENTS,
-  INITIAL_AI_PROPOSALS,
-  INITIAL_INVENTORY,
-  INITIAL_LEDGER,
-  INITIAL_SUPPLIERS,
-  INITIAL_FLEET_VEHICLES
-} from '../data/mockData';
+  PRODUCTION_PRODUCTS,
+  PRODUCTION_ORDERS,
+  PRODUCTION_PADALA_SHIPMENTS,
+  PRODUCTION_AI_PROPOSALS,
+  PRODUCTION_INVENTORY,
+  PRODUCTION_LEDGER,
+  PRODUCTION_SUPPLIERS,
+  PRODUCTION_FLEET_VEHICLES,
+} from '../data/productionRegistry';
+import { DEMO_MERCHANTS } from '../data/demoMerchants';
 
 export type ActivePortal =
   | 'landing'
@@ -93,6 +95,15 @@ interface AppContextType {
   setIsHelpModalOpen: (open: boolean) => void;
   activeTrackingOrderId: string;
   setActiveTrackingOrderId: (id: string) => void;
+
+  // Demo Merchants & Preview Storefronts
+  demoMerchants: DemoMerchantProfile[];
+  favoriteMerchantIds: string[];
+  toggleFavoriteMerchant: (merchantId: string) => void;
+  selectedDemoMerchant: DemoMerchantProfile | null;
+  setSelectedDemoMerchant: (merchant: DemoMerchantProfile | null) => void;
+  isStorefrontModalOpen: boolean;
+  setIsStorefrontModalOpen: (open: boolean) => void;
 
   // Cloud Sync
   cloudSync: CloudSyncState;
@@ -216,6 +227,32 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
   const [activeTrackingOrderId, setActiveTrackingOrderId] = useState<string>('');
 
+  // Demo Merchants State
+  const [demoMerchants] = useState<DemoMerchantProfile[]>(DEMO_MERCHANTS);
+  const [selectedDemoMerchant, setSelectedDemoMerchant] = useState<DemoMerchantProfile | null>(null);
+  const [isStorefrontModalOpen, setIsStorefrontModalOpen] = useState(false);
+  const [favoriteMerchantIds, setFavoriteMerchantIds] = useState<string[]>(() => {
+    if (typeof window === 'undefined') return [];
+    try {
+      const saved = localStorage.getItem('togoserve_favorite_merchants');
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+
+  const toggleFavoriteMerchant = (merchantId: string) => {
+    setFavoriteMerchantIds(prev => {
+      const next = prev.includes(merchantId)
+        ? prev.filter(id => id !== merchantId)
+        : [...prev, merchantId];
+      try {
+        localStorage.setItem('togoserve_favorite_merchants', JSON.stringify(next));
+      } catch {}
+      return next;
+    });
+  };
+
   // Sync state
   const [cloudSync, setCloudSync] = useState<CloudSyncState>({
     status: 'synced',
@@ -223,15 +260,15 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     pendingChangesCount: 0,
   });
 
-  // Domain data
-  const [products] = useState<ProductItem[]>(INITIAL_PRODUCTS);
-  const [inventory, setInventory] = useState<InventoryItem[]>(INITIAL_INVENTORY);
-  const [orders, setOrders] = useState<Order[]>(INITIAL_ORDERS);
-  const [padalaShipments, setPadalaShipments] = useState<PadalaShipment[]>(INITIAL_PADALA_SHIPMENTS);
-  const [aiProposals, setAiProposals] = useState<AIActionProposal[]>(INITIAL_AI_PROPOSALS);
-  const [ledger, setLedger] = useState<LedgerEntry[]>(INITIAL_LEDGER);
-  const [suppliers] = useState<SupplierItem[]>(INITIAL_SUPPLIERS);
-  const [fleetVehicles] = useState<FleetVehicle[]>(INITIAL_FLEET_VEHICLES);
+  // Authoritative Production Domain Baseline
+  const [products] = useState<ProductItem[]>(PRODUCTION_PRODUCTS);
+  const [inventory, setInventory] = useState<InventoryItem[]>(PRODUCTION_INVENTORY);
+  const [orders, setOrders] = useState<Order[]>(PRODUCTION_ORDERS);
+  const [padalaShipments, setPadalaShipments] = useState<PadalaShipment[]>(PRODUCTION_PADALA_SHIPMENTS);
+  const [aiProposals, setAiProposals] = useState<AIActionProposal[]>(PRODUCTION_AI_PROPOSALS);
+  const [ledger, setLedger] = useState<LedgerEntry[]>(PRODUCTION_LEDGER);
+  const [suppliers] = useState<SupplierItem[]>(PRODUCTION_SUPPLIERS);
+  const [fleetVehicles] = useState<FleetVehicle[]>(PRODUCTION_FLEET_VEHICLES);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
 
@@ -745,6 +782,13 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         setIsHelpModalOpen,
         activeTrackingOrderId,
         setActiveTrackingOrderId,
+        demoMerchants,
+        favoriteMerchantIds,
+        toggleFavoriteMerchant,
+        selectedDemoMerchant,
+        setSelectedDemoMerchant,
+        isStorefrontModalOpen,
+        setIsStorefrontModalOpen,
         cloudSync,
         triggerManualSync,
         cart,
