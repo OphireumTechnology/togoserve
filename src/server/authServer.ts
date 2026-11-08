@@ -223,7 +223,7 @@ function initializeOrLoadAuthStore() {
 
   // Root Administrator (SUPER_ADMIN)
   const rootSalt = crypto.randomBytes(32).toString('hex');
-  const rootSecretPassword = process.env.MASTER_ADMIN_PASSWORD || 'TogoServe#Root2026MasterKey!';
+  const rootSecretPassword = process.env.MASTER_ADMIN_PASSWORD || crypto.randomBytes(48).toString('base64url');
   const rootHash = hashPassword(rootSecretPassword, rootSalt);
   const rootTotpSecret = generateBase32Secret(20);
 
@@ -239,43 +239,11 @@ function initializeOrLoadAuthStore() {
     failedAttempts: 0,
   });
 
-  // Seed Departmental Administrator Accounts
-  const seedAccounts: Array<[string, string, string, UserRole, string]> = [
-    ['sec.admin', 'security@internal.togoserve.com', 'Security Operations Admin', 'SECURITY_ADMIN', 'TogoServe#SecOps2026!'],
-    ['infra.admin', 'infrastructure@internal.togoserve.com', 'Cloud Infrastructure Admin', 'INFRASTRUCTURE_ADMIN', 'TogoServe#Infra2026!'],
-    ['ai.supervisor', 'ai.supervisor@internal.togoserve.com', 'A00 AI Workforce Supervisor', 'AI_SUPERVISOR', 'TogoServe#AIGov2026!'],
-    ['finance.controller', 'finance@internal.togoserve.com', 'Chief Financial Controller', 'FINANCE_ADMIN', 'TogoServe#Finance2026!'],
-    ['merchant.admin', 'merchant.owner@togoserve.ph', 'Merchant Operations Principal', 'MERCHANT_ADMIN', 'TogoServe#Merchant2026!'],
-    ['rider.partner', 'rider.fleet@togoserve.ph', 'Verified Logistics Courier', 'RIDER', 'TogoServe#Rider2026!'],
-  ];
-
-  for (const [user, email, name, role, pass] of seedAccounts) {
-    const salt = crypto.randomBytes(32).toString('hex');
-    enterpriseAccounts.set(user, {
-      username: user,
-      email,
-      name,
-      role,
-      passwordSalt: salt,
-      passwordHash: hashPassword(pass, salt),
-      mfaSecret: generateBase32Secret(20),
-      mfaEnrolled: false,
-      failedAttempts: 0,
-    });
-  }
+  // Additional administrator accounts must be provisioned explicitly via the secure identity workflow.
 
   saveAuthStoreToDisk();
 
-  console.log('======================================================================');
-  console.log('[SECURITY_PROVISIONING] Master Enterprise Administrator account configured:');
-  console.log('  Username: root');
-  console.log('  Role: SUPER_ADMIN');
-  console.log('  MFA: Required (RFC 6238 TOTP)');
-  console.log(`  Initial Root Key: ${rootSecretPassword}`);
-  console.log(`  TOTP Secret: ${rootTotpSecret}`);
-  console.log(`  TOTP URI: otpauth://totp/TOGOSERVE:root?secret=${rootTotpSecret}&issuer=TOGOSERVE`);
-  console.log('  Credentials persisted to data/auth_store.json (Salt-hashed).');
-  console.log('======================================================================');
+  console.log('[AUTH_STORE] Initial enterprise administrator created; complete secure provisioning and MFA enrollment.');
 }
 
 // Initialize on module load
