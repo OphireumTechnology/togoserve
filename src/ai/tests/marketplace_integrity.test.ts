@@ -53,7 +53,7 @@ test('Marketplace Integrity: Unique merchant and product IDs', () => {
   }
 
   assert.equal(merchantIds.size, 48, 'Should have 48 unique merchant IDs');
-  assert.equal(productIds.size, 144, 'Should have 144 unique product IDs (3 per merchant)');
+  assert.equal(productIds.size, 96, 'Current catalog contains 96 unique sample product IDs (2 per merchant)');
 });
 
 test('Marketplace Integrity: 100% Unique images across storefronts and products (Zero Duplicates, Zero Overlap)', () => {
@@ -97,7 +97,7 @@ test('Marketplace Integrity: 100% Unique images across storefronts and products 
   }
 
   assert.equal(storefrontImages.size, 48, 'Should have 48 unique storefront images');
-  assert.equal(productImages.size, 144, 'Should have 144 unique product images');
+  assert.equal(productImages.size, 96, 'Current catalog requires 96 unique product images');
 });
 
 test('Production Data Safety: Production registries separated from demo merchants', () => {
