@@ -133,6 +133,10 @@ export const MarketplaceView: React.FC<{
   };
 
   const handleAddToCart = (product: DemoProductItem | ProductItem) => {
+    if ('isSample' in product && product.isSample) {
+      addToast('info', 'Preview Only', 'Demo products cannot be purchased. Browse a real accredited merchant to place an order.');
+      return;
+    }
     const cartProduct: ProductItem = {
       id: product.id,
       name: product.name,
@@ -222,7 +226,7 @@ export const MarketplaceView: React.FC<{
                 <Search className="w-4 h-4 text-neutral-400 absolute left-4 top-3.5" />
                 <input
                   type="text"
-                  placeholder="Search 48 merchants, food, fresh groceries, or services..."
+                  placeholder="Search sample merchants, products, or services..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full text-xs sm:text-sm pl-11 pr-4 py-3 rounded-2xl bg-white/10 border border-white/20 text-white placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#F4B400] transition-all"
