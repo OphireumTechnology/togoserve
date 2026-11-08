@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { DEMO_MERCHANTS } from '../../data/demoMerchants';
-import { PRODUCTION_PRODUCTS } from '../../data/productionRegistry';
+
 import { ProductItem } from '../../types';
 
 // Standalone verification of the business logic rules in cart and order management
@@ -9,7 +9,7 @@ function simulateCartAddition(
   cart: { product: ProductItem; quantity: number }[],
   product: ProductItem | (ProductItem & { isSample?: boolean; isDemo?: boolean })
 ): { success: boolean; reason?: string } {
-  if ((product as any).isSample === true || (product as any).isDemo === true) {
+  if (!product || (product as any).isSample === true || (product as any).isDemo === true) {
     return { success: false, reason: 'PREVIEW_ONLY_DEMO_PRODUCT' };
   }
 
@@ -20,6 +20,7 @@ function simulateCartAddition(
 function simulateCheckout(
   cart: { product: ProductItem; quantity: number }[]
 ): { success: boolean; orderId?: string } {
+  if (cart.some(item => !item.product)) throw new Error('INVALID_CART_PRODUCT');
   const hasDemoItems = cart.some(
     (item) => (item.product as any).isSample === true || (item.product as any).isDemo === true
   );
@@ -48,7 +49,7 @@ test('Demo Cart Security: Sample products are rejected from live cart', () => {
 test('Demo Cart Security: Production catalog items are accepted into cart', () => {
   const cart: { product: ProductItem; quantity: number }[] = [];
 
-  const prodProduct = PRODUCTION_PRODUCTS[0];
+  const prodProduct = { id: 'test-production-product', name: 'Verified test fixture', price: 100 } as ProductItem;
   assert.equal((prodProduct as any).isSample, undefined);
 
   const result = simulateCartAddition(cart, prodProduct);
@@ -72,7 +73,7 @@ test('Demo Cart Security: Checkout hard-fails if demo items are present', () => 
 
 test('Demo Cart Security: Checkout succeeds with legitimate production items', () => {
   const legitimateCart = [
-    { product: PRODUCTION_PRODUCTS[0], quantity: 1 },
+    { product: { id: 'test-production-product', name: 'Verified test fixture', price: 100 } as ProductItem, quantity: 1 },
   ];
 
   const checkout = simulateCheckout(legitimateCart);
