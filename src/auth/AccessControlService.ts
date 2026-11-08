@@ -208,9 +208,9 @@ export const PORTAL_ACCESS_RULES: Record<string, {
   },
   customer: {
     name: 'Customer Account',
-    isPrivate: false,
-    allowedRoles: [], // open to public
-    description: 'Public customer profile and past orders.',
+    isPrivate: true,
+    allowedRoles: ['CUSTOMER', 'CLIENT', 'SUPER_ADMIN'],
+    description: 'Authenticated customer profile and order history; server must enforce record ownership.',
   },
   padala: {
     name: 'TOGO Padala Express',
@@ -278,8 +278,11 @@ export class AccessControlService {
   ): { allowed: boolean; reason?: string; requiresEnterpriseLogin?: boolean } {
     const rule = PORTAL_ACCESS_RULES[portal];
 
-    // If route doesn't exist or is public, allow access
-    if (!rule || !rule.isPrivate) {
+    // Fail closed for unknown portals: newly added internal routes must be explicitly classified.
+    if (!rule) {
+      return { allowed: false, reason: 'Unregistered portal. Access denied pending security classification.' };
+    }
+    if (!rule.isPrivate) {
       return { allowed: true };
     }
 
