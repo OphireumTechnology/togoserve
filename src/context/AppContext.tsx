@@ -83,6 +83,16 @@ interface AppContextType {
   setIsCommandPaletteOpen: (open: boolean) => void;
   isShortcutsOpen: boolean;
   setIsShortcutsOpen: (open: boolean) => void;
+  isTrackingModalOpen: boolean;
+  setIsTrackingModalOpen: (open: boolean) => void;
+  isMerchantModalOpen: boolean;
+  setIsMerchantModalOpen: (open: boolean) => void;
+  isRiderModalOpen: boolean;
+  setIsRiderModalOpen: (open: boolean) => void;
+  isHelpModalOpen: boolean;
+  setIsHelpModalOpen: (open: boolean) => void;
+  activeTrackingOrderId: string;
+  setActiveTrackingOrderId: (id: string) => void;
 
   // Cloud Sync
   cloudSync: CloudSyncState;
@@ -200,6 +210,11 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   // Modals
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
   const [isShortcutsOpen, setIsShortcutsOpen] = useState(false);
+  const [isTrackingModalOpen, setIsTrackingModalOpen] = useState(false);
+  const [isMerchantModalOpen, setIsMerchantModalOpen] = useState(false);
+  const [isRiderModalOpen, setIsRiderModalOpen] = useState(false);
+  const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
+  const [activeTrackingOrderId, setActiveTrackingOrderId] = useState<string>('');
 
   // Sync state
   const [cloudSync, setCloudSync] = useState<CloudSyncState>({
@@ -720,6 +735,16 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         setIsCommandPaletteOpen,
         isShortcutsOpen,
         setIsShortcutsOpen,
+        isTrackingModalOpen,
+        setIsTrackingModalOpen,
+        isMerchantModalOpen,
+        setIsMerchantModalOpen,
+        isRiderModalOpen,
+        setIsRiderModalOpen,
+        isHelpModalOpen,
+        setIsHelpModalOpen,
+        activeTrackingOrderId,
+        setActiveTrackingOrderId,
         cloudSync,
         triggerManualSync,
         cart,

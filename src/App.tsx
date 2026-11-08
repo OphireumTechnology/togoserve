@@ -10,6 +10,10 @@ import { ShortcutsModal } from './components/common/ShortcutsModal';
 import { CommandPalette } from './components/common/CommandPalette';
 import { ToastContainer } from './components/common/ToastContainer';
 import { RouteGuard } from './components/common/RouteGuard';
+import { OrderTrackingModal } from './components/views/OrderTrackingModal';
+import { MerchantApplicationModal } from './components/views/MerchantApplicationModal';
+import { RiderApplicationModal } from './components/views/RiderApplicationModal';
+import { HelpSupportModal } from './components/views/HelpSupportModal';
 
 import { PublicLandingView } from './components/views/PublicLandingView';
 import { MarketplaceView } from './components/views/MarketplaceView';
@@ -23,7 +27,19 @@ import { AICommandCenterView } from './components/views/AICommandCenterView';
 import { AnalyticsView } from './components/views/AnalyticsView';
 
 const AppContent: React.FC = () => {
-  const { activePortal, isDarkMode } = useApp();
+  const {
+    activePortal,
+    isDarkMode,
+    isTrackingModalOpen,
+    setIsTrackingModalOpen,
+    activeTrackingOrderId,
+    isMerchantModalOpen,
+    setIsMerchantModalOpen,
+    isRiderModalOpen,
+    setIsRiderModalOpen,
+    isHelpModalOpen,
+    setIsHelpModalOpen,
+  } = useApp();
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   return (
@@ -91,6 +107,23 @@ const AppContent: React.FC = () => {
       <ShortcutsModal />
       <CommandPalette />
       <ToastContainer />
+      <OrderTrackingModal
+        isOpen={isTrackingModalOpen}
+        onClose={() => setIsTrackingModalOpen(false)}
+        initialTrackingId={activeTrackingOrderId}
+      />
+      <MerchantApplicationModal
+        isOpen={isMerchantModalOpen}
+        onClose={() => setIsMerchantModalOpen(false)}
+      />
+      <RiderApplicationModal
+        isOpen={isRiderModalOpen}
+        onClose={() => setIsRiderModalOpen(false)}
+      />
+      <HelpSupportModal
+        isOpen={isHelpModalOpen}
+        onClose={() => setIsHelpModalOpen(false)}
+      />
 
       {/* Mobile Touch Navigation */}
       <MobileNav onOpenCart={() => setIsCartOpen(true)} />

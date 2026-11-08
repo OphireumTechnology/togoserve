@@ -127,7 +127,37 @@ export const Logo: React.FC<LogoProps> = ({
     );
   }
 
-  // 4. HEADER, DASHBOARD, FOOTER, AND DEFAULT HORIZONTAL (Emblem + Wordmark)
+  // 4. OFFICIAL HORIZONTAL VARIANT (T-Symbol + Wordmark + Tagline Lockup)
+  if (variant === 'horizontal') {
+    const horizontalSrc = isDark
+      ? '/branding/togoserve/logo-dark.png'
+      : '/branding/togoserve/logo-horizontal.png';
+
+    const fallbackSrc = isDark
+      ? '/public/brand/togoserve-logo-dark.png'
+      : '/public/brand/togoserve-logo-horizontal.png';
+
+    return (
+      <div
+        onClick={onClick}
+        className={`inline-flex items-center shrink-0 select-none ${
+          onClick ? 'cursor-pointer hover:opacity-95' : ''
+        } ${className}`}
+        role="img"
+        aria-label="TOGOSERVE Official Corporate Horizontal Logo"
+      >
+        <img
+          src={imgError ? fallbackSrc : horizontalSrc}
+          alt="TOGOSERVE - Commerce, Logistics, AI"
+          style={{ height: `${Math.max(34, Math.min(48, dim * 0.95))}px`, width: 'auto' }}
+          className="shrink-0 object-contain drop-shadow-xs transition-opacity duration-150"
+          onError={() => setImgError(true)}
+        />
+      </div>
+    );
+  }
+
+  // 5. HEADER, DASHBOARD, FOOTER (Emblem + Wordmark)
   return (
     <div
       onClick={onClick}

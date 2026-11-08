@@ -1,13 +1,20 @@
 import React from 'react';
 import { Logo } from '../brand/Logo';
-import { ShieldCheck, ArrowUpRight, Lock, KeyRound } from 'lucide-react';
+import { ShieldCheck, ArrowUpRight, Lock, Store, Bike, Package, HelpCircle } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 
 export const Footer: React.FC = () => {
-  const { setActivePortal, setIsEnterpriseLoginOpen } = useApp();
+  const {
+    setActivePortal,
+    setIsEnterpriseLoginOpen,
+    setIsMerchantModalOpen,
+    setIsRiderModalOpen,
+    setIsTrackingModalOpen,
+    setIsHelpModalOpen,
+  } = useApp();
 
   return (
-    <footer className="mt-20 bg-[#2E2E2E] text-neutral-300 border-t border-neutral-700 text-xs py-14 px-4 sm:px-6 lg:px-8">
+    <footer className="mt-20 bg-[#2E2E2E] text-neutral-300 border-t border-neutral-700 text-xs py-14 px-4 sm:px-6 lg:px-8 font-['Inter']">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
         {/* Brand column */}
         <div className="space-y-4">
@@ -30,7 +37,7 @@ export const Footer: React.FC = () => {
             <li>
               <button
                 onClick={() => setActivePortal('marketplace')}
-                className="hover:text-white transition-colors flex items-center gap-1"
+                className="hover:text-white transition-colors flex items-center gap-1.5"
               >
                 <span>Customer Marketplace (Food &amp; Mart)</span>
               </button>
@@ -38,32 +45,50 @@ export const Footer: React.FC = () => {
             <li>
               <button
                 onClick={() => setActivePortal('padala')}
-                className="hover:text-white transition-colors flex items-center gap-1"
+                className="hover:text-white transition-colors flex items-center gap-1.5"
               >
-                <span>TOGO Padala Express Delivery</span>
+                <span>TOGO Padala Express Courier</span>
               </button>
             </li>
             <li>
               <button
                 onClick={() => setActivePortal('landing')}
-                className="hover:text-white transition-colors flex items-center gap-1"
+                className="hover:text-white transition-colors flex items-center gap-1.5"
               >
                 <span>Solutions &amp; Business Overview</span>
               </button>
             </li>
             <li>
-              <span className="text-neutral-500">Merchant Storefront Partnership</span>
+              <button
+                onClick={() => setIsMerchantModalOpen(true)}
+                className="hover:text-[#F4B400] transition-colors flex items-center gap-1.5 text-left"
+              >
+                <span>Become a Merchant Partner</span>
+              </button>
             </li>
             <li>
-              <span className="text-neutral-500">Courier Partner Opportunities</span>
+              <button
+                onClick={() => setIsRiderModalOpen(true)}
+                className="hover:text-[#F4B400] transition-colors flex items-center gap-1.5 text-left"
+              >
+                <span>Become a Delivery Partner</span>
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => setIsTrackingModalOpen(true)}
+                className="hover:text-[#F4B400] transition-colors flex items-center gap-1.5 text-left"
+              >
+                <span>Track Order or Shipment</span>
+              </button>
             </li>
           </ul>
         </div>
 
-        {/* Governance & Architecture */}
+        {/* Governance & Support */}
         <div>
           <h4 className="text-white font-bold mb-4 uppercase tracking-widest text-[11px] text-[#FFD54F]">
-            Governance &amp; Trust
+            Governance &amp; Support
           </h4>
           <ul className="space-y-2.5 text-neutral-400">
             <li className="flex items-center gap-1.5">
@@ -81,6 +106,15 @@ export const Footer: React.FC = () => {
             <li className="flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-[#F4B400]"></span>
               <span>256-Bit Cryptographic Audit Trails</span>
+            </li>
+            <li className="pt-2">
+              <button
+                onClick={() => setIsHelpModalOpen(true)}
+                className="text-[#FFD54F] hover:underline flex items-center gap-1"
+              >
+                <HelpCircle className="w-3.5 h-3.5" />
+                <span>Help &amp; Knowledge Base FAQs</span>
+              </button>
             </li>
           </ul>
         </div>
@@ -112,15 +146,8 @@ export const Footer: React.FC = () => {
               <span className="font-mono text-neutral-300">togoserve.com</span>
             </div>
             <div className="flex items-center justify-between">
-              <span>Active Gateway:</span>
-              <a
-                href="https://artax.services/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#FFD54F] hover:underline inline-flex items-center gap-0.5"
-              >
-                artax.services <ArrowUpRight className="w-2.5 h-2.5" />
-              </a>
+              <span>Operations:</span>
+              <span className="text-neutral-300">Philippine Hubs</span>
             </div>
           </div>
         </div>
@@ -131,9 +158,15 @@ export const Footer: React.FC = () => {
           © 2026 TOGOSERVE Technologies Inc. • Philippines Commerce, Logistics &amp; AI
         </div>
         <div className="flex items-center gap-4">
-          <span className="hover:text-neutral-200 cursor-pointer">Terms of Service</span>
-          <span className="hover:text-neutral-200 cursor-pointer">Privacy Policy</span>
-          <span className="hover:text-neutral-200 cursor-pointer">Governance &amp; Trust</span>
+          <button onClick={() => setIsHelpModalOpen(true)} className="hover:text-neutral-200 transition-colors">
+            Terms of Service
+          </button>
+          <button onClick={() => setIsHelpModalOpen(true)} className="hover:text-neutral-200 transition-colors">
+            Privacy Policy
+          </button>
+          <button onClick={() => setIsHelpModalOpen(true)} className="hover:text-neutral-200 transition-colors">
+            Governance &amp; Trust
+          </button>
         </div>
       </div>
     </footer>

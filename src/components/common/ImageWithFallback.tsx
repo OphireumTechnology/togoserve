@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ShoppingBag, Image as ImageIcon } from 'lucide-react';
+import { ShoppingBag, Package } from 'lucide-react';
 
 export interface ImageWithFallbackProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   fallbackSrc?: string;
@@ -10,7 +10,7 @@ export interface ImageWithFallbackProps extends React.ImgHTMLAttributes<HTMLImag
 /**
  * Production-ready ImageWithFallback component
  * Ensures no broken image icons, handles network errors gracefully,
- * applies proper object-fit (cover/contain) and lazy loading.
+ * applies proper object-fit (cover/contain) and lazy loading without external dependencies.
  */
 export const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
   src,
@@ -22,47 +22,64 @@ export const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
   ...props
 }) => {
   const [hasError, setHasError] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(Boolean(src));
 
-  const defaultFallback =
-    'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=600&q=80';
-
-  return (
-    <div className={`relative overflow-hidden ${containerClassName}`}>
-      {isLoading && (
-        <div className="absolute inset-0 bg-slate-200 dark:bg-slate-800 animate-pulse" />
-      )}
-
-      {hasError ? (
-        fallbackSrc ? (
+  // If no source is provided or error occurred, show the styled fallback container
+  if (!src || hasError) {
+    if (fallbackSrc && !hasError) {
+      return (
+        <div className={`relative overflow-hidden ${containerClassName}`}>
           <img
             src={fallbackSrc}
             alt={alt}
             className={`w-full h-full object-cover ${className}`}
             loading="lazy"
             referrerPolicy="no-referrer"
+            onError={() => setHasError(true)}
+            {...props}
           />
-        ) : (
-          <div className="w-full h-full flex flex-col items-center justify-center bg-slate-100 dark:bg-slate-800/80 text-slate-400 p-3 text-center">
-            {fallbackIcon || <ShoppingBag className="w-6 h-6 mb-1 text-slate-400" />}
-            <span className="text-[10px] font-medium text-slate-500 line-clamp-1">{alt}</span>
-          </div>
-        )
-      ) : (
-        <img
-          src={src || defaultFallback}
-          alt={alt}
-          onLoad={() => setIsLoading(false)}
-          onError={() => {
-            setHasError(true);
-            setIsLoading(false);
-          }}
-          className={`transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'} ${className}`}
-          loading="lazy"
-          referrerPolicy="no-referrer"
-          {...props}
-        />
+        </div>
+      );
+    }
+
+    return (
+      <div
+        className={`w-full h-full min-h-[140px] flex flex-col items-center justify-center bg-gradient-to-br from-[#FAFAFA] to-[#EBEEEE] dark:from-neutral-900 dark:to-neutral-800 text-neutral-500 dark:text-neutral-400 p-4 text-center border border-[#EBEEEE] dark:border-neutral-700/60 ${containerClassName}`}
+        role="img"
+        aria-label={alt}
+      >
+        <div className="w-10 h-10 rounded-full bg-white dark:bg-neutral-800 shadow-2xs flex items-center justify-center text-[#F4B400] mb-2">
+          {fallbackIcon || <Package className="w-5 h-5" />}
+        </div>
+        <span className="text-[11px] font-semibold text-[#2E2E2E] dark:text-neutral-200 line-clamp-1 max-w-[90%]">
+          {alt}
+        </span>
+        <span className="text-[9px] font-mono text-[#D9C39A] dark:text-[#D9C39A] uppercase tracking-wider mt-0.5">
+          TOGOSERVE Verified
+        </span>
+      </div>
+    );
+  }
+
+  return (
+    <div className={`relative overflow-hidden ${containerClassName}`}>
+      {isLoading && (
+        <div className="absolute inset-0 bg-[#EBEEEE] dark:bg-neutral-800 animate-pulse" />
       )}
+
+      <img
+        src={src}
+        alt={alt}
+        onLoad={() => setIsLoading(false)}
+        onError={() => {
+          setHasError(true);
+          setIsLoading(false);
+        }}
+        className={`transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'} ${className}`}
+        loading="lazy"
+        referrerPolicy="no-referrer"
+        {...props}
+      />
     </div>
   );
 };

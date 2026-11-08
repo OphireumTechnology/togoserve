@@ -3,6 +3,7 @@ import { useApp } from '../../context/AppContext';
 import { X, Trash2, Plus, Minus, ArrowRight, ShieldCheck, CreditCard, Wallet, Banknote } from 'lucide-react';
 import { Order } from '../../types';
 import { Logo } from '../brand/Logo';
+import { ImageWithFallback } from './ImageWithFallback';
 
 export const CartDrawer: React.FC<{
   isOpen: boolean;
@@ -17,6 +18,8 @@ export const CartDrawer: React.FC<{
     placeOrder,
     setActivePortal,
     isDarkMode,
+    setIsTrackingModalOpen,
+    setActiveTrackingOrderId,
   } = useApp();
 
   const [paymentMethod, setPaymentMethod] = useState<Order['paymentMethod']>('TOGO_PAY');
@@ -34,11 +37,13 @@ export const CartDrawer: React.FC<{
   const handleCheckout = () => {
     setIsCheckingOut(true);
     setTimeout(() => {
-      placeOrder(paymentMethod, address, phone);
+      const order = placeOrder(paymentMethod, address, phone);
       setIsCheckingOut(false);
       onClose();
-      // Jump to customer marketplace view to see active order tracking
-      setActivePortal('marketplace');
+      if (order?.orderNumber) {
+        setActiveTrackingOrderId(order.orderNumber);
+        setIsTrackingModalOpen(true);
+      }
     }, 800);
   };
 
@@ -91,10 +96,11 @@ export const CartDrawer: React.FC<{
                       key={item.product.id}
                       className="p-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 flex gap-3 items-center"
                     >
-                      <img
+                      <ImageWithFallback
                         src={item.product.image}
                         alt={item.product.name}
-                        className="w-14 h-14 rounded-lg object-cover shrink-0"
+                        className="w-14 h-14 rounded-xl object-cover shrink-0"
+                        containerClassName="w-14 h-14 rounded-xl shrink-0"
                       />
                       <div className="grow min-w-0">
                         <h4 className="text-xs font-bold truncate">{item.product.name}</h4>
