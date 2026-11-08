@@ -159,7 +159,7 @@ export const EnterpriseLoginModal: React.FC = () => {
         {/* Header */}
         <div className="p-6 sm:p-7 pb-4 flex items-start justify-between">
           <div className="flex items-center gap-3">
-            <Logo variant="symbol" size="sm" theme={isDarkMode ? 'dark' : 'light'} />
+            <Logo variant="circular" size="sm" theme={isDarkMode ? 'dark' : 'light'} />
             <div>
               <div className="flex items-center gap-2">
                 <span className="font-extrabold text-base tracking-tight">TOGOSERVE</span>

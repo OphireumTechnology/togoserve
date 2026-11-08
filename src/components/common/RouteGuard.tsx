@@ -34,7 +34,7 @@ export const RouteGuard: React.FC<RouteGuardProps> = ({ requiredPortal, children
       >
         {/* Official Brand Logo */}
         <div className="flex justify-center mb-6">
-          <Logo variant="symbol" size="lg" theme={isDarkMode ? 'dark' : 'light'} />
+          <Logo variant="circular" size="lg" theme={isDarkMode ? 'dark' : 'light'} />
         </div>
 
         {/* Security Shield Indicator */}

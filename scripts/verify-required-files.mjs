@@ -6,6 +6,8 @@ const requiredFiles = [
   'src/context/AppContext.tsx',
   'src/components/views/MarketplaceView.tsx',
   'src/components/marketplace/MerchantStorefrontModal.tsx',
+  'src/components/brand/OfficialLogo.tsx',
+  'public/branding/togoserve-official-circular.png',
 ];
 
 const missing = requiredFiles.filter((file) => !existsSync(file));

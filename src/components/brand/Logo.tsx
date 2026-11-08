@@ -127,32 +127,35 @@ export const Logo: React.FC<LogoProps> = ({
     );
   }
 
-  // 4. OFFICIAL HORIZONTAL VARIANT (T-Symbol + Wordmark + Tagline Lockup)
+  // 4. OFFICIAL HORIZONTAL VARIANT (Official Circular Emblem + Typography)
   if (variant === 'horizontal') {
-    const horizontalSrc = isDark
-      ? '/branding/togoserve/logo-dark.png'
-      : '/branding/togoserve/logo-horizontal.png';
-
-    const fallbackSrc = isDark
-      ? '/public/brand/togoserve-logo-dark.png'
-      : '/public/brand/togoserve-logo-horizontal.png';
-
     return (
       <div
         onClick={onClick}
-        className={`inline-flex items-center shrink-0 select-none ${
+        className={`inline-flex items-center gap-3 shrink-0 select-none ${
           onClick ? 'cursor-pointer hover:opacity-95' : ''
         } ${className}`}
         role="img"
         aria-label="TOGOSERVE Official Corporate Horizontal Logo"
       >
         <img
-          src={imgError ? fallbackSrc : horizontalSrc}
-          alt="TOGOSERVE - Commerce, Logistics, AI"
-          style={{ height: `${Math.max(34, Math.min(48, dim * 0.95))}px`, width: 'auto' }}
+          src={emblemSrc}
+          alt="TOGOSERVE Official Circular Emblem"
+          style={{ width: `${dim}px`, height: `${dim}px` }}
           className="shrink-0 object-contain drop-shadow-xs transition-opacity duration-150"
           onError={() => setImgError(true)}
         />
+        {showWordmark && (
+          <div className="flex flex-col justify-center text-left leading-none">
+            <div className="flex items-baseline tracking-tight font-black leading-none text-lg sm:text-xl font-['Inter']">
+              <span className={isDark ? 'text-white' : 'text-[#2E2E2E]'}>TOGO</span>
+              <span className="text-[#F4B400]">SERVE</span>
+            </div>
+            <span className={`mt-1 font-bold tracking-widest text-[8px] sm:text-[9px] uppercase ${isDark ? 'text-[#D9C39A]' : 'text-[#2E2E2E]'}`}>
+              COMMERCE <span className="text-[#F4B400]">•</span> LOGISTICS <span className="text-[#F4B400]">•</span> AI
+            </span>
+          </div>
+        )}
       </div>
     );
   }
@@ -202,3 +205,5 @@ export const BrandMark: React.FC<{
 
 export const BrandLogo = Logo;
 export type BrandLogoProps = LogoProps;
+export { OfficialLogo } from './OfficialLogo';
+export type { OfficialLogoProps } from './OfficialLogo';

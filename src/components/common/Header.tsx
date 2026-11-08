@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useApp, ActivePortal } from '../../context/AppContext';
-import { Logo } from '../brand/Logo';
+import { Logo, OfficialLogo } from '../brand/Logo';
 import {
   Sun,
   Moon,
@@ -170,18 +170,9 @@ export const Header: React.FC<{
           {/* Official TOGOSERVE Logo with clear spacing & proportions   */}
           {/* ========================================================= */}
           <div className="flex items-center shrink-0">
-            <button
+            <OfficialLogo
               onClick={() => setActivePortal('marketplace')}
-              className="focus:outline-none focus:ring-2 focus:ring-[#F4B400] rounded-xl transition-transform active:scale-[0.98] text-left flex items-center py-1"
-              aria-label="TOGOSERVE Home"
-            >
-              <Logo
-                variant="horizontal"
-                theme={isDarkMode ? 'dark' : 'light'}
-                size="md"
-                className="hover:opacity-95 transition-opacity"
-              />
-            </button>
+            />
           </div>
 
           {/* ========================================================= */}

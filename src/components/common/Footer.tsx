@@ -1,5 +1,5 @@
 import React from 'react';
-import { Logo } from '../brand/Logo';
+import { Logo, OfficialLogo } from '../brand/Logo';
 import { ShieldCheck, ArrowUpRight, Lock, Store, Bike, Package, HelpCircle } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 
@@ -18,7 +18,7 @@ export const Footer: React.FC = () => {
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
         {/* Brand column */}
         <div className="space-y-4">
-          <Logo variant="horizontal" theme="dark" size="md" />
+          <OfficialLogo onClick={() => setActivePortal('marketplace')} />
           <p className="text-neutral-400 text-xs leading-relaxed max-w-xs font-normal">
             Connecting people, businesses and communities through intelligent commerce, seamless logistics and AI-powered solutions.
           </p>

@@ -72,3 +72,20 @@ body {
   background: rgba(100, 116, 139, 0.5);
 }
 
+/* Official TOGOSERVE Circular Branding Specification */
+.togoserve-official-logo {
+  display: block;
+  width: auto;
+  height: 54px;
+  max-width: 100%;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .togoserve-official-logo {
+    height: 44px;
+  }
+}
+
+
