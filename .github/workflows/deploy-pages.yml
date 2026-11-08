@@ -38,10 +38,19 @@ jobs:
       - name: Build TOGOSERVE
         run: npm run build
 
+      # GitHub Pages has no server-side SPA rewrite support. Serve the same
+      # Vite app shell for direct visits and browser refreshes on nested routes.
+      - name: Enable client-side route refresh fallback
+        run: |
+          test -f dist/index.html
+          cp dist/index.html dist/404.html
+          test -f dist/404.html
+
       - name: Verify production build
         run: |
           test -f dist/index.html
-          echo "TOGOSERVE production build verified."
+          test -f dist/404.html
+          echo "TOGOSERVE production build and SPA fallback verified."
           ls -la dist
 
       - name: Setup GitHub Pages
